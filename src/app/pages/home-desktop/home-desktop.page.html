@@ -1,0 +1,13 @@
+<ion-split-pane when="xs" contentId="main">
+  <ion-menu contentId="main" class="left">
+    @if (show) {
+    <app-podcast-detail
+      [podcastId]="'88f25628-074a-49d8-bfd8-4e5c40919ea3'"
+    ></app-podcast-detail>
+    }
+  </ion-menu>
+
+  <div id="main" class="right ion-page">
+    <app-home></app-home>
+  </div>
+</ion-split-pane>

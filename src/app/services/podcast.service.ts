@@ -1,0 +1,112 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable, inject, signal } from '@angular/core';
+import { environment } from 'src/environments/environment';
+import { IPodcast } from '../interfaces/podcast.interface';
+import { IEpisode } from '../interfaces/episode.interface';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class PodcastService {
+  private apiUrl = environment.apiUrl;
+  private http = inject(HttpClient);
+
+  public podcasts = signal<IPodcast[]>([]);
+  public affiliates = signal<IPodcast[]>([]);
+  public episodes = signal<IEpisode[]>([]);
+
+  public fetchPodcasts() {
+    this.http.get(this.apiUrl + '/rest/podcasts').subscribe((data: any) => {
+      data = data.map(this.podcastDataParser);
+
+      // Filter out podcasts without an image
+      data = data.filter((item: IPodcast) => item.image_url);
+
+      this.podcasts.set(data);
+
+      this.fetchEpisodes();
+    });
+  }
+
+  public fetchEpisodes() {
+    this.http.get(this.apiUrl + '/rest/episodes').subscribe((data: any) => {
+      data = data.map(this.episodeDataParser);
+
+      this.episodes.set(data);
+
+      data.forEach((episode: IEpisode) => {
+        let podcast = this.podcasts().find(
+          (podcast) => podcast.id === episode.podcast_id
+        );
+
+        if (podcast) {
+          podcast.episodes = podcast.episodes || [];
+          podcast.episodes.push(episode);
+        }
+      });
+
+      console.log(this.podcasts());
+    });
+  }
+
+  public fetchAffiliates() {
+    this.http.get(this.apiUrl + '/rest/affiliates').subscribe((data: any) => {
+      data = data.map(this.affiliateDataParser);
+
+      // Filter out podcasts without an image
+      data = data.filter((item: IPodcast) => item.image_url);
+
+      this.affiliates.set(data);
+    });
+  }
+
+  // This function is used to parse the data from the API into the IPodcast interface
+  private podcastDataParser(data: any): IPodcast {
+    let podcastData: IPodcast = {
+      id: data.nid[0]?.value,
+      uuid: data.uuid[0]?.value,
+      title: data.title[0]?.value,
+      description: data.field_description[0]?.value,
+      description_short: data.field_short_description[0]?.value,
+      host_name: data.field_host_name_s_[0]?.value,
+      image_url: data.field_picture[0]?.url,
+      episodes: [],
+    };
+
+    return podcastData;
+  }
+
+  // This function is used to parse the data from the API into the IPodcast interface
+  private episodeDataParser(data: any): IEpisode {
+    let episodeData: IEpisode = {
+      id: data.nid[0]?.value,
+      uuid: data.uuid[0]?.value,
+      title: data.title[0]?.value,
+      description: data.field_description_html[0]?.value,
+      description_short: data.field_short_description_html[0]?.value,
+      length: data.field_length_hmmss_[0]?.value,
+      image_url: data.field_picture_episode[0]?.url,
+      audio_url: data.field_audio_file[0]?.url,
+      podcast_id: data.field_podcast[0]?.target_id,
+      published_at: data.created[0]?.value,
+    };
+
+    return episodeData;
+  }
+
+  // This function is used to parse the data from the API into the IPodcast interface
+  private affiliateDataParser(data: any): IPodcast {
+    let podcastData: IPodcast = {
+      id: data.nid[0]?.value,
+      uuid: data.uuid[0]?.value,
+      title: data.label[0]?.value,
+      description: data.field_description[0]?.value,
+      description_short: data.field_short_description[0]?.value,
+      host_name: data.field_host_name_s_[0]?.value,
+      image_url: data.field_logo[0]?.url,
+      episodes: [],
+    };
+
+    return podcastData;
+  }
+}

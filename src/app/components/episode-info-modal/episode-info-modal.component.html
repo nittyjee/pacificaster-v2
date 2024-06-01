@@ -1,0 +1,10 @@
+<ion-content class="ion-padding">
+  <div class="info">
+    <div class="title">
+      <h2>{{ episode.title }}</h2>
+      <h6>{{ episode.published_at | date : "dd MMM YYYY" }}</h6>
+    </div>
+
+    <div [innerHTML]="episode.description"></div>
+  </div>
+</ion-content>

@@ -1,0 +1,88 @@
+:host {
+  display: block;
+
+  ion-header {
+    ion-toolbar {
+      &.transparent {
+        --background: transparent;
+        --border-color: transparent;
+      }
+    }
+  }
+
+  .podcast-info {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .logo {
+      display: flex;
+      justify-content: center;
+
+      img {
+        width: 12rem;
+        height: 12rem;
+        object-fit: cover;
+        border-radius: 1.2rem;
+        margin: auto;
+        box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 16px;
+      }
+    }
+
+    .title {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+
+      h6 {
+        opacity: 0.7;
+      }
+    }
+
+    .description {
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 3; /* number of lines to show */
+      line-clamp: 3;
+      -webkit-box-orient: vertical;
+    }
+
+    .links {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+
+      ion-icon {
+        font-size: 1.4rem;
+      }
+    }
+  }
+
+  .background {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    opacity: 0.5;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .overlay {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      backdrop-filter: blur(20px);
+    }
+  }
+}

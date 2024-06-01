@@ -1,0 +1,23 @@
+<div class="top">
+  <img [src]="episode.image_url" [alt]="episode.title" />
+
+  <div class="info">
+    <p class="title">
+      {{ episode.title }}
+    </p>
+    <span>{{ episode.published_at | date : "dd MMM YYYY" }}</span>
+  </div>
+
+  <app-play-button [episode]="episode"></app-play-button>
+</div>
+
+@if (episode.description) {
+<div
+  class="description"
+  [class.expanded]="isDescriptionExpanded"
+  (click)="onDescription()"
+>
+  <div [innerHTML]="episode.description"></div>
+</div>
+
+}

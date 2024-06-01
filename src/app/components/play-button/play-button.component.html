@@ -1,0 +1,9 @@
+@if (player.isPlaying() && player.currentEpisode().id === episode.id) {
+<ion-button (click)="onPause()" shape="round" color="dark" size="medium">
+  <ion-icon slot="icon-only" name="pause"></ion-icon>
+</ion-button>
+} @else {
+<ion-button (click)="onPlay()" shape="round" color="dark" size="medium">
+  <ion-icon slot="icon-only" name="play"></ion-icon>
+</ion-button>
+}

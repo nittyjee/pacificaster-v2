@@ -1,0 +1,18 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title> Pacificaster </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large"> Pacificaster </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <app-podcast-list
+    [title]="'Podcasts'"
+    [podcasts]="podcastService.podcasts()"
+  ></app-podcast-list>
+</ion-content>

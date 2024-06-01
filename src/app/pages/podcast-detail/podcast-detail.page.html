@@ -1,0 +1,42 @@
+<ion-header collapse="fade" [translucent]="true">
+  <ion-toolbar [class.transparent]="!isViewDidEnter">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <!-- <ion-title>{{podcast.title}}</ion-title> -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="background">
+    <img [src]="podcast.image_url" [alt]="podcast.title" />
+    <div class="overlay"></div>
+  </div>
+
+  <div class="podcast-info ion-padding">
+    <div class="logo">
+      <img [src]="podcast.image_url" [alt]="podcast.title" />
+    </div>
+
+    <div class="title">
+      <h6>{{podcast.host_name}}</h6>
+
+      <h2>{{podcast.title}}</h2>
+    </div>
+
+    <p class="description" (click)="onDescription()">
+      {{podcast.description_short}}
+    </p>
+
+    <div class="links">
+      <ion-icon name="home"></ion-icon>
+      <ion-icon name="logo-rss"></ion-icon>
+      <ion-icon name="logo-twitter"></ion-icon>
+      <ion-icon name="logo-facebook"></ion-icon>
+      <ion-icon name="mail"></ion-icon>
+      <ion-icon name="cash"></ion-icon>
+    </div>
+  </div>
+
+  <app-episode-list [episodes]="podcast.episodes"></app-episode-list>
+</ion-content>

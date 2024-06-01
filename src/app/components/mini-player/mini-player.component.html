@@ -1,0 +1,35 @@
+<ion-footer translucent="true">
+  <ion-toolbar>
+    <audio
+      #audio
+      (timeupdate)="onTimeUpdate($event)"
+      (loadedmetadata)="onLoad($event)"
+    ></audio>
+
+    <div class="custom-player">
+      <img
+        [src]="player.currentEpisode().image_url"
+        [alt]="player.currentEpisode().title"
+      />
+
+      <div class="info">
+        <h3 class="title">{{ player.currentEpisode().title }}</h3>
+        <h5 class="time">{{ getTime }} / {{ totalDuration }}</h5>
+      </div>
+
+      <app-play-button [episode]="player.currentEpisode()"></app-play-button>
+    </div>
+
+    <div class="timeline">
+      <ion-range
+        [pin]="true"
+        [value]="currentTimeline"
+        [max]="timelineMax"
+        [pinFormatter]="pinFormatter"
+        (ionChange)="onTimelineChange($event)"
+        (ionKnobMoveStart)="onIonKnobMoveStart($event)"
+        (ionKnobMoveEnd)="onIonKnobMoveEnd($event)"
+      ></ion-range>
+    </div>
+  </ion-toolbar>
+</ion-footer>

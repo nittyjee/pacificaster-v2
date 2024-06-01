@@ -1,0 +1,11 @@
+<ion-list>
+  <ion-list-header>
+    <ion-label>Episodes</ion-label>
+  </ion-list-header>
+
+  @for (episode of episodes; track $index) {
+  <ion-item>
+    <app-episode-list-item [episode]="episode"></app-episode-list-item>
+  </ion-item>
+  }
+</ion-list>
