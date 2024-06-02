@@ -51,9 +51,14 @@
       flex: 1;
 
       .title {
-        font-size: 1.2rem;
+        font-size: 1rem;
         font-weight: 500;
         color: black;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* number of lines to show */
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
       }
 
       .time {
