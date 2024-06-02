@@ -9,4 +9,20 @@ export interface IPodcast {
   host_name: string;
   image_url: string;
   episodes: IEpisode[];
+  social: ISocialLink[];
+}
+
+export interface ISocialLink {
+  type:
+    | 'website'
+    | 'rss'
+    | 'twitter'
+    | 'facebook'
+    | 'instagram'
+    | 'linkedin'
+    | 'tumblr'
+    | 'mail'
+    | 'donation';
+  url: string;
+  icon: string;
 }

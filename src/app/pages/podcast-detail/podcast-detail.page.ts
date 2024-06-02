@@ -1,4 +1,5 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { KeyValuePipe } from '@angular/common';
+import { Component, Input, OnInit, effect, inject } from '@angular/core';
 import {
   IonHeader,
   IonToolbar,
@@ -13,6 +14,8 @@ import {
   ViewDidEnter,
   ViewWillLeave,
   ViewDidLeave,
+  IonFooter,
+  LoadingController,
 } from '@ionic/angular/standalone';
 import { EpisodeListComponent } from 'src/app/components/episode-list/episode-list.component';
 import { PodcastInfoModalComponent } from 'src/app/components/podcast-info-modal/podcast-info-modal.component';
@@ -25,6 +28,7 @@ import { PodcastService } from 'src/app/services/podcast.service';
   styleUrls: ['./podcast-detail.page.scss'],
   standalone: true,
   imports: [
+    IonFooter,
     IonHeader,
     IonTitle,
     IonToolbar,
@@ -35,6 +39,7 @@ import { PodcastService } from 'src/app/services/podcast.service';
     PodcastInfoModalComponent,
     IonIcon,
     IonButton,
+    KeyValuePipe,
   ],
 })
 export class PodcastDetailPage
@@ -48,26 +53,22 @@ export class PodcastDetailPage
 
   private podcastService = inject(PodcastService);
 
-  constructor(private modalCtrl: ModalController) {}
-
-  ngOnInit(): void {
-    if (this.podcastService.podcasts().length > 0) {
+  constructor(
+    private modalCtrl: ModalController,
+    private loadingCtrl: LoadingController
+  ) {
+    effect(() => {
       this.podcast =
         this.podcastService
           .podcasts()
           .find((podcast) => podcast.uuid === this.podcastId) ??
         ({} as IPodcast);
-    } else {
-      this.podcastService.fetchPodcasts();
+    });
+  }
 
-      setTimeout(() => {
-        this.podcast =
-          this.podcastService
-            .podcasts()
-            .find((podcast) => podcast.uuid === this.podcastId) ??
-          ({} as IPodcast);
-      }, 500);
-    }
+  ngOnInit(): void {
+    if (this.podcastService.podcasts().length === 0)
+      this.podcastService.fetchPodcasts();
   }
 
   ionViewWillEnter(): void {
@@ -101,5 +102,14 @@ export class PodcastDetailPage
 
     if (role === 'confirm') {
     }
+  }
+
+  async showLoading() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Loading...',
+      duration: 3000,
+    });
+
+    loading.present();
   }
 }
