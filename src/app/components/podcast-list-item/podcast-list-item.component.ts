@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import {
   IonCard,
   IonCardHeader,
@@ -8,6 +8,7 @@ import {
   IonCardTitle,
 } from '@ionic/angular/standalone';
 import { IPodcast } from 'src/app/interfaces/podcast.interface';
+import { ThumbnailComponent } from '../thumbnail/thumbnail.component';
 
 @Component({
   selector: 'app-podcast-list-item',
@@ -21,12 +22,25 @@ import { IPodcast } from 'src/app/interfaces/podcast.interface';
     IonCardSubtitle,
     IonCardContent,
     RouterLink,
+    ThumbnailComponent,
   ],
 })
 export class PodcastListItemComponent implements OnInit {
   @Input() podcast!: IPodcast;
+  @Input() inList: boolean = false;
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit() {}
+
+  onClick() {
+    console.log('clicked');
+    const isDesktop = window.innerWidth > 768;
+
+    if (isDesktop) {
+      this.router.navigate(['podcast-sidebar', this.podcast.uuid]);
+    } else {
+      this.router.navigate(['podcast', this.podcast.uuid]);
+    }
+  }
 }

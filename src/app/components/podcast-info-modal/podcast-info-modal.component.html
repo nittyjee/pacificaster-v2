@@ -1,14 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="setOpen(false)">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 <ion-content class="ion-padding">
   <div class="info">
+    <app-thumbnail
+      [src]="podcast.image_url"
+      [alt]="podcast.title"
+      size="medium"
+    ></app-thumbnail>
+
     <div class="title">
       <h6>{{ podcast.host_name }}</h6>
 
       <h2>{{ podcast.title }}</h2>
     </div>
-
-    <p>
-      {{ podcast.description }}
-    </p>
 
     <div class="links">
       @for (item of podcast.social; track $index) { @if ( item.url ) {
@@ -16,5 +25,9 @@
         <ion-icon [name]="item.icon"></ion-icon> </a
       >} }
     </div>
+
+    <p class="description">
+      {{ podcast.description }}
+    </p>
   </div>
 </ion-content>

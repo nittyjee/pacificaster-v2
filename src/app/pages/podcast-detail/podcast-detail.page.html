@@ -16,7 +16,11 @@
 
   <div class="podcast-info ion-padding">
     <div class="logo">
-      <img [src]="podcast.image_url" [alt]="podcast.title" />
+      <app-thumbnail
+        [src]="podcast.image_url"
+        [alt]="podcast.title"
+        [size]="'medium'"
+      ></app-thumbnail>
     </div>
 
     <div class="title">

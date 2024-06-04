@@ -15,10 +15,10 @@ import {
   ViewWillLeave,
   ViewDidLeave,
   IonFooter,
-  LoadingController,
 } from '@ionic/angular/standalone';
 import { EpisodeListComponent } from 'src/app/components/episode-list/episode-list.component';
 import { PodcastInfoModalComponent } from 'src/app/components/podcast-info-modal/podcast-info-modal.component';
+import { ThumbnailComponent } from 'src/app/components/thumbnail/thumbnail.component';
 import { IPodcast } from 'src/app/interfaces/podcast.interface';
 import { PodcastService } from 'src/app/services/podcast.service';
 
@@ -37,6 +37,7 @@ import { PodcastService } from 'src/app/services/podcast.service';
     IonBackButton,
     EpisodeListComponent,
     PodcastInfoModalComponent,
+    ThumbnailComponent,
     IonIcon,
     IonButton,
     KeyValuePipe,
@@ -53,10 +54,7 @@ export class PodcastDetailPage
 
   private podcastService = inject(PodcastService);
 
-  constructor(
-    private modalCtrl: ModalController,
-    private loadingCtrl: LoadingController
-  ) {
+  constructor(private modalCtrl: ModalController) {
     effect(() => {
       this.podcast =
         this.podcastService
@@ -90,8 +88,9 @@ export class PodcastDetailPage
   async onDescription() {
     const modal = await this.modalCtrl.create({
       component: PodcastInfoModalComponent,
-      breakpoints: [0, 0.75],
-      initialBreakpoint: 0.75,
+      breakpoints: [0, 0.5, 1],
+      initialBreakpoint: 0.5,
+      handleBehavior: 'cycle',
       componentProps: {
         podcast: this.podcast,
       },
@@ -99,17 +98,5 @@ export class PodcastDetailPage
     modal.present();
 
     const { data, role } = await modal.onWillDismiss();
-
-    if (role === 'confirm') {
-    }
-  }
-
-  async showLoading() {
-    const loading = await this.loadingCtrl.create({
-      message: 'Loading...',
-      duration: 3000,
-    });
-
-    loading.present();
   }
 }

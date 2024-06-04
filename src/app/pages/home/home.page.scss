@@ -1,2 +1,10 @@
 :host {
+  .site-logo {
+    height: 4rem;
+    object-fit: contain;
+
+    &.mini {
+      height: 2rem;
+    }
+  }
 }

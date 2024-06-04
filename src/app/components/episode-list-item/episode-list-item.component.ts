@@ -5,6 +5,7 @@ import { DatePipe } from '@angular/common';
 import { EpisodeInfoModalComponent } from '../episode-info-modal/episode-info-modal.component';
 import { PlayerService } from 'src/app/services/player.service';
 import { PlayButtonComponent } from '../play-button/play-button.component';
+import { ThumbnailComponent } from '../thumbnail/thumbnail.component';
 
 @Component({
   selector: 'app-episode-list-item',
@@ -17,6 +18,7 @@ import { PlayButtonComponent } from '../play-button/play-button.component';
     DatePipe,
     EpisodeInfoModalComponent,
     PlayButtonComponent,
+    ThumbnailComponent,
   ],
 })
 export class EpisodeListItemComponent implements OnInit {
@@ -25,13 +27,14 @@ export class EpisodeListItemComponent implements OnInit {
   private player = inject(PlayerService);
 
   isDescriptionExpanded = false;
+  isModalOpen = false;
 
   constructor(private modalCtrl: ModalController) {}
 
   ngOnInit() {}
 
   onDescription() {
-    if (this.isDescriptionExpanded) {
+    if (this.isDescriptionExpanded && !this.isModalOpen) {
       this.openModal();
     } else {
       this.isDescriptionExpanded = true;
@@ -41,21 +44,25 @@ export class EpisodeListItemComponent implements OnInit {
   async openModal() {
     const modal = await this.modalCtrl.create({
       component: EpisodeInfoModalComponent,
-      breakpoints: [0, 0.75],
-      initialBreakpoint: 0.75,
+      breakpoints: [0, 0.5, 1],
+      initialBreakpoint: 0.5,
+      handleBehavior: 'cycle',
       componentProps: {
         episode: this.episode,
       },
     });
     modal.present();
 
-    const { data, role } = await modal.onWillDismiss();
-
-    if (role === 'confirm') {
-    }
-
-    modal.onDidDismiss().then((data) => {
+    modal.addEventListener('ionModalDidPresent', () => {
+      this.isModalOpen = true;
       this.isDescriptionExpanded = false;
     });
+
+    modal.addEventListener('ionModalDidDismiss', () => {
+      console.log('ionModalDidDismiss');
+      this.isModalOpen = false;
+    });
+
+    const { data, role } = await modal.onWillDismiss();
   }
 }

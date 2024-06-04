@@ -1,5 +1,9 @@
 <div class="top">
-  <img [src]="episode.image_url" [alt]="episode.title" />
+  <app-thumbnail
+    [src]="episode.image_url"
+    [alt]="episode.title"
+    size="small"
+  ></app-thumbnail>
 
   <div class="info">
     <p class="title">

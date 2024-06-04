@@ -1,4 +1,8 @@
-<a [routerLink]="podcast.uuid">
-  <img [alt]="podcast.title" [src]="podcast.image_url" />
+<a (click)="onClick()" [class.in-list]="inList">
+  <app-thumbnail
+    [src]="podcast.image_url"
+    [alt]="podcast.title"
+    [size]="inList ? 'small' : 'auto'"
+  ></app-thumbnail>
   <h2>{{ podcast.title }}</h2>
 </a>

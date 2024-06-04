@@ -1,11 +1,14 @@
+<div class="toolbar">
+  @if (title) {
+  <h2>{{ title }}</h2>
+  }
+  <ion-button fill="clear" (click)="toggleLayout()">
+    <ion-icon [name]="isList ? 'grid-outline' : 'list-outline'"></ion-icon>
+  </ion-button>
+</div>
+
+@if (!isList) {
 <ion-grid>
-  <ion-row>
-    <ion-col size="12">
-      @if (title) {
-      <h2>{{ title }}</h2>
-      }
-    </ion-col>
-  </ion-row>
   <ion-row>
     @for (podcast of podcasts; track $index) {
     <ion-col size="6" size-md="4" size-lg="3">
@@ -14,3 +17,16 @@
     }
   </ion-row>
 </ion-grid>
+} @else {
+<ion-list>
+  @for (podcast of podcasts; track $index) {
+  <ion-item>
+    <app-podcast-list-item
+      [podcast]="podcast"
+      [inList]="true"
+    ></app-podcast-list-item>
+  </ion-item>
+  }
+</ion-list>
+
+}

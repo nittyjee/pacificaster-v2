@@ -1,10 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="setOpen(false)">Close</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <app-play-button [episode]="episode"></app-play-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 <ion-content class="ion-padding">
   <div class="info">
+    <app-thumbnail
+      [src]="episode.image_url"
+      [alt]="episode.title"
+      size="medium"
+    ></app-thumbnail>
+
     <div class="title">
       <h2>{{ episode.title }}</h2>
-      <h6>{{ episode.published_at | date : "dd MMM YYYY" }}</h6>
+      <span>{{ episode.published_at | date : "dd MMM YYYY" }}</span>
     </div>
-
-    <div [innerHTML]="episode.description"></div>
   </div>
+
+  <div class="description" [innerHTML]="episode.description"></div>
 </ion-content>
