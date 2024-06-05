@@ -13,21 +13,30 @@ import {
   IonRange,
   IonFooter,
   IonToolbar,
-  RangeCustomEvent,
+  ModalController,
 } from '@ionic/angular/standalone';
 import { IEpisode } from 'src/app/interfaces/episode.interface';
+import { PlayerModalComponent } from '../player-modal/player-modal.component';
+import { ThumbnailComponent } from '../thumbnail/thumbnail.component';
 
 @Component({
   selector: 'app-mini-player',
   templateUrl: './mini-player.component.html',
   styleUrls: ['./mini-player.component.scss'],
   standalone: true,
-  imports: [IonRange, PlayButtonComponent, IonFooter, IonToolbar],
+  imports: [
+    IonRange,
+    PlayButtonComponent,
+    IonFooter,
+    IonToolbar,
+    ThumbnailComponent,
+  ],
 })
 export class MiniPlayerComponent implements OnInit, AfterViewInit {
   @ViewChild('audio') audio!: ElementRef;
 
   public player = inject(PlayerService);
+  private modalCtrl = inject(ModalController);
 
   currentEpisode: IEpisode = {} as IEpisode;
 
@@ -134,5 +143,17 @@ export class MiniPlayerComponent implements OnInit, AfterViewInit {
     // }
 
     return timeString;
+  }
+
+  async openModal(event: Event) {
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+
+    const modal = await this.modalCtrl.create({
+      component: PlayerModalComponent,
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
   }
 }

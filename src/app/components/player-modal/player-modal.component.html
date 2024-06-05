@@ -1,0 +1,36 @@
+<ion-header collapse="fade">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="cancel()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="background">
+    <img
+      [src]="player.currentEpisode().image_url"
+      [alt]="player.currentEpisode().title"
+    />
+    <div class="overlay"></div>
+  </div>
+
+  <div class="info">
+    <app-thumbnail
+      [src]="player.currentEpisode().image_url"
+      [alt]="player.currentEpisode().title"
+      size="medium"
+    ></app-thumbnail>
+
+    <div class="title">
+      <h2>{{ player.currentEpisode().title }}</h2>
+      <span>{{
+        player.currentEpisode().published_at | date : "dd MMM YYYY"
+      }}</span>
+    </div>
+  </div>
+
+  <div
+    class="description"
+    [innerHTML]="player.currentEpisode().description"
+  ></div>
+</ion-content>

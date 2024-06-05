@@ -6,11 +6,12 @@
       (loadedmetadata)="onLoad($event)"
     ></audio>
 
-    <div class="custom-player">
-      <img
+    <div class="custom-player" (click)="openModal($event)">
+      <app-thumbnail
         [src]="player.currentEpisode().image_url"
         [alt]="player.currentEpisode().title"
-      />
+        [size]="'small'"
+      ></app-thumbnail>
 
       <div class="info">
         <h3 class="title">{{ player.currentEpisode().title }}</h3>
