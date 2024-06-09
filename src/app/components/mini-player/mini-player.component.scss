@@ -4,33 +4,6 @@
   left: 0;
   width: 100vw;
 
-  audio {
-    width: 100%;
-    visibility: hidden;
-  }
-
-  .timeline {
-    display: flex;
-    padding: 0 1rem 0.5rem 1rem;
-    width: 100%;
-
-    ion-range {
-      padding-top: 0;
-
-      &::part(pin) {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-
-        background: #fff;
-        color: #000;
-        border-radius: 0.8rem;
-        padding-top: 4px;
-        padding-bottom: 4px;
-      }
-    }
-  }
-
   .custom-player {
     display: flex;
     align-items: center;

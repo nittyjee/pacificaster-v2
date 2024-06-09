@@ -33,4 +33,27 @@
     class="description"
     [innerHTML]="player.currentEpisode().description"
   ></div>
+
+  <div class="wave">
+    <img src="assets/waveform.png" alt="" />
+  </div>
+
+  <div class="footer">
+    <div class="time">
+      <span
+        >{{ player.currentTime | timeline }} /
+        {{ player.totalDuration | timeline }}</span
+      >
+    </div>
+
+    <div class="buttons">
+      <ion-button size="small" fill="outline" color="light"> 1X </ion-button>
+
+      <ion-button size="small" fill="outline" color="light">
+        <ion-icon name="share-social"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+
+  <app-player-timeline></app-player-timeline>
 </ion-content>

@@ -18,6 +18,8 @@ import {
 import { IEpisode } from 'src/app/interfaces/episode.interface';
 import { PlayerModalComponent } from '../player-modal/player-modal.component';
 import { ThumbnailComponent } from '../thumbnail/thumbnail.component';
+import { PlayerTimelineComponent } from '../player-timeline/player-timeline.component';
+import { TimelinePipe } from 'src/app/pipes/timeline.pipe';
 
 @Component({
   selector: 'app-mini-player',
@@ -30,6 +32,8 @@ import { ThumbnailComponent } from '../thumbnail/thumbnail.component';
     IonFooter,
     IonToolbar,
     ThumbnailComponent,
+    PlayerTimelineComponent,
+    TimelinePipe,
   ],
 })
 export class MiniPlayerComponent implements OnInit, AfterViewInit {
@@ -49,15 +53,15 @@ export class MiniPlayerComponent implements OnInit, AfterViewInit {
   constructor() {
     effect(() => {
       if (this.player.isPlaying() && this.currentEpisode.audio_url) {
-        this.audio.nativeElement.play();
+        // this.audio.nativeElement.play();
       } else {
-        this.audio.nativeElement.pause();
+        // this.audio.nativeElement.pause();
       }
 
       if (this.player.currentEpisode().id !== this.currentEpisode.id) {
         this.currentEpisode = this.player.currentEpisode();
 
-        this.audio.nativeElement.src = this.currentEpisode.audio_url;
+        // this.audio.nativeElement.src = this.currentEpisode.audio_url;
 
         // this.audio.nativeElement.load();
 
@@ -69,11 +73,11 @@ export class MiniPlayerComponent implements OnInit, AfterViewInit {
   ngOnInit() {}
 
   start() {
-    this.audio.nativeElement.play();
+    // this.audio.nativeElement.play();
   }
 
   ngAfterViewInit(): void {
-    this.currentTime = this.audio.nativeElement.currentTime;
+    // this.currentTime = this.audio.nativeElement.currentTime;
   }
 
   onLoad(event: any) {

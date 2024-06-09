@@ -1,0 +1,9 @@
+<ion-range
+  [pin]="true"
+  [value]="!isDragging ? player.currentTime : timelineBeforeDrag"
+  [max]="player.totalDuration"
+  [pinFormatter]="pinFormatter"
+  (ionChange)="onChange($event)"
+  (ionKnobMoveStart)="onIonKnobMoveStart($event)"
+  (ionKnobMoveEnd)="onIonKnobMoveEnd($event)"
+></ion-range>

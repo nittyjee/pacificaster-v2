@@ -1,5 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { IEpisode } from '../interfaces/episode.interface';
+import { Howl, Howler } from 'howler';
 
 @Injectable({
   providedIn: 'root',
@@ -10,19 +11,57 @@ export class PlayerService {
 
   currentEpisode = signal<IEpisode>({} as IEpisode);
 
+  howl!: Howl;
+
+  totalDuration = 0;
+  currentTime = 0;
+
   play(episode: IEpisode) {
-    if (!this.isPlayerVisible()) {
-      this.isPlayerVisible.set(true);
+    if (!this.howl) {
+      this.initHowl(episode.audio_url);
     }
 
     if (this.currentEpisode().id !== episode.id) {
       this.currentEpisode.set(episode);
+
+      this.howl.unload();
+
+      this.initHowl(episode.audio_url);
     }
+
+    this.howl.play();
 
     this.isPlaying.set(true);
   }
 
+  initHowl(src: string) {
+    this.howl = new Howl({
+      src: [src],
+      html5: true,
+    });
+
+    this.howl.on('load', () => {
+      this.totalDuration = this.howl.duration();
+
+      this.logCurrentTime();
+    });
+
+    this.isPlayerVisible.set(true);
+  }
+
+  logCurrentTime() {
+    setInterval(() => {
+      this.currentTime = this.howl.seek();
+    }, 1000);
+  }
+
+  seek(value: number) {
+    this.howl.seek(value);
+  }
+
   pause(episode: IEpisode) {
+    this.howl.pause();
+
     this.isPlaying.set(false);
   }
 }

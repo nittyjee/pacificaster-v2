@@ -13,6 +13,7 @@ import {
   IonButtons,
   ModalController,
   IonButton,
+  IonIcon,
   IonFooter,
   ViewWillEnter,
   ViewWillLeave,
@@ -22,6 +23,8 @@ import { PlayerService } from 'src/app/services/player.service';
 import { ThumbnailComponent } from '../thumbnail/thumbnail.component';
 import { DatePipe } from '@angular/common';
 import { MiniPlayerComponent } from '../mini-player/mini-player.component';
+import { PlayerTimelineComponent } from '../player-timeline/player-timeline.component';
+import { TimelinePipe } from 'src/app/pipes/timeline.pipe';
 
 @Component({
   selector: 'app-player-modal',
@@ -34,11 +37,14 @@ import { MiniPlayerComponent } from '../mini-player/mini-player.component';
     IonTitle,
     IonContent,
     IonButtons,
+    IonIcon,
     IonButton,
     ThumbnailComponent,
     DatePipe,
     IonFooter,
     MiniPlayerComponent,
+    PlayerTimelineComponent,
+    TimelinePipe,
   ],
 })
 export class PlayerModalComponent implements OnInit, AfterViewInit, OnDestroy {
