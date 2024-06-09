@@ -34,9 +34,7 @@
     [innerHTML]="player.currentEpisode().description"
   ></div>
 
-  <div class="wave">
-    <img src="assets/waveform.png" alt="" />
-  </div>
+  <app-player-waveform></app-player-waveform>
 
   <div class="footer">
     <div class="time">
@@ -47,11 +45,7 @@
     </div>
 
     <div class="buttons">
-      <ion-button size="small" fill="outline" color="light"> 1X </ion-button>
-
-      <ion-button size="small" fill="outline" color="light">
-        <ion-icon name="share-social"></ion-icon>
-      </ion-button>
+      <app-play-button [episode]="player.currentEpisode()"></app-play-button>
     </div>
   </div>
 

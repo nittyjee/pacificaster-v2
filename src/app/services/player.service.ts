@@ -16,6 +16,10 @@ export class PlayerService {
   totalDuration = 0;
   currentTime = 0;
 
+  speed = 1;
+
+  constructor() {}
+
   play(episode: IEpisode) {
     if (!this.howl) {
       this.initHowl(episode.audio_url);
@@ -36,7 +40,7 @@ export class PlayerService {
 
   initHowl(src: string) {
     this.howl = new Howl({
-      src: [src],
+      src: 'assets/audio.mp3',
       html5: true,
     });
 

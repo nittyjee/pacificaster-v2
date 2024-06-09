@@ -25,6 +25,8 @@ import { DatePipe } from '@angular/common';
 import { MiniPlayerComponent } from '../mini-player/mini-player.component';
 import { PlayerTimelineComponent } from '../player-timeline/player-timeline.component';
 import { TimelinePipe } from 'src/app/pipes/timeline.pipe';
+import { PlayerWaveformComponent } from '../player-waveform/player-waveform.component';
+import { PlayButtonComponent } from '../play-button/play-button.component';
 
 @Component({
   selector: 'app-player-modal',
@@ -45,6 +47,8 @@ import { TimelinePipe } from 'src/app/pipes/timeline.pipe';
     MiniPlayerComponent,
     PlayerTimelineComponent,
     TimelinePipe,
+    PlayerWaveformComponent,
+    PlayButtonComponent,
   ],
 })
 export class PlayerModalComponent implements OnInit, AfterViewInit, OnDestroy {
