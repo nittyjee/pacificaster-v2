@@ -41,7 +41,7 @@ export class PlayerWaveformComponent implements OnInit, AfterViewInit {
     const wavesurfer = WaveSurfer.create({
       container: '#waveform',
       waveColor: 'rgb(255, 255, 255)',
-      progressColor: 'rgba(255, 255, 255, .5)',
+      progressColor: 'rgba(255, 255, 255, .4)',
       url: 'assets/audio.mp3',
       //   backend: 'MediaElement',
       //   media: (this.player.howl as any)._sounds[0]._node,
@@ -52,6 +52,7 @@ export class PlayerWaveformComponent implements OnInit, AfterViewInit {
       autoScroll: true,
       hideScrollbar: true,
       cursorWidth: 2,
+      cursorColor: '#3880ff',
       mediaControls: false,
       fetchParams: {
         mode: 'no-cors',

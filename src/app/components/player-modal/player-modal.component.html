@@ -44,9 +44,11 @@
     <div class="footer">
       <div class="time">
         <span
-          >{{ player.currentTime | timeline }} /
-          {{ player.totalDuration | timeline }}</span
+          >{{ player.currentTime | timeline }} -
+          {{ player.totalDuration - player.currentTime | timeline }}</span
         >
+
+        <span> {{ player.totalDuration | timeline }}</span>
       </div>
 
       <div class="buttons">
