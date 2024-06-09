@@ -40,7 +40,7 @@ export class PlayerService {
 
   initHowl(src: string) {
     this.howl = new Howl({
-      src: 'assets/audio.mp3',
+      src: src,
       html5: true,
     });
 

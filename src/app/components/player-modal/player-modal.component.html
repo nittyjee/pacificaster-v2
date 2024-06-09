@@ -32,22 +32,28 @@
   <div
     class="description"
     [innerHTML]="player.currentEpisode().description"
+    [class.expanded]="isDescriptionVisible"
+    (click)="onDescription()"
   ></div>
-
-  <app-player-waveform></app-player-waveform>
-
-  <div class="footer">
-    <div class="time">
-      <span
-        >{{ player.currentTime | timeline }} /
-        {{ player.totalDuration | timeline }}</span
-      >
-    </div>
-
-    <div class="buttons">
-      <app-play-button [episode]="player.currentEpisode()"></app-play-button>
-    </div>
-  </div>
-
-  <app-player-timeline></app-player-timeline>
 </ion-content>
+
+<ion-footer [class.visible]="!isDescriptionVisible">
+  <ion-toolbar>
+    <app-player-waveform></app-player-waveform>
+
+    <div class="footer">
+      <div class="time">
+        <span
+          >{{ player.currentTime | timeline }} /
+          {{ player.totalDuration | timeline }}</span
+        >
+      </div>
+
+      <div class="buttons">
+        <app-play-button [episode]="player.currentEpisode()"></app-play-button>
+      </div>
+    </div>
+
+    <app-player-timeline></app-player-timeline>
+  </ion-toolbar>
+</ion-footer>

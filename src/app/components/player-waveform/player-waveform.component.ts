@@ -42,12 +42,25 @@ export class PlayerWaveformComponent implements OnInit, AfterViewInit {
       container: '#waveform',
       waveColor: 'rgb(255, 255, 255)',
       progressColor: 'rgba(255, 255, 255, .5)',
-      //   url: this.player.currentEpisode().audio_url,
-      backend: 'MediaElement',
-      media: (this.player.howl as any)._sounds[0]._node,
+      url: 'assets/audio.mp3',
+      //   backend: 'MediaElement',
+      //   media: (this.player.howl as any)._sounds[0]._node,
       dragToSeek: true,
       minPxPerSec: 10,
       autoCenter: true,
+      fillParent: true,
+      autoScroll: true,
+      hideScrollbar: true,
+      cursorWidth: 2,
+      mediaControls: false,
+      fetchParams: {
+        mode: 'no-cors',
+      },
+    });
+
+    wavesurfer.on('ready', () => {
+      wavesurfer.setMuted(true);
+      wavesurfer.play();
     });
   }
 

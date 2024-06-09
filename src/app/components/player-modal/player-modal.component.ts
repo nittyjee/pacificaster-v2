@@ -17,6 +17,7 @@ import {
   IonFooter,
   ViewWillEnter,
   ViewWillLeave,
+  IonRange,
 } from '@ionic/angular/standalone';
 
 import { PlayerService } from 'src/app/services/player.service';
@@ -34,6 +35,7 @@ import { PlayButtonComponent } from '../play-button/play-button.component';
   styleUrls: ['./player-modal.component.scss'],
   standalone: true,
   imports: [
+    IonRange,
     IonHeader,
     IonToolbar,
     IonTitle,
@@ -56,6 +58,7 @@ export class PlayerModalComponent implements OnInit, AfterViewInit, OnDestroy {
   public player = inject(PlayerService);
 
   showPlayer = false;
+  isDescriptionVisible = false;
 
   constructor() {}
 
@@ -73,6 +76,10 @@ export class PlayerModalComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ionViewWillLeave() {
     this.showPlayer = false;
+  }
+
+  onDescription() {
+    this.isDescriptionVisible = !this.isDescriptionVisible;
   }
 
   ngOnDestroy() {}
