@@ -19,6 +19,7 @@ import { PlayerService } from 'src/app/services/player.service';
 })
 export class PlayButtonComponent implements OnInit {
   @Input() episode!: IEpisode;
+  @Input() fill: boolean = true;
   @Output() play = new EventEmitter<void>();
   @Output() pause = new EventEmitter<void>();
 
@@ -28,11 +29,14 @@ export class PlayButtonComponent implements OnInit {
 
   ngOnInit() {}
 
-  onPlay() {
+  onPlay(event: Event) {
+    event.stopImmediatePropagation();
     this.player.play(this.episode);
   }
 
-  onPause() {
+  onPause(event: Event) {
+    event.stopImmediatePropagation();
+
     this.player.pause(this.episode);
   }
 }

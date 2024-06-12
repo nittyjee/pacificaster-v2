@@ -44,8 +44,8 @@ export class EpisodeListItemComponent implements OnInit {
   async openModal() {
     const modal = await this.modalCtrl.create({
       component: EpisodeInfoModalComponent,
-      breakpoints: [0, 0.5, 1],
-      initialBreakpoint: 0.5,
+      breakpoints: [0, 0.7, 1],
+      initialBreakpoint: 0.7,
       handleBehavior: 'cycle',
       componentProps: {
         episode: this.episode,

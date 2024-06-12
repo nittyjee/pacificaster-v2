@@ -4,6 +4,8 @@ import {
   IonItem,
   IonLabel,
   IonListHeader,
+  IonIcon,
+  IonButton,
 } from '@ionic/angular/standalone';
 import { IEpisode } from 'src/app/interfaces/episode.interface';
 import { EpisodeListItemComponent } from '../episode-list-item/episode-list-item.component';
@@ -18,11 +20,13 @@ import { EpisodeListItemComponent } from '../episode-list-item/episode-list-item
     IonItem,
     IonList,
     IonListHeader,
+    IonIcon,
+    IonButton,
     EpisodeListItemComponent,
   ],
 })
 export class EpisodeListComponent implements OnInit {
-  @Input() episodes!: IEpisode[];
+  @Input() episodes: IEpisode[] = [];
   constructor() {}
 
   ngOnInit() {}

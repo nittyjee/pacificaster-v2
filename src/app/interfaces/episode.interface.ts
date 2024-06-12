@@ -9,4 +9,5 @@ export interface IEpisode {
   audio_url: string;
   podcast_id: number;
   published_at: string;
+  host_name?: string;
 }

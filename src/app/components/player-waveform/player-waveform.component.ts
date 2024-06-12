@@ -24,6 +24,8 @@ export class PlayerWaveformComponent implements OnInit, AfterViewInit {
 
   arrayBuffer!: ArrayBuffer;
 
+  audioDuration: number = 0;
+
   audioBuffer: any;
 
   moveInterval!: any;
@@ -38,43 +40,42 @@ export class PlayerWaveformComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    const wavesurfer = WaveSurfer.create({
-      container: '#waveform',
-      waveColor: 'rgb(255, 255, 255)',
-      progressColor: 'rgba(255, 255, 255, .4)',
-      url: 'assets/audio.mp3',
-      //   backend: 'MediaElement',
-      //   media: (this.player.howl as any)._sounds[0]._node,
-      dragToSeek: true,
-      minPxPerSec: 10,
-      autoCenter: true,
-      fillParent: true,
-      autoScroll: true,
-      hideScrollbar: true,
-      cursorWidth: 2,
-      cursorColor: '#3880ff',
-      mediaControls: false,
-      fetchParams: {
-        mode: 'no-cors',
-      },
-    });
-
-    wavesurfer.on('ready', () => {
-      wavesurfer.setMuted(true);
-      wavesurfer.play();
-    });
+    // const wavesurfer = WaveSurfer.create({
+    //   container: '#waveform',
+    //   waveColor: 'rgb(255, 255, 255)',
+    //   progressColor: 'rgba(255, 255, 255, .4)',
+    //   url: 'assets/audio.mp3',
+    //   //   backend: 'MediaElement',
+    //   //   media: (this.player.howl as any)._sounds[0]._node,
+    //   dragToSeek: true,
+    //   minPxPerSec: 10,
+    //   autoCenter: true,
+    //   fillParent: true,
+    //   autoScroll: true,
+    //   hideScrollbar: true,
+    //   cursorWidth: 2,
+    //   cursorColor: '#3880ff',
+    //   mediaControls: false,
+    //   fetchParams: {
+    //     mode: 'no-cors',
+    //   },
+    // });
+    // wavesurfer.on('ready', () => {
+    //   wavesurfer.setMuted(true);
+    //   wavesurfer.play();
+    // });
   }
 
   ngAfterViewInit(): void {
-    // this.ctx = this.canvas?.nativeElement?.getContext(
-    //   '2d'
-    // ) as CanvasRenderingContext2D;
-    // this.fetchAudioAsArrayBuffer(this.player.currentEpisode().audio_url).then(
-    //   (arrayBuffer) => {
-    //     this.arrayBuffer = arrayBuffer;
-    //     this.decodeAudioData(arrayBuffer);
-    //   }
-    // );
+    this.ctx = this.canvas?.nativeElement?.getContext(
+      '2d'
+    ) as CanvasRenderingContext2D;
+    this.fetchAudioAsArrayBuffer(this.player.currentEpisode().audio_url).then(
+      (arrayBuffer) => {
+        this.arrayBuffer = arrayBuffer;
+        this.decodeAudioData(arrayBuffer);
+      }
+    );
   }
 
   async fetchAudioAsArrayBuffer(url: string): Promise<ArrayBuffer> {
@@ -105,9 +106,11 @@ export class PlayerWaveformComponent implements OnInit, AfterViewInit {
     const scale = 10;
     const margin = 1;
 
+    this.audioDuration = this.player.howl.duration();
+
     const { width, height } = this.canvas.nativeElement;
 
-    this.canvas.nativeElement.width = audioBuffer.duration * scale;
+    this.canvas.nativeElement.width = this.audioDuration * scale;
     const centerHeight = Math.ceil(height / 2);
     const scaleFactor = (height - margin * 2) / 2;
     const float32Array = audioBuffer.getChannelData(0);
@@ -116,7 +119,7 @@ export class PlayerWaveformComponent implements OnInit, AfterViewInit {
     console.log('buffer size = ', float32Array.length);
     let i = 0;
     const chunkSize = Math.ceil(
-      float32Array.length / (audioBuffer.duration * scale)
+      float32Array.length / (this.audioDuration * scale)
     );
     console.log('Chunk size ', chunkSize);
     while (i < length) {
@@ -129,7 +132,7 @@ export class PlayerWaveformComponent implements OnInit, AfterViewInit {
     console.log('Array length = ', array.length);
     let x = 0;
     for (let k = 0; k < array.length; k += 2) {
-      this.ctx.fillStyle = '#fff';
+      this.ctx.fillStyle = '#76bde7';
       this.ctx.fillRect(
         x,
         centerHeight - array[k] * scaleFactor,
@@ -138,7 +141,7 @@ export class PlayerWaveformComponent implements OnInit, AfterViewInit {
       );
       x += 2;
     }
-
+    this.canvas.nativeElement.setAttribute('style', 'height:100px;opacity:1;');
     this.moveWave();
   }
 
@@ -153,7 +156,7 @@ export class PlayerWaveformComponent implements OnInit, AfterViewInit {
         const margin = currentTime * 10 * this.player.speed;
         this.canvas.nativeElement.setAttribute(
           'style',
-          'transform: translateX(-' + margin + 'px)'
+          'margin-left: -' + margin + 'px'
         );
       }
     }, 100);

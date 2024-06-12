@@ -58,10 +58,33 @@ ion-back-button {
 
 :root {
   /** primary **/
-  --ion-color-primary: #3880ff;
+  --ion-color-primary: #159dea;
   --ion-color-primary-rgb: 56, 128, 255;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
   --ion-color-primary-shade: #3171e0;
   --ion-color-primary-tint: #4c8dff;
+
+  --background-color: #f3f3f3;
+  --background-color-dark: #333333;
+  --radius: 0.8rem;
+}
+
+.podcast-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--ion-color-text);
+}
+
+// Desktop Now Playing Modal
+
+@media screen and (min-width: 768px) {
+  .player-modal {
+    &::part(content) {
+      position: absolute;
+      bottom: 0;
+      width: 100vw;
+      height: 30rem;
+    }
+  }
 }

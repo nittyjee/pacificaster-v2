@@ -1,5 +1,7 @@
-<ion-footer translucent="true">
+<ion-footer>
   <ion-toolbar>
+    <app-player-timeline></app-player-timeline>
+
     <div class="custom-player" (click)="openModal($event)">
       <app-thumbnail
         [src]="player.currentEpisode().image_url"
@@ -8,6 +10,7 @@
       ></app-thumbnail>
 
       <div class="info">
+        <p class="host">{{ player.currentEpisode().host_name }}</p>
         <h3 class="title">{{ player.currentEpisode().title }}</h3>
         <h5 class="time">
           {{ player.currentTime | timeline }} /
@@ -15,9 +18,10 @@
         </h5>
       </div>
 
-      <app-play-button [episode]="player.currentEpisode()"></app-play-button>
+      <app-play-button
+        [episode]="player.currentEpisode()"
+        [fill]="false"
+      ></app-play-button>
     </div>
-
-    <app-player-timeline></app-player-timeline>
   </ion-toolbar>
 </ion-footer>

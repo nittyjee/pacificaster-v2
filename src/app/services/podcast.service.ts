@@ -41,6 +41,7 @@ export class PodcastService {
 
         if (podcast) {
           podcast.episodes = podcast.episodes || [];
+          episode.host_name = podcast.host_name;
           podcast.episodes.push(episode);
         }
       });

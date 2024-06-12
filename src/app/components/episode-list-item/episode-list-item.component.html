@@ -23,5 +23,10 @@
 >
   <div [innerHTML]="episode.description"></div>
 </div>
-
+} @if (!isDescriptionExpanded) {
+<ion-button size="small" fill="clear">
+  <ion-icon slot="icon-only" name="chevron-down-outline"></ion-icon>
+</ion-button>
+} @else {
+<ion-button size="small" fill="clear"> Click to view more </ion-button>
 }

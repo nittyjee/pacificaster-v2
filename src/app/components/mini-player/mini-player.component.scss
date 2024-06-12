@@ -4,30 +4,45 @@
   left: 0;
   width: 100vw;
 
+  ion-toolbar {
+    --background: var(--background-color-dark);
+  }
+
   .custom-player {
     display: flex;
     align-items: center;
-    padding: 0.5rem;
+    padding: 0.25rem;
     gap: 1rem;
     width: 100%;
 
     .info {
       flex: 1;
 
-      .title {
-        font-size: 1rem;
-        font-weight: 500;
-        color: black;
+      .host {
+        font-size: 0.8rem;
+        color: var(--ion-color-primary);
         overflow: hidden;
         display: -webkit-box;
-        -webkit-line-clamp: 2; /* number of lines to show */
-        line-clamp: 2;
+        -webkit-line-clamp: 1; /* number of lines to show */
+        line-clamp: 1;
+        -webkit-box-orient: vertical;
+        margin-bottom: 0.25rem;
+      }
+
+      .title {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: white;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 1; /* number of lines to show */
+        line-clamp: 1;
         -webkit-box-orient: vertical;
       }
 
       .time {
         font-size: 0.8rem;
-        color: black;
+        color: white;
       }
     }
   }

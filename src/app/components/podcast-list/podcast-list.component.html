@@ -20,7 +20,7 @@
 } @else {
 <ion-list>
   @for (podcast of podcasts; track $index) {
-  <ion-item>
+  <ion-item lines="none">
     <app-podcast-list-item
       [podcast]="podcast"
       [inList]="true"

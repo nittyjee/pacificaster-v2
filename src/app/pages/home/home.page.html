@@ -1,4 +1,4 @@
-<ion-split-pane when="sm" contentId="main">
+<ion-split-pane when="md" contentId="main" [disabled]="!showSidebar">
   <ion-menu contentId="main" class="left">
     <ion-router-outlet [animated]="false"></ion-router-outlet>
   </ion-menu>

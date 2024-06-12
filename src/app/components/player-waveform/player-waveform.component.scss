@@ -1,8 +1,20 @@
 :host {
   display: flex;
+  position: relative;
+  height: 100px;
 
-  .waveform {
-    display: block;
-    width: 100%;
+  canvas {
+    position: absolute;
+    left: 50%;
+    transition: margin-left 1s linear;
+  }
+
+  .cursor {
+    position: absolute;
+    width: 2px;
+    height: 100px;
+    background: #fff;
+    z-index: 1;
+    left: 50%;
   }
 }

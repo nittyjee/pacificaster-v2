@@ -1,10 +1,25 @@
 <ion-list>
   <ion-list-header>
-    <ion-label>Episodes</ion-label>
+    <ion-label>Podcast Episodes</ion-label>
   </ion-list-header>
 
-  @for (episode of episodes; track $index) {
-  <ion-item>
+  @if(episodes && episodes.length > 0) {
+  <ion-item lines="none">
+    <a
+      class="rss-link"
+      [href]="
+        'https://user.pacificaster.org/podcasts/' +
+        episodes[0].podcast_id +
+        '/rss.xml'
+      "
+      target="_blank"
+    >
+      <ion-icon name="logo-rss"></ion-icon>Pacificaster RSS feed
+    </a>
+  </ion-item>
+
+  } @for (episode of episodes; track $index) {
+  <ion-item lines="none">
     <app-episode-list-item [episode]="episode"></app-episode-list-item>
   </ion-item>
   }

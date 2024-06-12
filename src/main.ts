@@ -22,7 +22,7 @@ if (environment.production) {
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    provideIonicAngular({ mode: 'ios' }),
+    provideIonicAngular({ mode: 'ios', experimentalCloseWatcher: true }),
     provideRouter(routes, withComponentInputBinding()),
     provideHttpClient(),
   ],

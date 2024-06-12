@@ -14,12 +14,14 @@ import {
   IonFooter,
   IonToolbar,
   ModalController,
+  IonIcon,
 } from '@ionic/angular/standalone';
 import { IEpisode } from 'src/app/interfaces/episode.interface';
 import { PlayerModalComponent } from '../player-modal/player-modal.component';
 import { ThumbnailComponent } from '../thumbnail/thumbnail.component';
 import { PlayerTimelineComponent } from '../player-timeline/player-timeline.component';
 import { TimelinePipe } from 'src/app/pipes/timeline.pipe';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-mini-player',
@@ -27,6 +29,7 @@ import { TimelinePipe } from 'src/app/pipes/timeline.pipe';
   styleUrls: ['./mini-player.component.scss'],
   standalone: true,
   imports: [
+    IonIcon,
     IonRange,
     PlayButtonComponent,
     IonFooter,
@@ -41,6 +44,7 @@ export class MiniPlayerComponent implements OnInit, AfterViewInit {
 
   public player = inject(PlayerService);
   private modalCtrl = inject(ModalController);
+  private router = inject(Router);
 
   currentEpisode: IEpisode = {} as IEpisode;
 
@@ -155,9 +159,15 @@ export class MiniPlayerComponent implements OnInit, AfterViewInit {
 
     const modal = await this.modalCtrl.create({
       component: PlayerModalComponent,
+      cssClass: 'player-modal',
+      canDismiss: true,
     });
     modal.present();
 
-    const { data, role } = await modal.onWillDismiss();
+    this.router.navigate([], { fragment: 'player-modal' });
+
+    modal.onWillDismiss().then(() => {
+      this.router.navigate([], { fragment: '' });
+    });
   }
 }

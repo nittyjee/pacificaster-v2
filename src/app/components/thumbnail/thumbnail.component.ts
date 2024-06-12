@@ -12,7 +12,7 @@ import { IonImg } from '@ionic/angular/standalone';
 export class ThumbnailComponent implements OnInit {
   @Input() src!: string;
   @Input() alt!: string;
-  @Input() size: 'small' | 'medium' | 'auto' = 'auto';
+  @Input() size: 'small' | 'medium' | 'large' | 'auto' = 'auto';
 
   constructor() {}
 

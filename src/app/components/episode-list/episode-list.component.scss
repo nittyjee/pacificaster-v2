@@ -1,7 +1,24 @@
 :host {
   ion-list {
     height: 100%;
-    border-top-left-radius: 1.2rem;
-    border-top-right-radius: 1.2rem;
+
+    ion-item {
+      --padding-start: 0.5rem;
+      --inner-padding-end: 0.5rem;
+    }
+  }
+
+  .rss-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: var(--ion-color-primary);
+    padding: 0.5rem;
+
+    ion-icon {
+      font-size: 1rem;
+    }
   }
 }

@@ -1,4 +1,12 @@
 :host {
+  ion-header {
+    --background: transparent;
+
+    ion-toolbar {
+      --background: transparent;
+      --border-color: transparent;
+    }
+  }
   ion-footer {
     --background: transparent;
 
@@ -25,7 +33,7 @@
     width: 100%;
     height: 100%;
     z-index: -1;
-    opacity: 0.5;
+    opacity: 1;
 
     img {
       width: 100%;
@@ -40,73 +48,109 @@
       position: absolute;
       top: 0;
       left: 0;
-      backdrop-filter: blur(20px);
     }
   }
-  .info {
+
+  .pause-overlay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    opacity: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #501212;
+    opacity: 0.6;
+
+    ion-icon {
+      width: 100%;
+      height: 100%;
+      color: white;
+    }
+  }
+
+  .modal-content {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-evenly;
+    height: 100%;
     gap: 1rem;
 
-    .title  {
+    .backdrop {
+      background-color: rgba(56, 58, 62, 0.52);
+      padding: 0.5rem;
+      border-radius: var(--radius);
+      color: white;
+      width: fit-content;
+      text-align: center;
+    }
+
+    .title {
       display: flex;
       flex-direction: column;
+      justify-content: center;
+      gap: 0.5rem;
 
-      span {
-        font-size: 0.8rem;
-        opacity: 0.7;
+      h2 {
+        font-size: 1.6rem;
+        font-weight: 700;
+      }
+
+      h3 {
+        font-size: 1.4rem;
+        font-weight: 500;
       }
     }
-  }
 
-  .description {
-    margin-top: 1rem;
-    padding-bottom: 4rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+    .times {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
 
-    font-size: 1rem;
-    overflow: hidden;
-    height: 2rem;
-    line-height: 1;
-    transition: height 0.1s ease-out;
+      .top {
+        display: flex;
+        gap: 0.5rem;
+      }
 
-    &.expanded {
-      height: calc(100% + 4rem);
+      span {
+        font-size: 1.4rem;
+        font-weight: 500;
+      }
     }
-  }
-
-  app-player-waveform {
-    // visibility: hidden;
-
-    // &.visible {
-    //   visibility: visible;
-    // }
   }
 
   .footer {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
 
-    .time {
+    .tools {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .buttons {
-      display: flex;
-      gap: 1rem;
+      gap: 0.5rem;
 
       ion-button {
-        flex-shrink: 0;
+        --border-color: var(--ion-color-primary);
+        --border-width: 1px;
+        --border-style: solid;
+        --background: white;
+        --color: var(--ion-color-primary);
+        font-size: 1.2rem;
       }
 
-      ion-icon {
-        color: white;
+      //   .speed-btn {
+      //     --padding-start: 1rem;
+      //     --padding-end: 1rem;
+      //   }
+    }
+
+    app-play-button {
+      ion-button {
+        font-size: 1.2rem;
       }
     }
   }

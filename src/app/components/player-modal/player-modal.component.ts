@@ -15,8 +15,6 @@ import {
   IonButton,
   IonIcon,
   IonFooter,
-  ViewWillEnter,
-  ViewWillLeave,
   IonRange,
 } from '@ionic/angular/standalone';
 
@@ -28,6 +26,7 @@ import { PlayerTimelineComponent } from '../player-timeline/player-timeline.comp
 import { TimelinePipe } from 'src/app/pipes/timeline.pipe';
 import { PlayerWaveformComponent } from '../player-waveform/player-waveform.component';
 import { PlayButtonComponent } from '../play-button/play-button.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-player-modal',
@@ -56,13 +55,25 @@ import { PlayButtonComponent } from '../play-button/play-button.component';
 export class PlayerModalComponent implements OnInit, AfterViewInit, OnDestroy {
   private modalCtrl = inject(ModalController);
   public player = inject(PlayerService);
+  private route = inject(ActivatedRoute);
 
   showPlayer = false;
   isDescriptionVisible = false;
+  showPauseOverlay = false;
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.route.fragment.subscribe((fragment: string | null) => {
+      if (fragment === null) {
+        // Fragment has been removed
+        console.log('Fragment removed');
+
+        this.cancel();
+        // Add your logic here
+      }
+    });
+  }
 
   ionViewWillEnter() {
     this.showPlayer = true;
@@ -83,4 +94,14 @@ export class PlayerModalComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {}
+
+  onClick() {
+    if (this.player.howl.playing()) {
+      this.player.howl.pause();
+      this.showPauseOverlay = true;
+    } else {
+      this.player.howl.play();
+      this.showPauseOverlay = false;
+    }
+  }
 }

@@ -1,11 +1,13 @@
-<ion-header collapse="fade">
+<ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button color="medium" (click)="cancel()">Close</ion-button>
+      <ion-button (click)="cancel()" fill="clear">
+        <ion-icon slot="icon-only" name="chevron-down-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content [fullscreen]="true" class="ion-padding">
+<ion-content [fullscreen]="true" class="ion-padding" (click)="onClick()">
   <div class="background">
     <img
       [src]="player.currentEpisode().image_url"
@@ -14,45 +16,43 @@
     <div class="overlay"></div>
   </div>
 
-  <div class="info">
-    <app-thumbnail
-      [src]="player.currentEpisode().image_url"
-      [alt]="player.currentEpisode().title"
-      size="medium"
-    ></app-thumbnail>
+  @if (showPauseOverlay) {
+  <div class="pause-overlay">
+    <ion-icon name="play-circle"></ion-icon>
+  </div>
+  }
 
-    <div class="title">
-      <h2>{{ player.currentEpisode().title }}</h2>
-      <span>{{
-        player.currentEpisode().published_at | date : "dd MMM YYYY"
-      }}</span>
+  <div class="modal-content">
+    <div class="title backdrop">
+      <h2 class="">{{ player.currentEpisode().title }}</h2>
+      <h3 class="">{{ player.currentEpisode().host_name }}</h3>
+    </div>
+
+    <app-player-waveform></app-player-waveform>
+
+    <div class="times">
+      <div class="top">
+        <span class="backdrop">{{ player.currentTime | timeline }}</span>
+        <span class="backdrop">
+          {{ player.totalDuration - player.currentTime | timeline }}</span
+        >
+      </div>
+
+      <span class="backdrop"> {{ player.totalDuration | timeline }}</span>
     </div>
   </div>
-
-  <div
-    class="description"
-    [innerHTML]="player.currentEpisode().description"
-    [class.expanded]="isDescriptionVisible"
-    (click)="onDescription()"
-  ></div>
 </ion-content>
 
 <ion-footer [class.visible]="!isDescriptionVisible">
   <ion-toolbar>
-    <app-player-waveform></app-player-waveform>
-
     <div class="footer">
-      <div class="time">
-        <span
-          >{{ player.currentTime | timeline }} -
-          {{ player.totalDuration - player.currentTime | timeline }}</span
-        >
-
-        <span> {{ player.totalDuration | timeline }}</span>
-      </div>
-
-      <div class="buttons">
-        <app-play-button [episode]="player.currentEpisode()"></app-play-button>
+      <div class="tools">
+        <ion-button shape="round" fill="solid">
+          <ion-icon slot="icon-only" name="speedometer-outline"></ion-icon>
+        </ion-button>
+        <ion-button shape="round" fill="solid">
+          <ion-icon slot="icon-only" name="share-social-outline"></ion-icon>
+        </ion-button>
       </div>
     </div>
 

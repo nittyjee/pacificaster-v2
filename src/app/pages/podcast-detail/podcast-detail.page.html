@@ -9,35 +9,31 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div class="background">
-    <img [src]="podcast.image_url" [alt]="podcast.title" />
-    <div class="overlay"></div>
-  </div>
-
   <div class="podcast-info ion-padding">
-    <div class="logo">
+    <div class="top">
       <app-thumbnail
         [src]="podcast.image_url"
         [alt]="podcast.title"
         [size]="'medium'"
       ></app-thumbnail>
+
+      <div class="right">
+        <h2 class="podcast-title">{{podcast.title}}</h2>
+
+        <div class="links">
+          @for (item of podcast.social; track $index) { @if ( item.url ) {
+          <a [href]="item.type === 'mail' ? 'mailto:' + item.url : item.url">
+            <ion-icon [name]="item.icon"></ion-icon> </a
+          >} }
+        </div>
+      </div>
     </div>
 
-    <div class="title">
+    <p class="description">{{podcast.description_short}}</p>
+
+    <div class="bottom">
+      <p>Hosted by:</p>
       <h6>{{podcast.host_name}}</h6>
-
-      <h2>{{podcast.title}}</h2>
-    </div>
-
-    <p class="description" (click)="onDescription()">
-      {{podcast.description_short}}
-    </p>
-
-    <div class="links">
-      @for (item of podcast.social; track $index) { @if ( item.url ) {
-      <a [href]="item.type === 'mail' ? 'mailto:' + item.url : item.url">
-        <ion-icon [name]="item.icon"></ion-icon> </a
-      >} }
     </div>
   </div>
 

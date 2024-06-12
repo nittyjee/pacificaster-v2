@@ -1,9 +1,29 @@
 @if (player.isPlaying() && player.currentEpisode().id === episode.id) {
-<ion-button (click)="onPause()" shape="round" color="dark" size="medium">
-  <ion-icon slot="icon-only" name="pause"></ion-icon>
+<ion-button
+  (click)="onPause($event)"
+  shape="round"
+  [color]="fill ? 'primary' : 'light'"
+  [size]="fill ? 'medium' : 'large'"
+  [fill]="fill ? 'solid' : 'clear'"
+>
+  <ion-icon
+    slot="icon-only"
+    name="pause"
+    [size]="fill ? 'medium' : 'large'"
+  ></ion-icon>
 </ion-button>
 } @else {
-<ion-button (click)="onPlay()" shape="round" color="dark" size="medium">
-  <ion-icon slot="icon-only" name="play"></ion-icon>
+<ion-button
+  (click)="onPlay($event)"
+  shape="round"
+  [color]="fill ? 'medium' : 'light'"
+  [size]="fill ? 'medium' : 'large'"
+  [fill]="fill ? 'solid' : 'clear'"
+>
+  <ion-icon
+    slot="icon-only"
+    name="play"
+    [size]="fill ? 'medium' : 'large'"
+  ></ion-icon>
 </ion-button>
 }
