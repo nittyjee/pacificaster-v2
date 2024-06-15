@@ -1,7 +1,5 @@
 <ion-footer>
   <ion-toolbar>
-    <app-player-timeline></app-player-timeline>
-
     <div class="custom-player" (click)="openModal($event)">
       <app-thumbnail
         [src]="player.currentEpisode().image_url"

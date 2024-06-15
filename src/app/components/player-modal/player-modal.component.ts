@@ -57,8 +57,6 @@ export class PlayerModalComponent implements OnInit, AfterViewInit, OnDestroy {
   public player = inject(PlayerService);
   private route = inject(ActivatedRoute);
 
-  showPlayer = false;
-  isDescriptionVisible = false;
   showPauseOverlay = false;
 
   constructor() {}
@@ -66,31 +64,15 @@ export class PlayerModalComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     this.route.fragment.subscribe((fragment: string | null) => {
       if (fragment === null) {
-        // Fragment has been removed
-        console.log('Fragment removed');
-
         this.cancel();
-        // Add your logic here
       }
     });
-  }
-
-  ionViewWillEnter() {
-    this.showPlayer = true;
   }
 
   ngAfterViewInit(): void {}
 
   cancel() {
     return this.modalCtrl.dismiss(null, 'cancel');
-  }
-
-  ionViewWillLeave() {
-    this.showPlayer = false;
-  }
-
-  onDescription() {
-    this.isDescriptionVisible = !this.isDescriptionVisible;
   }
 
   ngOnDestroy() {}

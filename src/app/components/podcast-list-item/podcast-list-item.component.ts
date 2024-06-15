@@ -34,7 +34,6 @@ export class PodcastListItemComponent implements OnInit {
   ngOnInit() {}
 
   onClick() {
-    console.log('clicked');
     const isDesktop = window.innerWidth > 768;
 
     if (isDesktop) {

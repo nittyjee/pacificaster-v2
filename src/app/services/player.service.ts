@@ -60,7 +60,7 @@ export class PlayerService {
   }
 
   seek(value: number) {
-    this.howl.seek(value);
+    this.howl.seek(this.currentTime + value);
   }
 
   pause(episode: IEpisode) {

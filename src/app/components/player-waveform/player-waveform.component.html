@@ -1,5 +1,15 @@
-<!-- <div class="waveform" id="waveform"></div> -->
+<div class="waveform">
+  <div #waveformContainer class="waveform-container">
+    <canvas #canvas height="100"></canvas>
+  </div>
 
-<canvas #canvas height="100"></canvas>
+  <span class="cursor"></span>
+</div>
 
-<span class="cursor"></span>
+<div class="times" [class.visible]="isSeeking">
+  <span class="backdrop">{{ player.currentTime + seek | timeline }}</span>
+
+  <span class="line"></span>
+
+  <span class="backdrop"> {{ seek }} seconds</span>
+</div>

@@ -1,20 +1,63 @@
 :host {
   display: flex;
-  position: relative;
-  height: 100px;
+  flex-direction: column;
+  gap: 1rem;
 
-  canvas {
-    position: absolute;
-    left: 50%;
-    transition: margin-left 1s linear;
+  .waveform {
+    position: relative;
+
+    .waveform-container {
+      position: relative;
+      height: 100px;
+      display: block;
+      //   transition: transform 1s linear;
+
+      canvas {
+        position: absolute;
+        left: 50%;
+        transition: transform 1s linear;
+      }
+    }
+
+    .cursor {
+      position: absolute;
+      width: 2px;
+      height: 100px;
+      background: #fff;
+      z-index: 1;
+      left: 50%;
+      top: 0;
+    }
   }
 
-  .cursor {
-    position: absolute;
-    width: 2px;
-    height: 100px;
-    background: #fff;
-    z-index: 1;
-    left: 50%;
+  .times {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    visibility: hidden;
+
+    &.visible {
+      visibility: visible;
+    }
+
+    span {
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    .line {
+      display: block;
+      width: 2px;
+      background-color: rgba(56, 58, 62, 0.52);
+    }
+  }
+
+  .backdrop {
+    background-color: rgba(56, 58, 62, 0.52);
+    padding: 0.5rem;
+    border-radius: var(--radius);
+    color: white;
+    width: fit-content;
+    text-align: center;
   }
 }

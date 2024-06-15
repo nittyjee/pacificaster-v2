@@ -48,8 +48,6 @@ export class HomePage implements OnInit {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: any) => {
-        console.log('NavigationEnd event:', event);
-
         if (event.url.includes('podcast-sidebar')) {
           this.showSidebar = true;
         } else {

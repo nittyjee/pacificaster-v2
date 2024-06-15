@@ -47,6 +47,7 @@ export class EpisodeListItemComponent implements OnInit {
       breakpoints: [0, 0.7, 1],
       initialBreakpoint: 0.7,
       handleBehavior: 'cycle',
+      cssClass: 'episode-info-modal',
       componentProps: {
         episode: this.episode,
       },
@@ -59,7 +60,6 @@ export class EpisodeListItemComponent implements OnInit {
     });
 
     modal.addEventListener('ionModalDidDismiss', () => {
-      console.log('ionModalDidDismiss');
       this.isModalOpen = false;
     });
 

@@ -33,6 +33,9 @@
     <div class="times">
       <div class="top">
         <span class="backdrop">{{ player.currentTime | timeline }}</span>
+
+        <span class="line"></span>
+
         <span class="backdrop">
           {{ player.totalDuration - player.currentTime | timeline }}</span
         >
@@ -43,7 +46,7 @@
   </div>
 </ion-content>
 
-<ion-footer [class.visible]="!isDescriptionVisible">
+<ion-footer>
   <ion-toolbar>
     <div class="footer">
       <div class="tools">

@@ -10,12 +10,6 @@
   ion-footer {
     --background: transparent;
 
-    visibility: hidden;
-
-    &.visible {
-      visibility: visible;
-    }
-
     ion-toolbar {
       --background: transparent;
       --border-color: transparent;
@@ -115,11 +109,23 @@
       .top {
         display: flex;
         gap: 0.5rem;
+
+        span {
+          font-size: 1.4rem;
+          font-weight: 500;
+        }
       }
 
       span {
-        font-size: 1.4rem;
+        font-size: 1rem;
         font-weight: 500;
+      }
+
+      .line {
+        display: block;
+        width: 2px;
+        height: 100%;
+        background-color: rgba(56, 58, 62, 0.52);
       }
     }
   }
