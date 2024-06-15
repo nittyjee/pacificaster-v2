@@ -1,10 +1,5 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
-import {
-  ActivatedRoute,
-  NavigationEnd,
-  Router,
-  RouterEvent,
-} from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import {
   IonHeader,
   IonToolbar,
@@ -13,6 +8,10 @@ import {
   IonSplitPane,
   IonMenu,
   IonRouterOutlet,
+  IonButtons,
+  IonButton,
+  IonIcon,
+  IonMenuButton,
 } from '@ionic/angular/standalone';
 import { filter } from 'rxjs';
 import { PodcastListComponent } from 'src/app/components/podcast-list/podcast-list.component';
@@ -24,6 +23,7 @@ import { PodcastService } from 'src/app/services/podcast.service';
   styleUrls: ['home.page.scss'],
   standalone: true,
   imports: [
+    IonButtons,
     IonSplitPane,
     IonMenu,
     IonHeader,
@@ -32,6 +32,10 @@ import { PodcastService } from 'src/app/services/podcast.service';
     IonContent,
     PodcastListComponent,
     IonRouterOutlet,
+    IonButtons,
+    IonButton,
+    IonIcon,
+    IonMenuButton,
   ],
 })
 export class HomePage implements OnInit {

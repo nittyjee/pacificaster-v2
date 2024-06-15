@@ -33,9 +33,10 @@ export class PlayerService {
       this.initHowl(episode.audio_url);
     }
 
-    this.howl.play();
-
-    this.isPlaying.set(true);
+    if (!this.howl.playing()) {
+      this.howl.play();
+      this.isPlaying.set(true);
+    }
   }
 
   initHowl(src: string) {
@@ -63,9 +64,18 @@ export class PlayerService {
     this.howl.seek(this.currentTime + value);
   }
 
-  pause(episode: IEpisode) {
-    this.howl.pause();
+  pause() {
+    if (this.howl.playing()) {
+      this.howl.pause();
+      this.isPlaying.set(false);
+    }
+  }
 
-    this.isPlaying.set(false);
+  contuniue() {
+    if (!this.howl.playing()) {
+      this.howl.play();
+
+      this.isPlaying.set(true);
+    }
   }
 }

@@ -2,11 +2,20 @@
   display: block;
 
   .site-logo {
-    height: 4rem;
+    height: 6rem;
     object-fit: contain;
 
     &.mini {
       height: 2rem;
+    }
+  }
+
+  .right {
+    display: flex;
+    justify-content: center;
+
+    .page-content {
+      max-width: 900px;
     }
   }
 }

@@ -20,6 +20,7 @@ import {
   IonPopover,
   IonSelect,
   IonSelectOption,
+  Platform,
 } from '@ionic/angular/standalone';
 
 import { PlayerService } from 'src/app/services/player.service';
@@ -71,7 +72,14 @@ export class PlayerModalComponent implements OnInit, AfterViewInit, OnDestroy {
   speedOptions = [1, 1.25, 1.5, 2];
   selectedSpeed = this.speedOptions[0];
 
-  constructor(private alertController: AlertController) {}
+  constructor(
+    private alertController: AlertController,
+    private platform: Platform
+  ) {
+    this.platform.backButton.subscribeWithPriority(10, () => {
+      this.cancel();
+    });
+  }
 
   ngOnInit() {
     this.route.fragment.subscribe((fragment: string | null) => {
@@ -89,12 +97,13 @@ export class PlayerModalComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() {}
 
-  onClick() {
-    if (this.player.howl.playing()) {
-      this.player.howl.pause();
+  onTogglePlay(event: Event) {
+    console.log('onTogglePlay');
+    if (this.player.isPlaying()) {
+      this.player.pause();
       this.showPauseOverlay = true;
     } else {
-      this.player.howl.play();
+      this.player.contuniue();
       this.showPauseOverlay = false;
     }
   }

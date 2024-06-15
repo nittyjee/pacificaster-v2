@@ -41,16 +41,11 @@ export class PlayerWaveformComponent implements OnInit, AfterViewInit {
 
   translationOrigin!: number;
 
-  private audioContext: AudioContext;
-
   constructor(
     private el: ElementRef,
     private gestureCtrl: GestureController,
     private cdRef: ChangeDetectorRef
-  ) {
-    this.audioContext = new (window.AudioContext ||
-      (window as any).webkitAudioContext)();
-  }
+  ) {}
 
   ngOnInit() {}
 
@@ -66,6 +61,7 @@ export class PlayerWaveformComponent implements OnInit, AfterViewInit {
       onStart: () => this.onStart(),
       onMove: (detail) => this.onMove(detail),
       onEnd: () => this.onEnd(),
+      threshold: 0,
       gestureName: 'example',
     });
 
@@ -130,7 +126,7 @@ export class PlayerWaveformComponent implements OnInit, AfterViewInit {
       this.canvas.nativeElement.getAttribute('position') ?? '0'
     );
 
-    this.player.howl.pause();
+    this.player.pause();
     clearInterval(this.moveInterval);
 
     this.cdRef.detectChanges();
@@ -144,13 +140,6 @@ export class PlayerWaveformComponent implements OnInit, AfterViewInit {
     this.canvas.nativeElement.style.transform =
       'translateX(-' + translation + 'px)';
 
-    console.log({
-      origin: this.translationOrigin,
-      delta: deltaX,
-      translation: translation,
-      canvas: this.canvas.nativeElement.style.transform,
-    });
-
     this.cdRef.detectChanges();
   }
 
@@ -158,7 +147,7 @@ export class PlayerWaveformComponent implements OnInit, AfterViewInit {
     this.player.seek(this.seek);
 
     this.isSeeking = false;
-    this.player.howl.play();
+    this.player.contuniue();
     this.moveWave();
     this.cdRef.detectChanges();
   }

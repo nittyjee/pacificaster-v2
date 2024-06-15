@@ -1,7 +1,17 @@
 <ion-split-pane when="md" contentId="main" [disabled]="!showSidebar">
-  <ion-menu contentId="main" class="left">
+  <ion-menu
+    side="start"
+    menuId="sidebar"
+    type="reveal"
+    contentId="main"
+    class="left"
+  >
     <ion-router-outlet [animated]="false"></ion-router-outlet>
   </ion-menu>
+
+  <!-- <ion-menu side="end" menuId="menu" type="overlay" contentId="main">
+    test
+  </ion-menu> -->
 
   <div id="main" class="right ion-page">
     <ion-header [translucent]="true">
@@ -13,6 +23,10 @@
             alt=""
           />
         </ion-title>
+
+        <!-- <ion-buttons slot="end">
+          <ion-menu-button menu="end"></ion-menu-button>
+        </ion-buttons> -->
       </ion-toolbar>
     </ion-header>
 
@@ -20,7 +34,11 @@
       <ion-header collapse="condense">
         <ion-toolbar>
           <ion-title size="large">
-            <img class="site-logo" src="assets/images/main-logo.png" alt="" />
+            <img
+              class="site-logo"
+              src="assets/images/main-logo-big.png"
+              alt=""
+            />
           </ion-title>
         </ion-toolbar>
       </ion-header>

@@ -36,7 +36,6 @@ export class PlayButtonComponent implements OnInit {
 
   onPause(event: Event) {
     event.stopImmediatePropagation();
-
-    this.player.pause(this.episode);
+    this.player.pause();
   }
 }
