@@ -15,10 +15,10 @@
 </div>
 
 @if (!isList) {
-<ion-grid>
+<ion-grid [fixed]="true">
   <ion-row>
     @for (podcast of podcasts; track $index) {
-    <ion-col size="6" size-md="4" size-lg="3">
+    <ion-col size="6" size-md="4">
       <app-podcast-list-item [podcast]="podcast"></app-podcast-list-item>
     </ion-col>
     }

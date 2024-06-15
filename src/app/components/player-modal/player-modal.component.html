@@ -55,12 +55,25 @@
   <ion-toolbar>
     <div class="footer">
       <div class="tools">
-        <ion-button shape="round" fill="solid">
-          <ion-icon slot="icon-only" name="speedometer-outline"></ion-icon>
-        </ion-button>
-        <ion-button shape="round" fill="solid">
-          <ion-icon slot="icon-only" name="share-social-outline"></ion-icon>
-        </ion-button>
+        <div class="tool">
+          <ion-select
+            interface="popover"
+            [(ngModel)]="selectedSpeed"
+            (ngModelChange)="onSpeedChange($event)"
+          >
+            @for (item of speedOptions; track $index) {
+            <ion-select-option [value]="item">{{ item }}X</ion-select-option>
+            }
+          </ion-select>
+        </div>
+
+        <div class="tool">
+          <ion-icon
+            slot="icon-only"
+            name="share-social-outline"
+            (click)="onShare()"
+          ></ion-icon>
+        </div>
       </div>
     </div>
 

@@ -16,6 +16,10 @@ import {
   IonIcon,
   IonFooter,
   IonRange,
+  AlertController,
+  IonPopover,
+  IonSelect,
+  IonSelectOption,
 } from '@ionic/angular/standalone';
 
 import { PlayerService } from 'src/app/services/player.service';
@@ -27,6 +31,7 @@ import { TimelinePipe } from 'src/app/pipes/timeline.pipe';
 import { PlayerWaveformComponent } from '../player-waveform/player-waveform.component';
 import { PlayButtonComponent } from '../play-button/play-button.component';
 import { ActivatedRoute } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-player-modal',
@@ -50,6 +55,10 @@ import { ActivatedRoute } from '@angular/router';
     TimelinePipe,
     PlayerWaveformComponent,
     PlayButtonComponent,
+    IonPopover,
+    IonSelect,
+    IonSelectOption,
+    FormsModule,
   ],
 })
 export class PlayerModalComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -59,7 +68,10 @@ export class PlayerModalComponent implements OnInit, AfterViewInit, OnDestroy {
 
   showPauseOverlay = false;
 
-  constructor() {}
+  speedOptions = [1, 1.25, 1.5, 2];
+  selectedSpeed = this.speedOptions[0];
+
+  constructor(private alertController: AlertController) {}
 
   ngOnInit() {
     this.route.fragment.subscribe((fragment: string | null) => {
@@ -85,5 +97,30 @@ export class PlayerModalComponent implements OnInit, AfterViewInit, OnDestroy {
       this.player.howl.play();
       this.showPauseOverlay = false;
     }
+  }
+
+  onShare() {
+    var url = window.location.href;
+
+    // Copy the text inside the text field
+    navigator.clipboard.writeText(url);
+
+    // Alert the copied text
+    this.presentAlert(url);
+  }
+
+  async presentAlert(message: string) {
+    const alert = await this.alertController.create({
+      header: 'Copied the share url',
+      message: message,
+      buttons: ['Close'],
+    });
+
+    await alert.present();
+  }
+
+  onSpeedChange(speed: number) {
+    this.player.speed = speed;
+    this.player.howl.rate(speed);
   }
 }
