@@ -39,6 +39,8 @@ export class PlayerWaveformComponent implements OnInit, AfterViewInit {
   isSeeking = false;
   seek = 0;
 
+  translationOrigin!: number;
+
   private audioContext: AudioContext;
 
   constructor(
@@ -100,10 +102,6 @@ export class PlayerWaveformComponent implements OnInit, AfterViewInit {
       );
       x += 2;
     }
-    this.waveformContainer.nativeElement.setAttribute(
-      'style',
-      'height:100px;opacity:1;'
-    );
     this.moveWave();
   }
 
@@ -112,26 +110,46 @@ export class PlayerWaveformComponent implements OnInit, AfterViewInit {
     this.moveInterval = setInterval(() => {
       if (!this.isSeeking) {
         // Only move the waveform when not seeking
-        const margin = this.player.currentTime * 10 * this.player.speed * -1;
+        const margin = Math.floor(
+          this.player.currentTime * 10 * this.player.speed
+        );
         // this.waveformContainer.nativeElement.style.marginLeft = margin + 'px';
 
+        this.canvas.nativeElement.setAttribute('position', margin.toString());
+
         this.canvas.nativeElement.style.transform =
-          'translateX(' + margin + 'px)';
+          'translateX(-' + margin + 'px)';
       }
-    }, 100);
+    }, 1000);
   }
 
   private onStart() {
     this.isSeeking = true;
+
+    this.translationOrigin = parseInt(
+      this.canvas.nativeElement.getAttribute('position') ?? '0'
+    );
+
     this.player.howl.pause();
+    clearInterval(this.moveInterval);
+
     this.cdRef.detectChanges();
   }
 
   private onMove({ deltaX, currentX, velocityX }: GestureDetail) {
-    this.seek = Math.floor(deltaX / 10) * -1;
+    this.seek = Math.floor((deltaX * -1) / 10);
 
-    this.waveformContainer.nativeElement.style.transform =
-      'translateX(' + deltaX + 'px)';
+    let translation = this.translationOrigin + deltaX * -1;
+
+    this.canvas.nativeElement.style.transform =
+      'translateX(-' + translation + 'px)';
+
+    console.log({
+      origin: this.translationOrigin,
+      delta: deltaX,
+      translation: translation,
+      canvas: this.canvas.nativeElement.style.transform,
+    });
 
     this.cdRef.detectChanges();
   }
@@ -139,10 +157,9 @@ export class PlayerWaveformComponent implements OnInit, AfterViewInit {
   private onEnd() {
     this.player.seek(this.seek);
 
-    this.player.howl.play();
-
     this.isSeeking = false;
-
+    this.player.howl.play();
+    this.moveWave();
     this.cdRef.detectChanges();
   }
 }

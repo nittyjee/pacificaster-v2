@@ -76,7 +76,7 @@ export class PodcastService {
         {
           type: 'website',
           url: data.field_website_sml[0]?.platform_values.website.value,
-          icon: 'home',
+          icon: 'home-outline',
         },
         {
           type: 'rss',
@@ -112,12 +112,12 @@ export class PodcastService {
         {
           type: 'mail',
           url: data.field_email_sml[0]?.platform_values.email.value,
-          icon: 'mail',
+          icon: 'mail-outline',
         },
         {
           type: 'donation',
           url: data.field_donation_link[0]?.value,
-          icon: 'cash',
+          icon: 'cash-outline',
         },
       ],
     };

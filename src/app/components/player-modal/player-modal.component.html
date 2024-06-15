@@ -7,7 +7,12 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content [fullscreen]="true" class="ion-padding" (click)="onClick()">
+<ion-content
+  [fullscreen]="true"
+  class="ion-padding"
+  scrollY="false"
+  (click)="onClick()"
+>
   <div class="background">
     <img
       [src]="player.currentEpisode().image_url"

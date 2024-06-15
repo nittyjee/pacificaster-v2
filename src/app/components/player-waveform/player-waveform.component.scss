@@ -15,7 +15,10 @@
       canvas {
         position: absolute;
         left: 50%;
-        transition: transform 1s linear;
+
+        &.animation {
+          transition: transform 1s linear;
+        }
       }
     }
 

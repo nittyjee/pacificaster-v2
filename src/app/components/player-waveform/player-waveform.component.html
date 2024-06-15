@@ -1,6 +1,6 @@
 <div class="waveform">
   <div #waveformContainer class="waveform-container">
-    <canvas #canvas height="100"></canvas>
+    <canvas #canvas height="100" [class.animation]="!isSeeking"></canvas>
   </div>
 
   <span class="cursor"></span>
