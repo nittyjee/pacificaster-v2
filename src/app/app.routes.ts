@@ -1,6 +1,4 @@
-import { inject } from '@angular/core';
 import { Routes } from '@angular/router';
-import { ScreenSizeService } from './services/screen-size.service';
 
 const childRoutes: Routes = [
   {
@@ -42,11 +40,6 @@ const childRoutes: Routes = [
 
 export const routes: Routes = [
   {
-    path: '',
-    redirectTo: 'mobile',
-    pathMatch: 'full',
-  },
-  {
     path: 'mobile',
 
     loadComponent: () =>
@@ -61,27 +54,3 @@ export const routes: Routes = [
     children: childRoutes,
   },
 ];
-
-export function getRoutes(screenSizeService: ScreenSizeService) {
-  [
-    {
-      path: '',
-      redirectTo: 'mobile',
-      pathMatch: 'full',
-    },
-    {
-      path: 'mobile',
-
-      loadComponent: () =>
-        import('./layouts/mobile/mobile.layout').then((m) => m.MobileLayout),
-
-      children: childRoutes,
-    },
-    {
-      path: 'desktop',
-      loadComponent: () =>
-        import('./layouts/desktop/desktop.layout').then((m) => m.DesktopLayout),
-      children: childRoutes,
-    },
-  ];
-}
