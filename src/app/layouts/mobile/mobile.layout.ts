@@ -30,17 +30,17 @@ export class MobileLayout implements OnInit {
     {
       title: 'About',
       icon: 'information-circle-outline',
-      link: '/about',
+      link: '/mobile/about',
     },
     {
       title: 'Contacts',
       icon: 'call-outline',
-      link: '/contacts',
+      link: '/mobile/contacts',
     },
     {
       title: 'Apply',
       icon: 'document-outline',
-      link: '/apply',
+      link: '/mobile/apply',
     },
   ];
   constructor() {}
