@@ -7,10 +7,12 @@ import {
 import { PlayerService } from './services/player.service';
 import { MiniPlayerComponent } from './components/mini-player/mini-player.component';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
+import { TabbarComponent } from './components/tabbar/tabbar.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
+  styleUrls: ['app.component.scss'],
   standalone: true,
   imports: [
     IonSplitPane,
@@ -18,23 +20,24 @@ import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
     IonRouterOutlet,
     RouterOutlet,
     MiniPlayerComponent,
+    TabbarComponent,
   ],
 })
 export class AppComponent implements OnInit {
   public player = inject(PlayerService);
 
-  private route = inject(ActivatedRoute);
   private router = inject(Router);
+
+  isMobile = window.innerWidth < 768;
 
   constructor() {}
 
   ngOnInit(): void {
-    console.log(window.location);
     if (window.location.pathname === '/') {
-      if (window.innerWidth > 768) {
-        this.router.navigate(['/desktop']);
-      } else {
+      if (this.isMobile) {
         this.router.navigate(['/mobile']);
+      } else {
+        this.router.navigate(['/desktop']);
       }
     }
   }

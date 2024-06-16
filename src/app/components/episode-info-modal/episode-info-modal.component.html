@@ -4,7 +4,7 @@
       <app-thumbnail
         [src]="episode.image_url"
         [alt]="episode.title"
-        size="medium"
+        [size]="isMobile ? 'medium' : 'large'"
       ></app-thumbnail>
 
       <div class="right">

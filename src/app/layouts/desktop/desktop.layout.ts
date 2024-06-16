@@ -8,6 +8,10 @@ import {
   IonToolbar,
   IonTitle,
   IonContent,
+  IonTabs,
+  IonTabBar,
+  IonTabButton,
+  IonIcon,
 } from '@ionic/angular/standalone';
 import { filter } from 'rxjs';
 
@@ -24,6 +28,10 @@ import { filter } from 'rxjs';
     IonRouterOutlet,
     IonSplitPane,
     IonMenu,
+    IonTabs,
+    IonTabBar,
+    IonTabButton,
+    IonIcon,
   ],
 })
 export class DesktopLayout implements OnInit {

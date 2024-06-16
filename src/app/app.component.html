@@ -1,7 +1,11 @@
 <ion-app>
   <ion-router-outlet></ion-router-outlet>
 
-  @if (player.isPlayerVisible()) {
-  <app-mini-player></app-mini-player>
-  }
+  <div class="bottom-bar">
+    @if (player.isPlayerVisible()) {
+    <app-mini-player></app-mini-player>
+    } @if (!isMobile) {
+    <app-tabbar></app-tabbar>
+    }
+  </div>
 </ion-app>

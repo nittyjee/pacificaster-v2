@@ -67,6 +67,7 @@ ion-back-button {
 
   --background-color: #f3f3f3;
   --background-color-dark: #333333;
+  --background-color-purple: #000428;
   --radius: 0.6rem;
 }
 
@@ -94,6 +95,17 @@ ion-back-button {
 
 @media screen and (min-width: 768px) {
   .player-modal {
+    &::part(content) {
+      position: absolute;
+      bottom: 0;
+      width: 100vw;
+      height: 30rem;
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .episode-info-modal {
     &::part(content) {
       position: absolute;
       bottom: 0;

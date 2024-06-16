@@ -1,0 +1,31 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  background-color: var(--background-color-purple);
+
+  button {
+    color: #a7aafb;
+    background: transparent;
+    padding: 0 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 3rem;
+
+    ion-icon {
+      font-size: 1.4rem;
+    }
+  }
+
+  .menu {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+    width: 100%;
+    max-width: 900px;
+  }
+}

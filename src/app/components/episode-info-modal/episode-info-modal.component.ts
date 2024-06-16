@@ -40,6 +40,9 @@ export class EpisodeInfoModalComponent implements OnInit {
   podcast!: IPodcast;
 
   isModalOpen = false;
+
+  isMobile = window.innerWidth < 768;
+
   private podcastService = inject(PodcastService);
 
   constructor(private modalCtrl: ModalController) {}

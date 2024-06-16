@@ -9,13 +9,7 @@ import {
 } from '@angular/core';
 import { PlayerService } from 'src/app/services/player.service';
 import { PlayButtonComponent } from '../play-button/play-button.component';
-import {
-  IonRange,
-  IonFooter,
-  IonToolbar,
-  ModalController,
-  IonIcon,
-} from '@ionic/angular/standalone';
+import { IonRange, ModalController, IonIcon } from '@ionic/angular/standalone';
 import { IEpisode } from 'src/app/interfaces/episode.interface';
 import { PlayerModalComponent } from '../player-modal/player-modal.component';
 import { ThumbnailComponent } from '../thumbnail/thumbnail.component';
@@ -32,8 +26,6 @@ import { Router } from '@angular/router';
     IonIcon,
     IonRange,
     PlayButtonComponent,
-    IonFooter,
-    IonToolbar,
     ThumbnailComponent,
     PlayerTimelineComponent,
     TimelinePipe,
