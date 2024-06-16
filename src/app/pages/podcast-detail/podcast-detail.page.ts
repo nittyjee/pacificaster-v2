@@ -17,6 +17,7 @@ import {
   IonFooter,
 } from '@ionic/angular/standalone';
 import { EpisodeListComponent } from 'src/app/components/episode-list/episode-list.component';
+import { HeaderComponent } from 'src/app/components/header/header.component';
 import { PodcastInfoModalComponent } from 'src/app/components/podcast-info-modal/podcast-info-modal.component';
 import { ThumbnailComponent } from 'src/app/components/thumbnail/thumbnail.component';
 import { IPodcast } from 'src/app/interfaces/podcast.interface';
@@ -29,28 +30,21 @@ import { PodcastService } from 'src/app/services/podcast.service';
   standalone: true,
   imports: [
     IonFooter,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
     IonContent,
-    IonButtons,
-    IonBackButton,
     EpisodeListComponent,
     PodcastInfoModalComponent,
     ThumbnailComponent,
     IonIcon,
-    IonButton,
     KeyValuePipe,
+    HeaderComponent,
   ],
 })
-export class PodcastDetailPage
-  implements OnInit, ViewWillEnter, ViewDidEnter, ViewWillLeave, ViewDidLeave
-{
+export class PodcastDetailPage implements OnInit {
   @Input() podcastId!: string;
 
-  podcast!: IPodcast;
+  isMobile = window.innerWidth < 768;
 
-  isViewDidEnter = false;
+  podcast!: IPodcast;
 
   private podcastService = inject(PodcastService);
 
@@ -67,22 +61,6 @@ export class PodcastDetailPage
   ngOnInit(): void {
     if (this.podcastService.podcasts().length === 0)
       this.podcastService.fetchPodcasts();
-  }
-
-  ionViewWillEnter(): void {
-    this.isViewDidEnter = false;
-  }
-
-  ionViewDidEnter(): void {
-    this.isViewDidEnter = true;
-  }
-
-  ionViewWillLeave(): void {
-    this.isViewDidEnter = false;
-  }
-
-  ionViewDidLeave(): void {
-    this.isViewDidEnter = false;
   }
 
   async onDescription() {

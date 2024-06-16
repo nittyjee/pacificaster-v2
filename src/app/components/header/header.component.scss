@@ -1,0 +1,14 @@
+:host {
+  display: block;
+
+  ion-toolbar {
+    --padding-top: 1rem;
+    --padding-bottom: 1rem;
+    --background: var(--background-color);
+  }
+
+  .site-logo {
+    object-fit: contain;
+    height: 2rem;
+  }
+}

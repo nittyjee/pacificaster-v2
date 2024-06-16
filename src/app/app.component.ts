@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   IonApp,
   IonRouterOutlet,
@@ -6,7 +6,7 @@ import {
 } from '@ionic/angular/standalone';
 import { PlayerService } from './services/player.service';
 import { MiniPlayerComponent } from './components/mini-player/mini-player.component';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -20,8 +20,18 @@ import { RouterOutlet } from '@angular/router';
     MiniPlayerComponent,
   ],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   public player = inject(PlayerService);
 
+  private router = inject(Router);
+
   constructor() {}
+
+  ngOnInit(): void {
+    // if (window.innerWidth > 768) {
+    //   this.router.navigate(['/desktop']);
+    // } else {
+    //   this.router.navigate(['/mobile']);
+    // }
+  }
 }

@@ -1,0 +1,15 @@
+:host {
+  .menu {
+    display: flex;
+    flex-direction: column;
+  }
+
+  ion-button {
+    --color: var(--ion-text-color);
+
+    &.active {
+      --color: var(--ion-color-primary);
+      --background: var(--background-color);
+    }
+  }
+}

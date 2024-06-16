@@ -1,15 +1,8 @@
-@if (podcast) {
-<ion-header collapse="fade">
-  <ion-toolbar [class.transparent]="!isViewDidEnter">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
-    </ion-buttons>
-    <!-- <ion-title>{{podcast.title}}</ion-title> -->
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <div class="podcast-info ion-padding">
+@if (isMobile) {
+<app-header></app-header>
+} @if (podcast) {
+<ion-content [fullscreen]="false">
+  <div class="page-content podcast-info ion-padding">
     <div class="top">
       <app-thumbnail
         [src]="podcast.image_url"
@@ -35,8 +28,9 @@
       <p>Hosted by:</p>
       <h6>{{podcast.host_name}}</h6>
     </div>
-  </div>
 
-  <app-episode-list [episodes]="podcast.episodes"></app-episode-list>
+    <app-episode-list [episodes]="podcast.episodes"></app-episode-list>
+  </div>
 </ion-content>
+
 }

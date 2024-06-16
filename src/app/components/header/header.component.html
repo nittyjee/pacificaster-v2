@@ -1,0 +1,20 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button
+        color="primary"
+        text=""
+        [defaultHref]="isMobile ? '/mobile' : '/desktop'"
+      ></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <a [routerLink]="'/'">
+        <img class="site-logo mini" src="assets/images/main-logo.png" alt="" />
+      </a>
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>

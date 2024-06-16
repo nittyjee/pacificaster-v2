@@ -70,6 +70,12 @@ ion-back-button {
   --radius: 0.6rem;
 }
 
+.page-content {
+  max-width: 900px;
+  margin: auto;
+  padding-bottom: 10rem;
+}
+
 .podcast-title {
   font-size: 1.4rem;
   font-weight: 600;

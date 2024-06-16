@@ -34,12 +34,13 @@ export class PodcastListItemComponent implements OnInit {
   ngOnInit() {}
 
   onClick() {
-    const isDesktop = window.innerWidth > 768;
-
-    if (isDesktop) {
-      this.router.navigate(['podcast-sidebar', this.podcast.uuid]);
+    if (window.innerWidth > 768) {
+      this.router.navigate([
+        'desktop',
+        { outlets: { sidebar: ['podcast-sidebar', this.podcast.uuid] } },
+      ]);
     } else {
-      this.router.navigate(['podcast', this.podcast.uuid]);
+      this.router.navigate(['mobile', 'podcast', this.podcast.uuid]);
     }
   }
 }

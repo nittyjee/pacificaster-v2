@@ -1,19 +1,13 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { Component, OnInit, inject } from '@angular/core';
 import {
-  IonHeader,
-  IonToolbar,
-  IonTitle,
   IonContent,
   IonSplitPane,
   IonMenu,
   IonRouterOutlet,
-  IonButtons,
-  IonButton,
-  IonIcon,
-  IonMenuButton,
+  IonImg,
 } from '@ionic/angular/standalone';
 import { filter } from 'rxjs';
+import { HeaderComponent } from 'src/app/components/header/header.component';
 import { PodcastListComponent } from 'src/app/components/podcast-list/podcast-list.component';
 import { PodcastService } from 'src/app/services/podcast.service';
 
@@ -23,40 +17,22 @@ import { PodcastService } from 'src/app/services/podcast.service';
   styleUrls: ['home.page.scss'],
   standalone: true,
   imports: [
-    IonButtons,
     IonSplitPane,
     IonMenu,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
     IonContent,
+    IonImg,
     PodcastListComponent,
     IonRouterOutlet,
-    IonButtons,
-    IonButton,
-    IonIcon,
-    IonMenuButton,
+    HeaderComponent,
   ],
 })
 export class HomePage implements OnInit {
   public podcastService = inject(PodcastService);
-  public router = inject(Router);
 
-  showSidebar = false;
-
+  isMobile = window.innerWidth < 768;
   constructor() {}
 
   ngOnInit(): void {
     this.podcastService.fetchPodcasts();
-
-    this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe((event: any) => {
-        if (event.url.includes('podcast-sidebar')) {
-          this.showSidebar = true;
-        } else {
-          this.showSidebar = false;
-        }
-      });
   }
 }

@@ -28,6 +28,10 @@ export class PodcastService {
     });
   }
 
+  findPodcast(id: number): IPodcast | null {
+    return this.podcasts().find((podcast) => podcast.id === id) ?? null;
+  }
+
   public fetchEpisodes() {
     this.http.get(this.apiUrl + '/rest/episodes').subscribe((data: any) => {
       data = data.map(this.episodeDataParser);

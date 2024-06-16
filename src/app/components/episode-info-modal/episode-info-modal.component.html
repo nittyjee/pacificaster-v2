@@ -1,15 +1,21 @@
 <ion-content class="ion-padding">
   <div class="modal-info">
-    <app-thumbnail
-      [src]="episode.image_url"
-      [alt]="episode.title"
-      size="medium"
-    ></app-thumbnail>
+    <div class="top">
+      <app-thumbnail
+        [src]="episode.image_url"
+        [alt]="episode.title"
+        size="medium"
+      ></app-thumbnail>
 
-    <div class="title">
-      <h2>{{ episode.title }}</h2>
+      <div class="right">
+        <div class="title">
+          <h2>{{ episode.title }}</h2>
 
-      <app-play-button [episode]="episode"></app-play-button>
+          <p class="date">{{ episode.published_at | date : "dd MMM YYYY" }}</p>
+        </div>
+
+        <app-play-button [episode]="episode"></app-play-button>
+      </div>
     </div>
 
     <div class="description" [innerHTML]="episode.description"></div>
@@ -23,6 +29,12 @@
           {{ episode.host_name }}
         </h6>
       </div>
+    </div>
+
+    <div class="footer">
+      <h4>Podcast</h4>
+
+      <a>{{ podcast.title }}</a>
     </div>
   </div>
 </ion-content>

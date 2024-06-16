@@ -1,6 +1,6 @@
-<ion-split-pane when="sm" contentId="main">
-  <ion-menu contentId="main" class="left">
-    <ion-router-outlet name="detail"></ion-router-outlet>
+<ion-split-pane when="md" contentId="main" [disabled]="!showSidebar">
+  <ion-menu side="start" menuId="sidebar" contentId="main" class="left">
+    <ion-router-outlet name="sidebar"></ion-router-outlet>
   </ion-menu>
 
   <div id="main" class="right ion-page">

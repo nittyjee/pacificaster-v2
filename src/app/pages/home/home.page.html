@@ -1,52 +1,17 @@
-<ion-split-pane when="md" contentId="main" [disabled]="!showSidebar">
-  <ion-menu
-    side="start"
-    menuId="sidebar"
-    type="reveal"
-    contentId="main"
-    class="left"
-  >
-    <ion-router-outlet [animated]="false"></ion-router-outlet>
-  </ion-menu>
-
-  <!-- <ion-menu side="end" menuId="menu" type="overlay" contentId="main">
-    test
-  </ion-menu> -->
-
-  <div id="main" class="right ion-page">
-    <ion-header [translucent]="true">
-      <ion-toolbar>
-        <ion-title>
-          <img
-            class="site-logo mini"
-            src="assets/images/main-logo.png"
-            alt=""
-          />
-        </ion-title>
-
-        <!-- <ion-buttons slot="end">
-          <ion-menu-button menu="end"></ion-menu-button>
-        </ion-buttons> -->
-      </ion-toolbar>
-    </ion-header>
-
-    <ion-content [fullscreen]="true">
-      <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large">
-            <img
-              class="site-logo"
-              src="assets/images/main-logo-big.png"
-              alt=""
-            />
-          </ion-title>
-        </ion-toolbar>
-      </ion-header>
-
-      <app-podcast-list
-        [title]="'Podcasts'"
-        [podcasts]="podcastService.podcasts()"
-      ></app-podcast-list>
-    </ion-content>
+@if (isMobile) {
+<app-header></app-header>
+}
+<ion-content [fullscreen]="false">
+  @if (!isMobile) {
+  <div class="site-logo">
+    <ion-img src="assets/images/main-logo-big.png"></ion-img>
   </div>
-</ion-split-pane>
+  }
+
+  <div class="page-content">
+    <app-podcast-list
+      [title]="'Podcasts'"
+      [podcasts]="podcastService.podcasts()"
+    ></app-podcast-list>
+  </div>
+</ion-content>

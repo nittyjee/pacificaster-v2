@@ -1,15 +1,6 @@
 :host {
   display: block;
 
-  ion-header {
-    ion-toolbar {
-      &.transparent {
-        --background: transparent;
-        --border-color: transparent;
-      }
-    }
-  }
-
   .podcast-info {
     display: flex;
     flex-direction: column;
@@ -38,14 +29,6 @@
           }
         }
       }
-    }
-
-    .description {
-      //   overflow: hidden;
-      //   display: -webkit-box;
-      //   -webkit-line-clamp: 3; /* number of lines to show */
-      //   line-clamp: 3;
-      //   -webkit-box-orient: vertical;
     }
 
     .bottom {
