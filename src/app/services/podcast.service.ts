@@ -49,8 +49,6 @@ export class PodcastService {
           podcast.episodes.push(episode);
         }
       });
-
-      console.log(this.podcasts());
     });
   }
 

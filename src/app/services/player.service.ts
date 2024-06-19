@@ -6,17 +6,16 @@ import { Howl, Howler } from 'howler';
   providedIn: 'root',
 })
 export class PlayerService {
-  isPlayerVisible = signal<boolean>(false);
-  isPlaying = signal<boolean>(false);
-
   currentEpisode = signal<IEpisode>({} as IEpisode);
 
-  howl!: Howl;
+  private howl!: Howl;
 
   totalDuration = 0;
   currentTime = 0;
 
   speed = 1;
+
+  private logInterval: any;
 
   constructor() {}
 
@@ -35,7 +34,6 @@ export class PlayerService {
 
     if (!this.howl.playing()) {
       this.howl.play();
-      this.isPlaying.set(true);
     }
   }
 
@@ -50,13 +48,15 @@ export class PlayerService {
 
       this.logCurrentTime();
     });
-
-    this.isPlayerVisible.set(true);
   }
 
   logCurrentTime() {
-    setInterval(() => {
-      this.currentTime = this.howl.seek();
+    clearInterval(this.logInterval);
+
+    this.logInterval = setInterval(() => {
+      if (this.howl.playing()) {
+        this.currentTime = this.howl.seek();
+      }
     }, 1000);
   }
 
@@ -64,18 +64,33 @@ export class PlayerService {
     this.howl.seek(this.currentTime + value);
   }
 
+  jump(value: number) {
+    this.howl.seek(value);
+  }
+
   pause() {
     if (this.howl.playing()) {
       this.howl.pause();
-      this.isPlaying.set(false);
     }
   }
 
   contuniue() {
     if (!this.howl.playing()) {
       this.howl.play();
-
-      this.isPlaying.set(true);
     }
+  }
+
+  changeSpeed(speed: number) {
+    this.speed = speed;
+    this.howl.rate(speed);
+  }
+
+  isPlaying(): boolean {
+    if (!this.howl) return false;
+    return this.howl.playing();
+  }
+
+  isInitialized(): boolean {
+    return !!this.howl;
   }
 }

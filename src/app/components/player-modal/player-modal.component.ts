@@ -1,5 +1,6 @@
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   OnDestroy,
   OnInit,
@@ -74,7 +75,8 @@ export class PlayerModalComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private alertController: AlertController,
-    private platform: Platform
+    private platform: Platform,
+    private cdr: ChangeDetectorRef
   ) {
     this.platform.backButton.subscribeWithPriority(10, () => {
       this.cancel();
@@ -82,6 +84,7 @@ export class PlayerModalComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.showPauseOverlay = !this.player.isPlaying();
     this.route.fragment.subscribe((fragment: string | null) => {
       if (fragment === null) {
         this.cancel();
@@ -97,15 +100,14 @@ export class PlayerModalComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() {}
 
-  onTogglePlay(event: Event) {
-    console.log('onTogglePlay');
-    if (this.player.isPlaying()) {
-      this.player.pause();
-      this.showPauseOverlay = true;
-    } else {
-      this.player.contuniue();
-      this.showPauseOverlay = false;
-    }
+  onPlay(event: Event) {
+    this.player.contuniue();
+    this.showPauseOverlay = false;
+  }
+
+  onPause(event: Event) {
+    this.player.pause();
+    this.showPauseOverlay = true;
   }
 
   onShare() {
@@ -129,7 +131,6 @@ export class PlayerModalComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onSpeedChange(speed: number) {
-    this.player.speed = speed;
-    this.player.howl.rate(speed);
+    this.player.changeSpeed(speed);
   }
 }

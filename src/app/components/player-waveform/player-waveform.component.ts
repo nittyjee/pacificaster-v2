@@ -61,7 +61,7 @@ export class PlayerWaveformComponent implements OnInit, AfterViewInit {
       onStart: () => this.onStart(),
       onMove: (detail) => this.onMove(detail),
       onEnd: () => this.onEnd(),
-      threshold: 0,
+      threshold: 10,
       gestureName: 'example',
     });
 
@@ -69,7 +69,9 @@ export class PlayerWaveformComponent implements OnInit, AfterViewInit {
   }
 
   drawRandomWaveform() {
-    let duration = this.player.howl.duration();
+    let duration = this.player.totalDuration;
+
+    console.log('duration', duration);
 
     const scale = 10;
     const margin = 1;
@@ -115,6 +117,8 @@ export class PlayerWaveformComponent implements OnInit, AfterViewInit {
 
         this.canvas.nativeElement.style.transform =
           'translateX(-' + margin + 'px)';
+
+        console.log('moveWave', margin, this.player.currentTime);
       }
     }, 1000);
   }

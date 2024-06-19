@@ -20,7 +20,7 @@ export class PlayerTimelineComponent implements OnInit {
   ngOnInit() {}
 
   onChange(event: any) {
-    this.player.seek(event.detail.value);
+    this.player.jump(event.detail.value);
   }
 
   onIonKnobMoveStart(ev: Event) {

@@ -7,12 +7,7 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content
-  [fullscreen]="true"
-  class="ion-padding"
-  scrollY="false"
-  (click)="onTogglePlay($event)"
->
+<ion-content [fullscreen]="true" class="ion-padding" scrollY="false">
   <div class="background">
     <img
       [src]="player.currentEpisode().image_url"
@@ -22,12 +17,12 @@
   </div>
 
   @if (showPauseOverlay) {
-  <div class="pause-overlay">
+  <div class="pause-overlay" (click)="onPlay($event)">
     <ion-icon name="play-circle"></ion-icon>
   </div>
   }
 
-  <div class="modal-content">
+  <div class="modal-content" (click)="onPause($event)">
     <div class="title backdrop">
       <h2 class="">{{ player.currentEpisode().title }}</h2>
       <h3 class="">{{ player.currentEpisode().host_name }}</h3>
