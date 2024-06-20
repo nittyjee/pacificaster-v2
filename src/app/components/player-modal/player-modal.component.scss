@@ -9,6 +9,11 @@
   }
   ion-footer {
     --background: transparent;
+    visibility: hidden;
+
+    &.visible {
+      visibility: visible;
+    }
 
     ion-toolbar {
       --background: transparent;
