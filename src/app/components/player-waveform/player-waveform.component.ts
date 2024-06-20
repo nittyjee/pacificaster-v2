@@ -71,8 +71,6 @@ export class PlayerWaveformComponent implements OnInit, AfterViewInit {
   drawRandomWaveform() {
     let duration = this.player.totalDuration;
 
-    console.log('duration', duration);
-
     const scale = 10;
     const margin = 1;
 
@@ -124,35 +122,41 @@ export class PlayerWaveformComponent implements OnInit, AfterViewInit {
   }
 
   private onStart() {
-    this.isSeeking = true;
+    if (this.player.isPlaying()) {
+      this.isSeeking = true;
 
-    this.translationOrigin = parseInt(
-      this.canvas.nativeElement.getAttribute('position') ?? '0'
-    );
+      this.translationOrigin = parseInt(
+        this.canvas.nativeElement.getAttribute('position') ?? '0'
+      );
 
-    this.player.pause();
-    clearInterval(this.moveInterval);
+      this.player.pause();
+      clearInterval(this.moveInterval);
 
-    this.cdRef.detectChanges();
+      this.cdRef.detectChanges();
+    }
   }
 
   private onMove({ deltaX, currentX, velocityX }: GestureDetail) {
-    this.seek = Math.floor((deltaX * -1) / 10);
+    if (this.isSeeking) {
+      this.seek = Math.floor((deltaX * -1) / 10);
 
-    let translation = this.translationOrigin + deltaX * -1;
+      let translation = this.translationOrigin + deltaX * -1;
 
-    this.canvas.nativeElement.style.transform =
-      'translateX(-' + translation + 'px)';
+      this.canvas.nativeElement.style.transform =
+        'translateX(-' + translation + 'px)';
 
-    this.cdRef.detectChanges();
+      this.cdRef.detectChanges();
+    }
   }
 
   private onEnd() {
-    this.player.seek(this.seek);
+    if (this.isSeeking) {
+      this.player.seek(this.seek);
 
-    this.isSeeking = false;
-    this.player.contuniue();
-    this.moveWave();
-    this.cdRef.detectChanges();
+      this.isSeeking = false;
+      this.player.contuniue();
+      this.moveWave();
+      this.cdRef.detectChanges();
+    }
   }
 }
