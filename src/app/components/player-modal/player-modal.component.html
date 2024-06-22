@@ -16,7 +16,7 @@
     <div class="overlay"></div>
   </div>
 
-  @if (showPauseOverlay) {
+  @if (!player.isPlaying()) {
   <div class="pause-overlay" (click)="onPlay($event)">
     <ion-icon name="play-circle"></ion-icon>
   </div>
@@ -48,7 +48,13 @@
 
 <ion-footer [class.visible]="!showPauseOverlay">
   <ion-toolbar>
-    <div class="footer">
+    <ion-buttons slot="secondary">
+      <ion-button class="tool" (click)="onEpisodeDetail()">
+        Episode Info
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="primary">
       <div class="tools">
         <div class="tool">
           <ion-select
@@ -70,8 +76,8 @@
           ></ion-icon>
         </div>
       </div>
-    </div>
-
-    <app-player-timeline></app-player-timeline>
+    </ion-buttons>
   </ion-toolbar>
+
+  <app-player-timeline></app-player-timeline>
 </ion-footer>

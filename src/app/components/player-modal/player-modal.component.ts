@@ -34,6 +34,7 @@ import { PlayerWaveformComponent } from '../player-waveform/player-waveform.comp
 import { PlayButtonComponent } from '../play-button/play-button.component';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { EpisodeInfoModalComponent } from '../episode-info-modal/episode-info-modal.component';
 
 @Component({
   selector: 'app-player-modal',
@@ -72,6 +73,8 @@ export class PlayerModalComponent implements OnInit, AfterViewInit, OnDestroy {
 
   speedOptions = [1, 1.25, 1.5, 2];
   selectedSpeed = this.speedOptions[0];
+
+  isModalOpen = false;
 
   constructor(
     private alertController: AlertController,
@@ -132,5 +135,33 @@ export class PlayerModalComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onSpeedChange(speed: number) {
     this.player.changeSpeed(speed);
+  }
+
+  onEpisodeDetail() {
+    this.openModal();
+  }
+
+  async openModal() {
+    const modal = await this.modalCtrl.create({
+      component: EpisodeInfoModalComponent,
+      breakpoints: [0, 0.7, 1],
+      initialBreakpoint: 0.7,
+      handleBehavior: 'cycle',
+      cssClass: 'episode-info-player-modal',
+      componentProps: {
+        episode: this.player.currentEpisode(),
+      },
+    });
+    modal.present();
+
+    modal.addEventListener('ionModalDidPresent', () => {
+      this.isModalOpen = true;
+    });
+
+    modal.addEventListener('ionModalDidDismiss', () => {
+      this.isModalOpen = false;
+    });
+
+    const { data, role } = await modal.onWillDismiss();
   }
 }

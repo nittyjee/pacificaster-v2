@@ -91,21 +91,14 @@ ion-back-button {
   z-index: 4000 !important;
 }
 
+.episode-info-player-modal {
+  z-index: 5000 !important;
+}
+
 // Desktop Now Playing Modal
 
 @media screen and (min-width: 768px) {
-  .player-modal {
-    &::part(content) {
-      position: absolute;
-      bottom: 0;
-      width: 100vw;
-      height: 30rem;
-    }
-  }
-}
-
-@media screen and (min-width: 768px) {
-  .episode-info-modal {
+  ion-modal {
     &::part(content) {
       position: absolute;
       bottom: 0;
