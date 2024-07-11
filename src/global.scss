@@ -77,6 +77,21 @@ ion-back-button {
   padding-bottom: 10rem;
 }
 
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.header-logo-container {
+  display: flex;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px; /* Optional: add some padding if needed */
+}
+
+
 .podcast-title {
   font-size: 1.4rem;
   font-weight: 600;

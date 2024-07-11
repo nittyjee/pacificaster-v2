@@ -12,3 +12,20 @@
     height: 2rem;
   }
 }
+
+.header-logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 10px; /* Optional: add some padding if needed */
+}
+
+.header-logo {
+  max-width: 100%; /* Ensure the image scales within the container */
+}
+
+.ion-no-border {
+  border: none;
+}

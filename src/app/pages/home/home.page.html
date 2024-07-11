@@ -1,10 +1,10 @@
 @if (isMobile) {
-<app-header></app-header>
+  <app-header></app-header>
 }
 <ion-content [fullscreen]="false">
   @if (!isMobile) {
-  <div class="site-logo">
-    <ion-img src="assets/images/main-logo-big.png"></ion-img>
+  <div class="header-logo-container">
+    <ion-img class="header-logo" src="assets/images/main-logo-big.png"></ion-img>
   </div>
   }
 
