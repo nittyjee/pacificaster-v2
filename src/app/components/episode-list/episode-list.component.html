@@ -7,14 +7,10 @@
   <ion-item lines="none">
     <a
       class="rss-link"
-      [href]="
-        'https://user.pacificaster.org/podcasts/' +
-        episodes[0].podcast_id +
-        '/rss.xml'
-      "
-      target="_blank"
+      href="#"
+      (click)="copyRssLink($event, 'https://user.pacificaster.org/podcasts/' + episodes[0].podcast_id + '/rss.xml')"
     >
-      <ion-icon name="logo-rss"></ion-icon>Pacificaster RSS feed
+      <ion-icon name="logo-rss"></ion-icon>Copy Pacificaster RSS feed
     </a>
   </ion-item>
 
