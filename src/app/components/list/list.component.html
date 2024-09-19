@@ -1,8 +1,7 @@
 <div class="toolbar">
   @if (title) {
   <h2>{{ title }}</h2>
-  }
-
+  } @if (showToggle) {
   <div class="toggle">
     <ion-button [class.active]="isList" fill="clear" (click)="toggleLayout()">
       <ion-icon [name]="'list-outline'"></ion-icon>
@@ -12,26 +11,24 @@
       <ion-icon [name]="'grid-outline'"></ion-icon>
     </ion-button>
   </div>
+  }
 </div>
 
 @if (!isList) {
 <ion-grid [fixed]="true">
   <ion-row>
-    @for (podcast of podcasts; track $index) {
+    @for (item of items; track $index) {
     <ion-col size="6" size-md="4">
-      <app-podcast-list-item [podcast]="podcast"></app-podcast-list-item>
+      <app-list-item [item]="item"></app-list-item>
     </ion-col>
     }
   </ion-row>
 </ion-grid>
 } @else {
 <ion-list>
-  @for (podcast of podcasts; track $index) {
+  @for (item of items; track $index) {
   <ion-item lines="none">
-    <app-podcast-list-item
-      [podcast]="podcast"
-      [inList]="true"
-    ></app-podcast-list-item>
+    <app-list-item [item]="item" [inList]="true"></app-list-item>
   </ion-item>
   }
 </ion-list>

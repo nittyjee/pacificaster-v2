@@ -9,11 +9,12 @@ import {
 } from '@ionic/angular/standalone';
 import { IPodcast } from 'src/app/interfaces/podcast.interface';
 import { ThumbnailComponent } from '../thumbnail/thumbnail.component';
+import { IAffiliate } from 'src/app/interfaces/affiliate.interface';
 
 @Component({
-  selector: 'app-podcast-list-item',
-  templateUrl: './podcast-list-item.component.html',
-  styleUrls: ['./podcast-list-item.component.scss'],
+  selector: 'app-list-item',
+  templateUrl: './list-item.component.html',
+  styleUrls: ['./list-item.component.scss'],
   standalone: true,
   imports: [
     IonCardTitle,
@@ -25,8 +26,8 @@ import { ThumbnailComponent } from '../thumbnail/thumbnail.component';
     ThumbnailComponent,
   ],
 })
-export class PodcastListItemComponent implements OnInit {
-  @Input() podcast!: IPodcast;
+export class ListItemComponent implements OnInit {
+  @Input() item!: IPodcast | IAffiliate;
   @Input() inList: boolean = false;
 
   constructor(private router: Router) {}
@@ -37,10 +38,10 @@ export class PodcastListItemComponent implements OnInit {
     if (window.innerWidth > 768) {
       this.router.navigate([
         'desktop',
-        { outlets: { sidebar: ['podcast-sidebar', this.podcast.uuid] } },
+        { outlets: { sidebar: [this.item.type + '-sidebar', this.item.uuid] } },
       ]);
     } else {
-      this.router.navigate(['mobile', 'podcast', this.podcast.uuid]);
+      this.router.navigate(['mobile', this.item.type, this.item.uuid]);
     }
   }
 }

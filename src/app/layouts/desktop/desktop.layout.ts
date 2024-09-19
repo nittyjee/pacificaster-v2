@@ -45,7 +45,10 @@ export class DesktopLayout implements OnInit {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: any) => {
-        if (event.url.includes('podcast-sidebar')) {
+        if (
+          event.url.includes('podcast-sidebar') ||
+          event.url.includes('affiliate-sidebar')
+        ) {
           this.showSidebar = true;
         } else {
           this.showSidebar = false;

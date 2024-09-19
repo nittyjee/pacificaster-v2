@@ -22,6 +22,21 @@ const childRoutes: Routes = [
       ),
   },
   {
+    path: 'affiliate-sidebar/:affiliateId',
+    outlet: 'sidebar',
+    loadComponent: () =>
+      import('./pages/affiliate-detail/affiliate-detail.page').then(
+        (m) => m.AffiliateDetailPage
+      ),
+  },
+  {
+    path: 'affiliate/:affiliateId',
+    loadComponent: () =>
+      import('./pages/affiliate-detail/affiliate-detail.page').then(
+        (m) => m.AffiliateDetailPage
+      ),
+  },
+  {
     path: 'about',
     loadComponent: () =>
       import('./pages/about/about.page').then((m) => m.AboutPage),

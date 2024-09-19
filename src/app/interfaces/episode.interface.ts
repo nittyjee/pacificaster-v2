@@ -1,4 +1,5 @@
 export interface IEpisode {
+  type: string;
   id: number;
   uuid: string;
   title: string;

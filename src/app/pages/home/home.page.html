@@ -1,17 +1,29 @@
 @if (isMobile) {
-  <app-header></app-header>
+<app-header></app-header>
 }
 <ion-content [fullscreen]="false">
   @if (!isMobile) {
   <div class="header-logo-container">
-    <ion-img class="header-logo" src="assets/images/main-logo-big.png"></ion-img>
+    <ion-img
+      class="header-logo"
+      src="assets/images/main-logo-big.png"
+    ></ion-img>
   </div>
   }
 
   <div class="page-content">
-    <app-podcast-list
+    <app-list
       [title]="'Podcasts'"
-      [podcasts]="podcastService.podcasts()"
-    ></app-podcast-list>
+      [items]="podcastService.podcasts()"
+      [showToggle]="true"
+      [isList]="isList()"
+      (layoutChanged)="onLayoutChange($event)"
+    ></app-list>
+
+    <app-list
+      [title]="'Affiliates'"
+      [items]="affiliateService.affiliates()"
+      [isList]="isList()"
+    ></app-list>
   </div>
 </ion-content>

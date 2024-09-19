@@ -1,22 +1,19 @@
-import { IEpisode } from './episode.interface';
+import { IPodcast } from './podcast.interface';
 
-export interface IPodcast {
+export interface IAffiliate {
   type: string;
   id: number;
   uuid: string;
   title: string;
   description: string;
-  description_short: string;
-  host_name: string;
   image_url: string;
-  episodes: IEpisode[];
+  podcasts: IPodcast[];
   social: ISocialLink[];
 }
 
 export interface ISocialLink {
   type:
     | 'website'
-    | 'rss'
     | 'twitter'
     | 'facebook'
     | 'instagram'

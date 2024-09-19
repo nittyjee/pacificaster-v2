@@ -3,6 +3,9 @@
 
   .page-content {
     max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
   }
 
   .site-logo {

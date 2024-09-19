@@ -1,8 +1,8 @@
 <a (click)="onClick()" [class.in-list]="inList">
   <app-thumbnail
-    [src]="podcast.image_url"
-    [alt]="podcast.title"
+    [src]="item.image_url"
+    [alt]="item.title"
     [size]="inList ? 'small' : 'auto'"
   ></app-thumbnail>
-  <h2>{{ podcast.title }}</h2>
+  <h2>{{ item.title }}</h2>
 </a>

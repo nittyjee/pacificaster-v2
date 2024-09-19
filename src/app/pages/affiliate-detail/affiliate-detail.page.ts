@@ -10,13 +10,13 @@ import { EpisodeListComponent } from 'src/app/components/episode-list/episode-li
 import { HeaderComponent } from 'src/app/components/header/header.component';
 import { PodcastInfoModalComponent } from 'src/app/components/podcast-info-modal/podcast-info-modal.component';
 import { ThumbnailComponent } from 'src/app/components/thumbnail/thumbnail.component';
-import { IPodcast } from 'src/app/interfaces/podcast.interface';
-import { PodcastService } from 'src/app/services/podcast.service';
+import { IAffiliate } from 'src/app/interfaces/affiliate.interface';
+import { AffiliateService } from 'src/app/services/affiliate.service';
 
 @Component({
-  selector: 'app-podcast-detail',
-  templateUrl: './podcast-detail.page.html',
-  styleUrls: ['./podcast-detail.page.scss'],
+  selector: 'app-affiliate-detail',
+  templateUrl: './affiliate-detail.page.html',
+  styleUrls: ['./affiliate-detail.page.scss'],
   standalone: true,
   imports: [
     IonFooter,
@@ -29,28 +29,28 @@ import { PodcastService } from 'src/app/services/podcast.service';
     HeaderComponent,
   ],
 })
-export class PodcastDetailPage implements OnInit {
-  @Input() podcastId!: string;
+export class AffiliateDetailPage implements OnInit {
+  @Input() affiliateId!: string;
 
   isMobile = window.innerWidth < 768;
 
-  podcast!: IPodcast;
+  affiliate!: IAffiliate;
 
-  private podcastService = inject(PodcastService);
+  private affiliateService = inject(AffiliateService);
 
   constructor(private modalCtrl: ModalController) {
     effect(() => {
-      this.podcast =
-        this.podcastService
-          .podcasts()
-          .find((podcast) => podcast.uuid === this.podcastId) ??
-        ({} as IPodcast);
+      this.affiliate =
+        this.affiliateService
+          .affiliates()
+          .find((affiliate) => affiliate.uuid === this.affiliateId) ??
+        ({} as IAffiliate);
     });
   }
 
   ngOnInit(): void {
-    if (this.podcastService.podcasts().length === 0)
-      this.podcastService.fetchPodcasts();
+    if (this.affiliateService.affiliates().length === 0)
+      this.affiliateService.fetchAffiliates();
   }
 
   async onDescription() {
@@ -60,7 +60,7 @@ export class PodcastDetailPage implements OnInit {
       initialBreakpoint: 0.5,
       handleBehavior: 'cycle',
       componentProps: {
-        podcast: this.podcast,
+        podcast: this.affiliate,
       },
     });
     modal.present();

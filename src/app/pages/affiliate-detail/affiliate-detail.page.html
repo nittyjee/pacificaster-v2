@@ -1,0 +1,32 @@
+@if (isMobile) {
+<app-header></app-header>
+} @if (affiliate) {
+<ion-content [fullscreen]="false">
+  <div class="page-content podcast-info ion-padding">
+    <h2>Affiliate</h2>
+    <div class="top">
+      <app-thumbnail
+        [src]="affiliate.image_url"
+        [alt]="affiliate.title"
+        [size]="'medium'"
+      ></app-thumbnail>
+
+      <div class="right">
+        <h2 class="podcast-title">{{affiliate.title}}</h2>
+
+        <div class="links">
+          @for (item of affiliate.social; track $index) { @if ( item.url ) {
+          <a [href]="item.type === 'mail' ? 'mailto:' + item.url : item.url">
+            <ion-icon [name]="item.icon"></ion-icon> </a
+          >} }
+        </div>
+      </div>
+    </div>
+
+    <p class="description">{{affiliate.description}}</p>
+
+    <!-- <app-episode-list [episodes]="affiliate.podcasts"></app-episode-list> -->
+  </div>
+</ion-content>
+
+}

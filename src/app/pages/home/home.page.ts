@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import {
   IonContent,
   IonSplitPane,
@@ -8,7 +8,8 @@ import {
 } from '@ionic/angular/standalone';
 import { filter } from 'rxjs';
 import { HeaderComponent } from 'src/app/components/header/header.component';
-import { PodcastListComponent } from 'src/app/components/podcast-list/podcast-list.component';
+import { ListComponent } from 'src/app/components/list/list.component';
+import { AffiliateService } from 'src/app/services/affiliate.service';
 import { PodcastService } from 'src/app/services/podcast.service';
 
 @Component({
@@ -21,18 +22,27 @@ import { PodcastService } from 'src/app/services/podcast.service';
     IonMenu,
     IonContent,
     IonImg,
-    PodcastListComponent,
+    ListComponent,
     IonRouterOutlet,
     HeaderComponent,
   ],
 })
 export class HomePage implements OnInit {
   public podcastService = inject(PodcastService);
+  public affiliateService = inject(AffiliateService);
 
   isMobile = window.innerWidth < 768;
+
+  isList = signal<boolean>(false);
+
   constructor() {}
 
   ngOnInit(): void {
     this.podcastService.fetchPodcasts();
+    this.affiliateService.fetchAffiliates();
+  }
+
+  onLayoutChange(eventData: boolean) {
+    this.isList.set(eventData);
   }
 }
