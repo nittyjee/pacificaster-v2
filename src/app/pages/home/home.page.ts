@@ -6,10 +6,8 @@ import {
   IonRouterOutlet,
   IonImg,
 } from '@ionic/angular/standalone';
-import { filter } from 'rxjs';
 import { HeaderComponent } from 'src/app/components/header/header.component';
 import { ListComponent } from 'src/app/components/list/list.component';
-import { AffiliateService } from 'src/app/services/affiliate.service';
 import { PodcastService } from 'src/app/services/podcast.service';
 
 @Component({
@@ -29,7 +27,6 @@ import { PodcastService } from 'src/app/services/podcast.service';
 })
 export class HomePage implements OnInit {
   public podcastService = inject(PodcastService);
-  public affiliateService = inject(AffiliateService);
 
   isMobile = window.innerWidth < 768;
 
@@ -39,7 +36,7 @@ export class HomePage implements OnInit {
 
   ngOnInit(): void {
     this.podcastService.fetchPodcasts();
-    this.affiliateService.fetchAffiliates();
+    // this.podcastService.fetchAffiliates();
   }
 
   onLayoutChange(eventData: boolean) {

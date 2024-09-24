@@ -115,8 +115,6 @@ export class PlayerWaveformComponent implements OnInit, AfterViewInit {
 
         this.canvas.nativeElement.style.transform =
           'translateX(-' + margin + 'px)';
-
-        console.log('moveWave', margin, this.player.currentTime);
       }
     }, 1000);
   }

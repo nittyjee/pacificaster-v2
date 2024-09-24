@@ -6,12 +6,12 @@ import {
   IonIcon,
   IonFooter,
 } from '@ionic/angular/standalone';
-import { EpisodeListComponent } from 'src/app/components/episode-list/episode-list.component';
 import { HeaderComponent } from 'src/app/components/header/header.component';
 import { PodcastInfoModalComponent } from 'src/app/components/podcast-info-modal/podcast-info-modal.component';
+import { PodcastListComponent } from 'src/app/components/podcast-list/podcast-list.component';
 import { ThumbnailComponent } from 'src/app/components/thumbnail/thumbnail.component';
 import { IAffiliate } from 'src/app/interfaces/affiliate.interface';
-import { AffiliateService } from 'src/app/services/affiliate.service';
+import { PodcastService } from 'src/app/services/podcast.service';
 
 @Component({
   selector: 'app-affiliate-detail',
@@ -21,7 +21,7 @@ import { AffiliateService } from 'src/app/services/affiliate.service';
   imports: [
     IonFooter,
     IonContent,
-    EpisodeListComponent,
+    PodcastListComponent,
     PodcastInfoModalComponent,
     ThumbnailComponent,
     IonIcon,
@@ -36,12 +36,12 @@ export class AffiliateDetailPage implements OnInit {
 
   affiliate!: IAffiliate;
 
-  private affiliateService = inject(AffiliateService);
+  private podcastService = inject(PodcastService);
 
   constructor(private modalCtrl: ModalController) {
     effect(() => {
       this.affiliate =
-        this.affiliateService
+        this.podcastService
           .affiliates()
           .find((affiliate) => affiliate.uuid === this.affiliateId) ??
         ({} as IAffiliate);
@@ -49,8 +49,8 @@ export class AffiliateDetailPage implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.affiliateService.affiliates().length === 0)
-      this.affiliateService.fetchAffiliates();
+    if (this.podcastService.affiliates().length === 0)
+      this.podcastService.fetchAffiliates();
   }
 
   async onDescription() {

@@ -24,3 +24,12 @@ export interface ISocialLink {
   url: string;
   icon: string;
 }
+
+export interface IAffiliatePodcast {
+  type: string;
+  id: number;
+  uuid: string;
+  target_id: number;
+  target_uuid: string;
+  title: string;
+}

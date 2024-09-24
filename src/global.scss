@@ -91,7 +91,6 @@ body {
   padding: 10px; /* Optional: add some padding if needed */
 }
 
-
 .podcast-title {
   font-size: 1.4rem;
   font-weight: 600;
@@ -126,4 +125,5 @@ body {
 svg {
   width: inherit !important;
   height: inherit !important;
+  transform: scale(1);
 }

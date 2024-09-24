@@ -1,0 +1,13 @@
+<a class="top" (click)="onClick()">
+  <app-thumbnail
+    [src]="podcast.image_url"
+    [alt]="podcast.title"
+    size="small"
+  ></app-thumbnail>
+
+  <div class="info">
+    <p class="title">
+      {{ podcast.title }}
+    </p>
+  </div>
+</a>
