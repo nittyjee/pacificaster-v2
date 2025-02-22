@@ -16,10 +16,10 @@
     <div class="overlay"></div>
   </div>
 
-  @if (!player.isPlaying()) {
-  <div class="pause-overlay" (click)="onPlay($event)">
-    <ion-icon name="play-circle"></ion-icon>
-  </div>
+  @if (!player.isPlaying() && showPauseOverlay) {
+    <div class="pause-overlay" (click)="onPlay($event)">
+      <ion-icon name="play-circle"></ion-icon>
+    </div>
   }
 
   <div class="modal-content" (click)="onPause($event)">
@@ -63,7 +63,7 @@
             (ngModelChange)="onSpeedChange($event)"
           >
             @for (item of speedOptions; track $index) {
-            <ion-select-option [value]="item">{{ item }}X</ion-select-option>
+              <ion-select-option [value]="item">{{ item }}X</ion-select-option>
             }
           </ion-select>
         </div>
