@@ -127,7 +127,7 @@ export class PlayerWaveformComponent implements OnInit, AfterViewInit {
         this.canvas.nativeElement.getAttribute('position') ?? '0'
       );
 
-      this.player.pause();
+      //this.player.pause();
       clearInterval(this.moveInterval);
 
       this.cdRef.detectChanges();

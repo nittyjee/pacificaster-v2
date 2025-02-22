@@ -75,6 +75,13 @@ export class PlayerModalComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedSpeed = this.speedOptions[0];
 
   isModalOpen = false;
+  isTouchedMove = false;
+
+  get isTouchDevice(): boolean {
+    return 'ontouchstart' in window ||
+      navigator.maxTouchPoints > 0 ||
+      (navigator as any).msMaxTouchPoints > 0;
+  }
 
   constructor(
     private alertController: AlertController,
@@ -87,7 +94,7 @@ export class PlayerModalComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.showPauseOverlay = !this.player.isPlaying();
+    // this.showPauseOverlay = !this.player.isPlaying();
     this.route.fragment.subscribe((fragment: string | null) => {
       if (fragment === null) {
         this.cancel();
@@ -103,12 +110,33 @@ export class PlayerModalComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() {}
 
-  onPlay(event: Event) {
+  onPlay(event: TouchEvent | MouseEvent) {
     this.player.contuniue();
     this.showPauseOverlay = false;
+    this.isTouchedMove = false;
+    //console.log([event, this.isTouchedMove]);
   }
 
-  onPause(event: Event) {
+  onPause(event: TouchEvent | MouseEvent) {
+    //console.log([event, this.isTouchedMove]);
+    if (event.type === 'touchend' || event.type === 'mouseup') {
+      if (!this.isTouchedMove) {
+        this.handlePauseLogic();
+      }
+      this.isTouchedMove = false;
+    }
+  }
+
+  mouseDown() {
+    this.isTouchedMove = false;
+  }
+
+  onTouchMove(event: TouchEvent | MouseEvent) {
+    this.isTouchedMove = true;
+  }
+
+  private handlePauseLogic() {
+    //console.log('Pause triggered');
     this.player.pause();
     this.showPauseOverlay = true;
   }
