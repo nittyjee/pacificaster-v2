@@ -15,40 +15,63 @@
     />
     <div class="overlay"></div>
   </div>
-
-  @if (showPauseOverlay && !isTouchedMove) {
-    <div class="pause-overlay" (touchend)="isTouchDevice ? onPlay($event) : null"
-         (mouseup)="!isTouchDevice ? onPlay($event) : null">
-      <ion-icon name="play-circle"></ion-icon>
-    </div>
-  }
-
-  <div class="modal-content" (touchend)="isTouchDevice ? onPause($event) : null"
-       (mouseup)="!isTouchDevice ? onPause($event) : null"
-       (touchmove)="isTouchDevice ? onTouchMove($event) : null"
-       (mousedown)="!isTouchDevice ? mouseDown() : null"
-       (mousemove)="!isTouchDevice ? onTouchMove($event) : null">
-    <div class="title backdrop">
-      <h2 class="">{{ player.currentEpisode().title }}</h2>
-      <h3 class="">{{ player.currentEpisode().host_name }}</h3>
-    </div>
-
-    <app-player-waveform></app-player-waveform>
-
-    <div class="times">
-      <div class="top">
-        <span class="backdrop">{{ player.currentTime | timeline }}</span>
-
-        <span class="line"></span>
-
-        <span class="backdrop">
-          {{ player.totalDuration - player.currentTime | timeline }}</span
-        >
+  @if (isTouchDevice) {
+    @if (showPauseOverlay) {
+      <div class="pause-overlay" (touchend)="onTouchendPlay($event)">
+        <ion-icon name="play-circle"></ion-icon>
+      </div>
+    }
+    <div class="modal-content" (touchend)="onTouched($event)"
+         (touchmove)="onTouchMove($event)">
+      <div class="title backdrop">
+        <h2 class="">{{ player.currentEpisode().title }}</h2>
+        <h3 class="">{{ player.currentEpisode().host_name }}</h3>
       </div>
 
-      <span class="backdrop"> {{ player.totalDuration | timeline }}</span>
+      <app-player-waveform></app-player-waveform>
+
+      <div class="times">
+        <div class="top">
+          <span class="backdrop">{{ player.currentTime | timeline }}</span>
+
+          <span class="line"></span>
+
+          <span class="backdrop">
+                {{ player.totalDuration - player.currentTime | timeline }}</span>
+        </div>
+
+        <span class="backdrop"> {{ player.totalDuration | timeline }}</span>
+      </div>
     </div>
-  </div>
+  } @else {
+    @if (showPauseOverlay) {
+      <div class="pause-overlay" (mouseup)="mouseUpPlay($event)">
+        <ion-icon name="play-circle"></ion-icon>
+      </div>
+    }
+    <div class="modal-content" (mousedown)="mouseDown($event)"
+         (mousemove)="mouseMove($event)"
+         (mouseup)="mouseUp($event)">
+      <div class="title backdrop">
+        <h2 class="">{{ player.currentEpisode().title }}</h2>
+        <h3 class="">{{ player.currentEpisode().host_name }}</h3>
+      </div>
+
+      <app-player-waveform></app-player-waveform>
+
+      <div class="times">
+        <div class="top">
+          <span class="backdrop">{{ player.currentTime | timeline }}</span>
+
+          <span class="line"></span>
+
+          <span class="backdrop">
+          {{ player.totalDuration - player.currentTime | timeline }}</span>
+        </div>
+        <span class="backdrop"> {{ player.totalDuration | timeline }}</span>
+      </div>
+    </div>
+  }
 </ion-content>
 
 <ion-footer [class.visible]="!showPauseOverlay">

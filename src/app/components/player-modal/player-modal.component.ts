@@ -75,7 +75,8 @@ export class PlayerModalComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedSpeed = this.speedOptions[0];
 
   isModalOpen = false;
-  isTouchedMove = false;
+  isMouseDown = false;
+  isSearch = false;
 
   get isTouchDevice(): boolean {
     return 'ontouchstart' in window ||
@@ -110,35 +111,54 @@ export class PlayerModalComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() {}
 
-  onPlay(event: TouchEvent | MouseEvent) {
+
+  onTouchMove(event: TouchEvent) {
+    this.player.mute();
+    this.isSearch = true;
+  }
+
+  onTouched(event: TouchEvent) {
+    this.player.unmute();
+    if (!this.isSearch) {
+      this.player.pause();
+      this.showPauseOverlay = true;
+    }
+    this.isSearch = false;
+  }
+
+  onTouchendPlay(event: TouchEvent) {
+    this.player.contuniue();
+    this.player.unmute();
+    this.showPauseOverlay = false;
+  }
+
+  mouseUpPlay(event: MouseEvent) {
     this.player.contuniue();
     this.showPauseOverlay = false;
-    this.isTouchedMove = false;
-    //console.log([event, this.isTouchedMove]);
+    this.isMouseDown = false;
   }
 
-  onPause(event: TouchEvent | MouseEvent) {
-    //console.log([event, this.isTouchedMove]);
-    if (event.type === 'touchend' || event.type === 'mouseup') {
-      if (!this.isTouchedMove) {
-        this.handlePauseLogic();
-      }
-      this.isTouchedMove = false;
+  mouseDown(event: MouseEvent) {
+    this.isMouseDown = true;
+  }
+
+  mouseUp(event: MouseEvent) {
+    if (this.isSearch) {
+      this.player.contuniue();
+    } else {
+      this.player.pause();
+      this.showPauseOverlay = true;
     }
+    this.player.unmute();
+    this.isMouseDown = false;
+    this.isSearch = false
   }
 
-  mouseDown() {
-    this.isTouchedMove = false;
-  }
-
-  onTouchMove(event: TouchEvent | MouseEvent) {
-    this.isTouchedMove = true;
-  }
-
-  private handlePauseLogic() {
-    //console.log('Pause triggered');
-    this.player.pause();
-    this.showPauseOverlay = true;
+  mouseMove(event: MouseEvent) {
+    if (this.isMouseDown) {
+      this.isSearch = true;
+      this.player.mute();
+    }
   }
 
   onShare() {
