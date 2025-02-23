@@ -75,6 +75,14 @@ export class PlayerModalComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedSpeed = this.speedOptions[0];
 
   isModalOpen = false;
+  isMouseDown = false;
+  isSearch = false;
+
+  get isTouchDevice(): boolean {
+    return 'ontouchstart' in window ||
+      navigator.maxTouchPoints > 0 ||
+      (navigator as any).msMaxTouchPoints > 0;
+  }
 
   constructor(
     private alertController: AlertController,
@@ -87,7 +95,7 @@ export class PlayerModalComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.showPauseOverlay = !this.player.isPlaying();
+    // this.showPauseOverlay = !this.player.isPlaying();
     this.route.fragment.subscribe((fragment: string | null) => {
       if (fragment === null) {
         this.cancel();
@@ -103,14 +111,54 @@ export class PlayerModalComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() {}
 
-  onPlay(event: Event) {
+
+  onTouchMove(event: TouchEvent) {
+    this.player.mute();
+    this.isSearch = true;
+  }
+
+  onTouched(event: TouchEvent) {
+    this.player.unmute();
+    if (!this.isSearch) {
+      this.player.pause();
+      this.showPauseOverlay = true;
+    }
+    this.isSearch = false;
+  }
+
+  onTouchendPlay(event: TouchEvent) {
     this.player.contuniue();
+    this.player.unmute();
     this.showPauseOverlay = false;
   }
 
-  onPause(event: Event) {
-    this.player.pause();
-    this.showPauseOverlay = true;
+  mouseUpPlay(event: MouseEvent) {
+    this.player.contuniue();
+    this.showPauseOverlay = false;
+    this.isMouseDown = false;
+  }
+
+  mouseDown(event: MouseEvent) {
+    this.isMouseDown = true;
+  }
+
+  mouseUp(event: MouseEvent) {
+    if (this.isSearch) {
+      this.player.contuniue();
+    } else {
+      this.player.pause();
+      this.showPauseOverlay = true;
+    }
+    this.player.unmute();
+    this.isMouseDown = false;
+    this.isSearch = false
+  }
+
+  mouseMove(event: MouseEvent) {
+    if (this.isMouseDown) {
+      this.isSearch = true;
+      this.player.mute();
+    }
   }
 
   onShare() {

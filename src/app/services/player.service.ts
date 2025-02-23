@@ -93,4 +93,18 @@ export class PlayerService {
   isInitialized(): boolean {
     return !!this.howl;
   }
+
+  mute() {
+    if (this.howl) {
+      this.howl.volume(0);
+    }
+  }
+
+  unmute(volume: number = 1) {
+    if (this.howl) {
+      setTimeout(() => {
+        this.howl.volume(volume);
+      }, 100);
+    }
+  }
 }
