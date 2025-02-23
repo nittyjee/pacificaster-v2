@@ -129,7 +129,6 @@ export class PlayerWaveformComponent implements OnInit, AfterViewInit {
       // seek is not working if it is pause. mute is better
       // this.player.pause();
 
-      this.player.pause();
       clearInterval(this.moveInterval);
 
       this.cdRef.detectChanges();
