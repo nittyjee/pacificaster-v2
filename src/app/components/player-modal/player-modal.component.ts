@@ -64,7 +64,7 @@ import { EpisodeInfoModalComponent } from '../episode-info-modal/episode-info-mo
     FormsModule,
   ],
 })
-export class PlayerModalComponent implements OnInit, AfterViewInit, OnDestroy {
+export class PlayerModalComponent implements OnInit {
   private modalCtrl = inject(ModalController);
   public player = inject(PlayerService);
   private route = inject(ActivatedRoute);
@@ -79,9 +79,17 @@ export class PlayerModalComponent implements OnInit, AfterViewInit, OnDestroy {
   isSearch = false;
 
   get isTouchDevice(): boolean {
-    return 'ontouchstart' in window ||
+    return (
+      'ontouchstart' in window ||
       navigator.maxTouchPoints > 0 ||
-      (navigator as any).msMaxTouchPoints > 0;
+      (navigator as any).msMaxTouchPoints > 0
+    );
+  }
+
+  get currentTime(): number {
+    return this.player.isSeeking
+      ? this.player.timeStartSeeking
+      : this.player.currentTime;
   }
 
   constructor(
@@ -103,14 +111,9 @@ export class PlayerModalComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  ngAfterViewInit(): void {}
-
   cancel() {
     return this.modalCtrl.dismiss(null, 'cancel');
   }
-
-  ngOnDestroy() {}
-
 
   onTouchMove(event: TouchEvent) {
     this.player.mute();
@@ -151,7 +154,7 @@ export class PlayerModalComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     this.player.unmute();
     this.isMouseDown = false;
-    this.isSearch = false
+    this.isSearch = false;
   }
 
   mouseMove(event: MouseEvent) {

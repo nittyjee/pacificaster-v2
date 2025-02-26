@@ -1,13 +1,13 @@
 <div class="waveform">
   <div #waveformContainer class="waveform-container">
-    <canvas #canvas height="100" [class.animation]="!isSeeking"></canvas>
+    <canvas #canvas height="100" [class.animation]="!player.isSeeking"></canvas>
   </div>
 
   <span class="cursor"></span>
 </div>
 
-<div class="times" [class.visible]="isSeeking">
-  <span class="backdrop">{{ player.currentTime + seek | timeline }}</span>
+<div class="times" [class.visible]="player.isSeeking">
+  <span class="backdrop">{{ (player.timeStartSeeking) + seek | timeline }}</span>
 
   <span class="line"></span>
 

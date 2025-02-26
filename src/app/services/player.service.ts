@@ -13,6 +13,17 @@ export class PlayerService {
   totalDuration = 0;
   currentTime = 0;
 
+  private _isSeeking = false;
+  private _timeStartSeeking?: number;
+
+  get isSeeking(): boolean {
+    return this._isSeeking;
+  }
+
+  get timeStartSeeking(): number {
+    return this._timeStartSeeking || 0;
+  }
+
   speed = 1;
 
   private logInterval: any;
@@ -60,8 +71,15 @@ export class PlayerService {
     }, 1000);
   }
 
-  seek(value: number) {
+  startSeeking(timeStarted: number) {
+    this._isSeeking = true;
+    this._timeStartSeeking = timeStarted;
+  }
+
+  endSeeking(value: number) {
     this.howl.seek(this.currentTime + value);
+    this._isSeeking = false;
+    this._timeStartSeeking = undefined;
   }
 
   jump(value: number) {

@@ -61,12 +61,12 @@
 
       <div class="times">
         <div class="top">
-          <span class="backdrop">{{ player.currentTime | timeline }}</span>
+          <span class="backdrop">{{ currentTime | timeline }}</span>
 
           <span class="line"></span>
 
           <span class="backdrop">
-          {{ player.totalDuration - player.currentTime | timeline }}</span>
+          {{ player.totalDuration - currentTime | timeline }}</span>
         </div>
         <span class="backdrop"> {{ player.totalDuration | timeline }}</span>
       </div>

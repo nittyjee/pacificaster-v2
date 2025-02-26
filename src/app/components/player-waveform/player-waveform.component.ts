@@ -19,7 +19,7 @@ import { TimelinePipe } from 'src/app/pipes/timeline.pipe';
   standalone: true,
   imports: [TimelinePipe],
 })
-export class PlayerWaveformComponent implements OnInit, AfterViewInit {
+export class PlayerWaveformComponent implements AfterViewInit {
   @ViewChild('canvas')
   canvas!: ElementRef<HTMLCanvasElement>;
   @ViewChild('waveformContainer')
@@ -36,7 +36,6 @@ export class PlayerWaveformComponent implements OnInit, AfterViewInit {
 
   moveInterval!: any;
 
-  isSeeking = false;
   seek = 0;
 
   translationOrigin!: number;
@@ -46,8 +45,6 @@ export class PlayerWaveformComponent implements OnInit, AfterViewInit {
     private gestureCtrl: GestureController,
     private cdRef: ChangeDetectorRef
   ) {}
-
-  ngOnInit() {}
 
   ngAfterViewInit(): void {
     this.ctx = this.canvas?.nativeElement?.getContext(
@@ -104,7 +101,7 @@ export class PlayerWaveformComponent implements OnInit, AfterViewInit {
   moveWave() {
     clearInterval(this.moveInterval); // Clear any existing interval
     this.moveInterval = setInterval(() => {
-      if (!this.isSeeking) {
+      if (!this.player.isSeeking) {
         // Only move the waveform when not seeking
         const margin = Math.floor(
           this.player.currentTime * 10 * this.player.speed
@@ -120,9 +117,9 @@ export class PlayerWaveformComponent implements OnInit, AfterViewInit {
   }
 
   private onStart() {
-    if (this.player.isPlaying()) {
-      this.isSeeking = true;
+    this.player.startSeeking(this.player.currentTime);
 
+    if (this.player.isPlaying()) {
       this.translationOrigin = parseInt(
         this.canvas.nativeElement.getAttribute('position') ?? '0'
       );
@@ -136,7 +133,7 @@ export class PlayerWaveformComponent implements OnInit, AfterViewInit {
   }
 
   private onMove({ deltaX, currentX, velocityX }: GestureDetail) {
-    if (this.isSeeking) {
+    if (this.player.isSeeking) {
       this.seek = Math.floor((deltaX * -1) / 10);
 
       let translation = this.translationOrigin + deltaX * -1;
@@ -149,10 +146,8 @@ export class PlayerWaveformComponent implements OnInit, AfterViewInit {
   }
 
   private onEnd() {
-    if (this.isSeeking) {
-      this.player.seek(this.seek);
-
-      this.isSeeking = false;
+    if (this.player.isSeeking) {
+      this.player.endSeeking(this.seek);
       this.player.contuniue();
       this.moveWave();
       this.cdRef.detectChanges();
