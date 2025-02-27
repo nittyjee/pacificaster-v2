@@ -152,6 +152,7 @@ export class PlayerModalComponent implements OnInit {
       this.player.pause();
       this.showPauseOverlay = true;
     }
+    
     this.player.unmute();
     this.isMouseDown = false;
     this.isSearch = false;
