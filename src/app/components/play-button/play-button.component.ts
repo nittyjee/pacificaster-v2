@@ -17,7 +17,7 @@ import { PlayerService } from 'src/app/services/player.service';
   standalone: true,
   imports: [IonButton, IonIcon],
 })
-export class PlayButtonComponent implements OnInit {
+export class PlayButtonComponent {
   @Input() episode!: IEpisode;
   @Input() fill: boolean = true;
   @Output() play = new EventEmitter<void>();
@@ -26,8 +26,6 @@ export class PlayButtonComponent implements OnInit {
   public player = inject(PlayerService);
 
   constructor() {}
-
-  ngOnInit() {}
 
   onPlay(event: Event) {
     event.stopImmediatePropagation();

@@ -9,15 +9,11 @@ import { PlayerService } from 'src/app/services/player.service';
   standalone: true,
   imports: [IonRange],
 })
-export class PlayerTimelineComponent implements OnInit {
+export class PlayerTimelineComponent {
   isDragging = false;
   timelineBeforeDrag!: number;
 
   player = inject(PlayerService);
-
-  constructor() {}
-
-  ngOnInit() {}
 
   onChange(event: any) {
     this.player.jump(event.detail.value);

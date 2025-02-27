@@ -8,7 +8,7 @@ import { Howl, Howler } from 'howler';
 export class PlayerService {
   currentEpisode = signal<IEpisode>({} as IEpisode);
 
-  private howl!: Howl;
+  private howl?: Howl;
 
   totalDuration = 0;
   currentTime = 0;
@@ -28,8 +28,6 @@ export class PlayerService {
 
   private logInterval: any;
 
-  constructor() {}
-
   play(episode: IEpisode) {
     if (!this.howl) {
       this.initHowl(episode.audio_url);
@@ -38,13 +36,13 @@ export class PlayerService {
     if (this.currentEpisode().id !== episode.id) {
       this.currentEpisode.set(episode);
 
-      this.howl.unload();
+      this.howl?.unload();
 
       this.initHowl(episode.audio_url);
     }
 
-    if (!this.howl.playing()) {
-      this.howl.play();
+    if (!this.howl?.playing()) {
+      this.howl?.play();
     }
   }
 
@@ -55,7 +53,7 @@ export class PlayerService {
     });
 
     this.howl.on('load', () => {
-      this.totalDuration = this.howl.duration();
+      this.totalDuration = this.howl!.duration();
 
       this.logCurrentTime();
     });
@@ -65,8 +63,8 @@ export class PlayerService {
     clearInterval(this.logInterval);
 
     this.logInterval = setInterval(() => {
-      if (this.howl.playing()) {
-        this.currentTime = this.howl.seek();
+      if (this.howl?.playing() && !this.isSeeking) {
+        this.currentTime = this.howl?.seek();
       }
     }, 1000);
   }
@@ -77,30 +75,30 @@ export class PlayerService {
   }
 
   endSeeking(value: number) {
-    this.howl.seek(this.currentTime + value);
+    this.howl?.seek(this.currentTime + value);
     this._isSeeking = false;
     this._timeStartSeeking = undefined;
   }
 
   jump(value: number) {
-    this.howl.seek(value);
+    this.howl?.seek(value);
   }
 
   pause() {
-    if (this.howl.playing()) {
+    if (this.howl && this.howl.playing()) {
       this.howl.pause();
     }
   }
 
   contuniue() {
-    if (!this.howl.playing()) {
+    if (this.howl && !this.howl.playing()) {
       this.howl.play();
     }
   }
 
   changeSpeed(speed: number) {
     this.speed = speed;
-    this.howl.rate(speed);
+    this.howl?.rate(speed);
   }
 
   isPlaying(): boolean {
@@ -113,16 +111,12 @@ export class PlayerService {
   }
 
   mute() {
-    if (this.howl) {
-      this.howl.volume(0);
-    }
+    this.howl?.volume(0);
   }
 
-  unmute(volume: number = 1) {
-    if (this.howl) {
-      setTimeout(() => {
-        this.howl.volume(volume);
-      }, 100);
-    }
+  unmute() {
+    setTimeout(() => {
+      this.howl?.volume(1);
+    }, 100);
   }
 }

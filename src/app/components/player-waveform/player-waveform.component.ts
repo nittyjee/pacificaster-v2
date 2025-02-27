@@ -147,8 +147,8 @@ export class PlayerWaveformComponent implements AfterViewInit {
 
   private onEnd() {
     if (this.player.isSeeking) {
-      this.player.endSeeking(this.seek);
       this.player.contuniue();
+      this.player.endSeeking(this.seek);
       this.moveWave();
       this.cdRef.detectChanges();
     }

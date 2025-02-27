@@ -120,6 +120,7 @@ export class PlayerModalComponent implements OnInit {
     this.isSearch = true;
   }
 
+  //runs when the finger is lifted off the screen
   onTouched(event: TouchEvent) {
     this.player.unmute();
     if (!this.isSearch) {
@@ -152,7 +153,7 @@ export class PlayerModalComponent implements OnInit {
       this.player.pause();
       this.showPauseOverlay = true;
     }
-    
+
     this.player.unmute();
     this.isMouseDown = false;
     this.isSearch = false;
