@@ -33,17 +33,7 @@
     <ion-icon name="play-circle"></ion-icon>
   </div>
   }
-
-  <!-- Modal Content -->
-  <div
-    class="modal-content"
-    [style.gap]="inLimitedSpace ? '0.2rem' : '1rem'"
-    (touchend)="isTouchDevice && onTouched($event)"
-    (touchmove)="isTouchDevice && onTouchMove($event)"
-    (mousedown)="!isTouchDevice && mouseDown($event)"
-    (mousemove)="!isTouchDevice && mouseMove($event)"
-    (mouseup)="!isTouchDevice && mouseUp($event)"
-  >
+  <div>
     <div class="header">
       @if(inLimitedSpace){
       <ion-buttons class="onlyShowOnHoverOfWrapper">
@@ -66,26 +56,39 @@
       </ion-buttons>
       }
     </div>
+    <!-- Modal Content -->
+    <div
+      class="modal-content"
+      [style.gap]="inLimitedSpace ? '0.2rem' : '1rem'"
+      (touchend)="isTouchDevice && onTouched($event)"
+      (touchmove)="isTouchDevice && onTouchMove($event)"
+      (mousedown)="!isTouchDevice && mouseDown($event)"
+      (mousemove)="!isTouchDevice && mouseMove($event)"
+      (mouseup)="!isTouchDevice && mouseUp($event)"
+    >
+      <app-player-waveform
+        [totalDuration]="player.totalDuration"
+      ></app-player-waveform>
 
-    <app-player-waveform
-      [totalDuration]="player.totalDuration"
-    ></app-player-waveform>
-
-    <div class="times onlyShowOnHoverOfWrapper">
-      <div class="top">
-        <span class="backdrop">{{ currentTime | timeline }}</span>
-        <span class="line"></span>
-        <span class="backdrop">{{
-          player.totalDuration - currentTime | timeline
-        }}</span>
+      <div class="times onlyShowOnHoverOfWrapper">
+        <div class="top">
+          <span class="backdrop">{{ currentTime | timeline }}</span>
+          <span class="line"></span>
+          <span class="backdrop">{{
+            player.totalDuration - currentTime | timeline
+          }}</span>
+        </div>
+        @if (!inLimitedSpace){
+        <ng-container *ngTemplateOutlet="totalDurationTemplate"></ng-container>
+        }
       </div>
-      @if (!inLimitedSpace){
-      <ng-container *ngTemplateOutlet="totalDurationTemplate"></ng-container>
-      }
     </div>
   </div>
 
-  <div [class.hidden]="showPauseOverlay" class="footer onlyShowOnHoverOfWrapper">
+  <div
+    [class.hidden]="showPauseOverlay"
+    class="footer onlyShowOnHoverOfWrapper"
+  >
     @if(!inLimitedSpace){
     <ion-toolbar>
       <ion-buttons slot="primary">
@@ -133,12 +136,12 @@
         }
       </ion-select>
     </div>
-    <div class="tool">
+    <ion-button class="tool">
       <ion-icon
         slot="icon-only"
         name="share-social-outline"
         (click)="onShare()"
       ></ion-icon>
-    </div>
+    </ion-button>
   </div>
 </ng-template>
