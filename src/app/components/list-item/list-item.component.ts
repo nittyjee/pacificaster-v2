@@ -26,13 +26,11 @@ import { IAffiliate } from 'src/app/interfaces/affiliate.interface';
     ThumbnailComponent,
   ],
 })
-export class ListItemComponent implements OnInit {
+export class ListItemComponent {
   @Input() item!: IPodcast | IAffiliate;
   @Input() inList: boolean = false;
 
   constructor(private router: Router) {}
-
-  ngOnInit() {}
 
   onClick() {
     if (window.innerWidth > 768) {

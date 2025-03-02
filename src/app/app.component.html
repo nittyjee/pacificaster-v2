@@ -2,9 +2,10 @@
   <ion-router-outlet></ion-router-outlet>
 
   <div class="bottom-bar">
-    @if (player.isInitialized()) {
+    @if (isMobile && player.isInitialized()) {
     <app-mini-player></app-mini-player>
-    } @if (!isMobile) {
+  }
+    @if (!isMobile) {
     <app-tabbar></app-tabbar>
     }
   </div>

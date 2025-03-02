@@ -1,14 +1,16 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import {
   IonContent,
-  IonSplitPane,
+  IonImg,
   IonMenu,
   IonRouterOutlet,
-  IonImg,
+  IonSplitPane,
 } from '@ionic/angular/standalone';
 import { HeaderComponent } from 'src/app/components/header/header.component';
 import { ListComponent } from 'src/app/components/list/list.component';
+import { PlayerService } from 'src/app/services/player.service';
 import { PodcastService } from 'src/app/services/podcast.service';
+import { PlayerModalComponent } from "../../components/player-modal/player-modal.component";
 
 @Component({
   selector: 'app-home',
@@ -23,10 +25,12 @@ import { PodcastService } from 'src/app/services/podcast.service';
     ListComponent,
     IonRouterOutlet,
     HeaderComponent,
-  ],
+    PlayerModalComponent
+],
 })
 export class HomePage implements OnInit {
   public podcastService = inject(PodcastService);
+  public player = inject(PlayerService);
 
   isMobile = window.innerWidth < 768;
 

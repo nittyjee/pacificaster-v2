@@ -26,4 +26,11 @@
       [isList]="isList()"
     ></app-list>
   </div>
+
+  @if(player.isInitialized() && !isMobile){
+    <div class="bottom-bar">
+      <app-player-modal [openedAsModal]="false"></app-player-modal>
+    </div>
+  }
+
 </ion-content>

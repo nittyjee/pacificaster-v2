@@ -1,14 +1,12 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-button (click)="cancel()" fill="clear">
-        <ion-icon slot="icon-only" name="chevron-down-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
+@if(openedAsModal){
+      <ion-buttons slot="start">
+        <ion-button (click)="cancel()" fill="clear">
+          <ion-icon slot="icon-only" name="chevron-down-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+}
 
-<ion-content [fullscreen]="true" class="ion-padding" scrollY="false">
+<div [class.ion-padding]="true" (mouseup)="!isTouchDevice && mouseUp($event)">
   <div class="background">
     <img
       [src]="player.currentEpisode().image_url"
@@ -31,14 +29,13 @@
        (touchend)="isTouchDevice && onTouched($event)"
        (touchmove)="isTouchDevice && onTouchMove($event)"
        (mousedown)="!isTouchDevice && mouseDown($event)"
-       (mousemove)="!isTouchDevice && mouseMove($event)"
-       (mouseup)="!isTouchDevice && mouseUp($event)">
+       (mousemove)="!isTouchDevice && mouseMove($event)">
     <div class="title backdrop">
       <h2>{{ player.currentEpisode().title }}</h2>
       <h3>{{ player.currentEpisode().host_name }}</h3>
     </div>
 
-    <app-player-waveform></app-player-waveform>
+    <app-player-waveform [totalDuration]="player.totalDuration"></app-player-waveform>
 
     <div class="times">
       <div class="top">
@@ -49,7 +46,7 @@
       <span class="backdrop">{{ player.totalDuration | timeline }}</span>
     </div>
   </div>
-</ion-content>
+</div>
 
 <ion-footer [class.visible]="!showPauseOverlay">
   <ion-toolbar>

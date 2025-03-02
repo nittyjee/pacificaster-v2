@@ -3,14 +3,15 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
-  OnInit,
+  Input,
+  OnChanges,
   ViewChild,
-  inject,
+  inject
 } from '@angular/core';
-import { PlayerService } from 'src/app/services/player.service';
 import type { GestureDetail } from '@ionic/angular/standalone';
 import { GestureController } from '@ionic/angular/standalone';
 import { TimelinePipe } from 'src/app/pipes/timeline.pipe';
+import { PlayerService } from 'src/app/services/player.service';
 
 @Component({
   selector: 'app-player-waveform',
@@ -19,9 +20,10 @@ import { TimelinePipe } from 'src/app/pipes/timeline.pipe';
   standalone: true,
   imports: [TimelinePipe],
 })
-export class PlayerWaveformComponent implements AfterViewInit {
+export class PlayerWaveformComponent implements AfterViewInit, OnChanges {
+  @Input() totalDuration?: number;
   @ViewChild('canvas')
-  canvas!: ElementRef<HTMLCanvasElement>;
+  canvas?: ElementRef<HTMLCanvasElement>;
   @ViewChild('waveformContainer')
   waveformContainer!: ElementRef;
   private ctx!: CanvasRenderingContext2D;
@@ -54,7 +56,7 @@ export class PlayerWaveformComponent implements AfterViewInit {
     this.drawRandomWaveform();
 
     const gesture = this.gestureCtrl.create({
-      el: this.el.nativeElement.closest('ion-content'),
+      el: this.el.nativeElement,
       onStart: () => this.onStart(),
       onMove: (detail) => this.onMove(detail),
       onEnd: () => this.onEnd(),
@@ -65,43 +67,52 @@ export class PlayerWaveformComponent implements AfterViewInit {
     gesture.enable();
   }
 
+  ngOnChanges(): void {
+    if (this.totalDuration) {
+      this.drawRandomWaveform();
+    }
+  }
+
   drawRandomWaveform() {
-    let duration = this.player.totalDuration;
+    if (this.canvas) {
+      let duration = this.player.totalDuration;
 
-    const scale = 10;
-    const margin = 1;
+      const scale = 10;
+      const margin = 1;
 
-    const { width, height } = this.canvas.nativeElement;
+      const { width, height } = this.canvas.nativeElement;
 
-    this.canvas.nativeElement.width = duration * scale;
-    const centerHeight = Math.ceil(height / 2);
-    const scaleFactor = (height - margin * 2) / 2;
+      this.canvas.nativeElement.width = duration * scale;
+      const centerHeight = Math.ceil(height / 2);
+      const scaleFactor = (height - margin * 2) / 2;
 
-    // Generate random values
-    const array = [];
-    const totalPoints = duration * scale;
-    for (let i = 0; i < totalPoints; i++) {
-      array.push(Math.random()); // Random values between 0 and 1
+      // Generate random values
+      const array = [];
+      const totalPoints = duration * scale;
+      for (let i = 0; i < totalPoints; i++) {
+        array.push(Math.random()); // Random values between 0 and 1
+      }
+
+      let x = 0;
+      for (let k = 0; k < array.length; k += 2) {
+        this.ctx.fillStyle = '#76bde7';
+        this.ctx.fillRect(
+          x,
+          centerHeight - array[k] * scaleFactor,
+          1,
+          array[k] * scaleFactor * 2
+        );
+        x += 2;
+      }
+
+      this.moveWave();
     }
-
-    let x = 0;
-    for (let k = 0; k < array.length; k += 2) {
-      this.ctx.fillStyle = '#76bde7';
-      this.ctx.fillRect(
-        x,
-        centerHeight - array[k] * scaleFactor,
-        1,
-        array[k] * scaleFactor * 2
-      );
-      x += 2;
-    }
-    this.moveWave();
   }
 
   moveWave() {
     clearInterval(this.moveInterval); // Clear any existing interval
     this.moveInterval = setInterval(() => {
-      if (!this.player.isSeeking) {
+      if (!this.player.isSeeking && this.canvas) {
         // Only move the waveform when not seeking
         const margin = Math.floor(
           this.player.currentTime * 10 * this.player.speed
@@ -121,7 +132,7 @@ export class PlayerWaveformComponent implements AfterViewInit {
 
     if (this.player.isPlaying()) {
       this.translationOrigin = parseInt(
-        this.canvas.nativeElement.getAttribute('position') ?? '0'
+        this.canvas?.nativeElement.getAttribute('position') ?? '0'
       );
       // seek is not working if it is pause. mute is better
       // this.player.pause();
@@ -132,8 +143,8 @@ export class PlayerWaveformComponent implements AfterViewInit {
     }
   }
 
-  private onMove({ deltaX, currentX, velocityX }: GestureDetail) {
-    if (this.player.isSeeking) {
+  private onMove({ deltaX }: GestureDetail) {
+    if (this.player.isSeeking && this.canvas) {
       this.seek = Math.floor((deltaX * -1) / 10);
 
       let translation = this.translationOrigin + deltaX * -1;
@@ -147,7 +158,7 @@ export class PlayerWaveformComponent implements AfterViewInit {
 
   private onEnd() {
     if (this.player.isSeeking) {
-      this.player.contuniue();
+      this.player.continue();
       this.player.endSeeking(this.seek);
       this.moveWave();
       this.cdRef.detectChanges();

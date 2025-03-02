@@ -90,7 +90,7 @@ export class PlayerService {
     }
   }
 
-  contuniue() {
+  continue() {
     if (this.howl && !this.howl.playing()) {
       this.howl.play();
     }

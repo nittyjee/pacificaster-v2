@@ -20,4 +20,14 @@
       width: auto;
     }
   }
+
+  .bottom-bar{
+    position: sticky;
+    width: 100%;
+    left:0;
+
+    //move above the footer
+    bottom:48px;
+
+  }
 }

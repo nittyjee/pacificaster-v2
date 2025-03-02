@@ -31,7 +31,7 @@ import { Router } from '@angular/router';
     TimelinePipe,
   ],
 })
-export class MiniPlayerComponent implements OnInit, AfterViewInit {
+export class MiniPlayerComponent {
   @ViewChild('audio') audio!: ElementRef;
 
   public player = inject(PlayerService);
@@ -66,14 +66,8 @@ export class MiniPlayerComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngOnInit() {}
-
   start() {
     // this.audio.nativeElement.play();
-  }
-
-  ngAfterViewInit(): void {
-    // this.currentTime = this.audio.nativeElement.currentTime;
   }
 
   onLoad(event: any) {
