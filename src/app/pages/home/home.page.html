@@ -29,7 +29,7 @@
 
   @if(player.isInitialized() && !isMobile){
     <div class="bottom-bar">
-      <app-player-modal [openedAsModal]="false"></app-player-modal>
+      <app-player-modal [inLimitedSpace]="true"></app-player-modal>
     </div>
   }
 

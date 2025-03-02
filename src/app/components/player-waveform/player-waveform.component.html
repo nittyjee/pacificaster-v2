@@ -6,7 +6,7 @@
   <span class="cursor"></span>
 </div>
 
-<div class="times" [class.visible]="player.isSeeking">
+<div class="times" [class.hidden]="!player.isSeeking">
   <span class="backdrop">{{ (player.timeStartSeeking) + seek | timeline }}</span>
 
   <span class="line"></span>

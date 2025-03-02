@@ -1,13 +1,21 @@
-@if(openedAsModal){
-      <ion-buttons slot="start">
-        <ion-button (click)="cancel()" fill="clear">
-          <ion-icon slot="icon-only" name="chevron-down-outline"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-}
-
-<div [class.ion-padding]="true" (mouseup)="!isTouchDevice && mouseUp($event)">
-  <div class="background">
+<div
+  [class.ion-padding]="!inLimitedSpace"
+  [style.padding]="inLimitedSpace ? '5px' : undefined"
+  [class.limitedSpace]="inLimitedSpace"
+  class="wrapper"
+>
+  @if(!inLimitedSpace){
+  <ion-buttons>
+    <ion-button (click)="cancel()" fill="clear">
+      <ion-icon slot="icon-only" name="chevron-down-outline"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  }
+  <div
+    class="background"
+    (mouseup)="!isTouchDevice && mouseUp($event)"
+    (touchend)="isTouchDevice && onTouched($event)"
+  >
     <img
       [src]="player.currentEpisode().image_url"
       [alt]="player.currentEpisode().title"
@@ -17,68 +25,120 @@
 
   <!-- Pause Overlay -->
   @if (showPauseOverlay) {
-    <div class="pause-overlay" 
-         (touchend)="isTouchDevice && onTouchendPlay($event)"
-         (mouseup)="!isTouchDevice && mouseUpPlay($event)">
-      <ion-icon name="play-circle"></ion-icon>
-    </div>
+  <div
+    class="pause-overlay"
+    (mouseup)="!isTouchDevice && mouseUp($event)"
+    (touchend)="isTouchDevice && onTouchendPlay($event)"
+  >
+    <ion-icon name="play-circle"></ion-icon>
+  </div>
   }
 
   <!-- Modal Content -->
-  <div class="modal-content"
-       (touchend)="isTouchDevice && onTouched($event)"
-       (touchmove)="isTouchDevice && onTouchMove($event)"
-       (mousedown)="!isTouchDevice && mouseDown($event)"
-       (mousemove)="!isTouchDevice && mouseMove($event)">
-    <div class="title backdrop">
-      <h2>{{ player.currentEpisode().title }}</h2>
-      <h3>{{ player.currentEpisode().host_name }}</h3>
+  <div
+    class="modal-content"
+    [style.gap]="inLimitedSpace ? '0.2rem' : '1rem'"
+    (touchend)="isTouchDevice && onTouched($event)"
+    (touchmove)="isTouchDevice && onTouchMove($event)"
+    (mousedown)="!isTouchDevice && mouseDown($event)"
+    (mousemove)="!isTouchDevice && mouseMove($event)"
+    (mouseup)="!isTouchDevice && mouseUp($event)"
+  >
+    <div class="header">
+      @if(inLimitedSpace){
+      <ion-buttons class="onlyShowOnHoverOfWrapper">
+        <ng-container
+          *ngTemplateOutlet="episodeInfoButtonTemplate"
+        ></ng-container>
+      </ion-buttons>
+      }
+      <div class="title backdrop">
+        <h2>{{ player.currentEpisode().title }}</h2>
+        @if(inLimitedSpace){
+        <span>|</span>
+        }
+        <h3>{{ player.currentEpisode().host_name }}</h3>
+      </div>
+
+      @if(inLimitedSpace){
+      <ion-buttons class="onlyShowOnHoverOfWrapper">
+        <ng-container *ngTemplateOutlet="toolsButtonsTemplate"></ng-container>
+      </ion-buttons>
+      }
     </div>
 
-    <app-player-waveform [totalDuration]="player.totalDuration"></app-player-waveform>
+    <app-player-waveform
+      [totalDuration]="player.totalDuration"
+    ></app-player-waveform>
 
-    <div class="times">
+    <div class="times onlyShowOnHoverOfWrapper">
       <div class="top">
         <span class="backdrop">{{ currentTime | timeline }}</span>
         <span class="line"></span>
-        <span class="backdrop">{{ player.totalDuration - currentTime | timeline }}</span>
+        <span class="backdrop">{{
+          player.totalDuration - currentTime | timeline
+        }}</span>
       </div>
-      <span class="backdrop">{{ player.totalDuration | timeline }}</span>
+      @if (!inLimitedSpace){
+      <ng-container *ngTemplateOutlet="totalDurationTemplate"></ng-container>
+      }
     </div>
+  </div>
+
+  <div [class.hidden]="showPauseOverlay" class="footer onlyShowOnHoverOfWrapper">
+    @if(!inLimitedSpace){
+    <ion-toolbar>
+      <ion-buttons slot="primary">
+        <ng-container *ngTemplateOutlet="toolsButtonsTemplate"></ng-container>
+      </ion-buttons>
+
+      <ion-buttons slot="secondary">
+        <ng-container
+          *ngTemplateOutlet="episodeInfoButtonTemplate"
+        ></ng-container>
+      </ion-buttons>
+    </ion-toolbar>
+    }
+
+    <app-player-timeline></app-player-timeline>
   </div>
 </div>
 
-<ion-footer [class.visible]="!showPauseOverlay">
-  <ion-toolbar>
-    <ion-buttons slot="secondary">
-      <ion-button class="tool" (click)="onEpisodeDetail()">
-        Episode Info
-      </ion-button>
-    </ion-buttons>
+<ng-template #totalDurationTemplate
+  ><span class="backdrop">{{
+    player.totalDuration | timeline
+  }}</span></ng-template
+>
 
-    <ion-buttons slot="primary">
-      <div class="tools">
-        <div class="tool">
-          <ion-select
-            interface="popover"
-            [(ngModel)]="selectedSpeed"
-            (ngModelChange)="onSpeedChange($event)"
-          >
-            @for (item of speedOptions; track $index) {
-              <ion-select-option [value]="item">{{ item }}X</ion-select-option>
-            }
-          </ion-select>
-        </div>
-        <div class="tool">
-          <ion-icon
-            slot="icon-only"
-            name="share-social-outline"
-            (click)="onShare()"
-          ></ion-icon>
-        </div>
-      </div>
-    </ion-buttons>
-  </ion-toolbar>
+<ng-template #episodeInfoButtonTemplate>
+  <ion-button
+    class="tool"
+    (click)="onEpisodeDetail()"
+    [class.hidden]="showPauseOverlay"
+  >
+    Episode Info
+  </ion-button>
+</ng-template>
 
-  <app-player-timeline></app-player-timeline>
-</ion-footer>
+<ng-template #toolsButtonsTemplate>
+  <div class="tools" [class.hidden]="showPauseOverlay">
+    <div class="tool">
+      <ion-select
+        interface="popover"
+        [(ngModel)]="selectedSpeed"
+        (ngModelChange)="onSpeedChange($event)"
+      >
+        @for (item of speedOptions; track $index) {
+        <ion-select-option [value]="item">{{ item }}X</ion-select-option>
+        }
+      </ion-select>
+    </div>
+    <div class="tool">
+      <ion-icon
+        slot="icon-only"
+        name="share-social-outline"
+        (click)="onShare()"
+      ></ion-icon>
+    </div>
+  </div>
+</ng-template>

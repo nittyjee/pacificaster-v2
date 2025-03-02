@@ -23,7 +23,7 @@ import {
   Platform,
 } from '@ionic/angular/standalone';
 
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgTemplateOutlet } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { TimelinePipe } from 'src/app/pipes/timeline.pipe';
@@ -61,10 +61,11 @@ import { ThumbnailComponent } from '../thumbnail/thumbnail.component';
     IonSelect,
     IonSelectOption,
     FormsModule,
+    NgTemplateOutlet,
   ],
 })
 export class PlayerModalComponent implements OnInit {
-  @Input() openedAsModal = true;
+  @Input() inLimitedSpace = false;
   private modalCtrl = inject(ModalController);
   public player = inject(PlayerService);
   private route = inject(ActivatedRoute);
@@ -136,12 +137,6 @@ export class PlayerModalComponent implements OnInit {
     this.showPauseOverlay = false;
   }
 
-  mouseUpPlay(event: MouseEvent) {
-    this.player.continue();
-    this.showPauseOverlay = false;
-    this.isMouseDown = false;
-  }
-
   mouseDown(event: MouseEvent) {
     this.isMouseDown = true;
   }
@@ -149,8 +144,9 @@ export class PlayerModalComponent implements OnInit {
   //if the mouse is lifter up outised of the player we also need to unmute
   // @HostListener('document:mouseup', ['$event'])
   mouseUp(event: MouseEvent) {
-    if (this.isSearch) {
+    if (this.isSearch || this.showPauseOverlay) {
       this.player.continue();
+      this.showPauseOverlay = false;
     } else {
       this.player.pause();
       this.showPauseOverlay = true;

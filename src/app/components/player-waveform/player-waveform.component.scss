@@ -37,10 +37,15 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    visibility: hidden;
+    height: 30px;
+    opacity: 1;
+    transition: height 0.5s, opacity 0.5s;
+    transition-timing-function: ease-in-out;
 
-    &.visible {
-      visibility: visible;
+    &.hidden {
+      visibility: hidden;
+      height:0px;
+      opacity: 0;
     }
 
     span {

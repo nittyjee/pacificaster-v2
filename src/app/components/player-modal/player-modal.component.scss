@@ -1,89 +1,134 @@
 :host {
-  ion-header {
-    --background: transparent;
-
-    ion-toolbar {
-      --background: transparent;
-      --border-color: transparent;
-    }
-  }
-  ion-footer {
-    --background: transparent;
-    visibility: hidden;
-
-    &.visible {
-      visibility: visible;
-    }
-
-    ion-toolbar {
-      --background: transparent;
-      --border-color: transparent;
-
-      app-player-timeline {
-        padding: 0 0.5rem 0.5rem 0.5rem;
-      }
-    }
-  }
-
-  .background {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    opacity: 1;
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-    }
-
-    .overlay {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      background-color: rgba(0, 0, 0, 0.5);
-    }
-  }
-
-  .pause-overlay {
-    overflow: hidden;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 2;
-    opacity: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #501212;
-    opacity: 0.6;
-
-    ion-icon {
-      width: 100%;
-      height: 100%;
-      color: white;
-      scale: 1.5;
-      overflow: hidden;
-    }
-  }
-
-  .modal-content {
+  .wrapper {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    align-items: stretch;
     height: 100%;
-    gap: 1rem;
-    position: relative;
-    z-index: 1;
+
+    .footer {
+      --background: transparent;
+
+      ion-toolbar {
+        --background: transparent;
+        --border-color: transparent;
+
+        app-player-timeline {
+          padding: 0 0.5rem 0.5rem 0.5rem;
+        }
+      }
+    }
+
+    .background {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      opacity: 1;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+      }
+
+      .overlay {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+    }
+
+    .pause-overlay {
+      overflow: hidden;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      opacity: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #501212;
+      opacity: 0.6;
+
+      ion-icon {
+        width: 100%;
+        height: 100%;
+        color: white;
+        scale: 1.5;
+        overflow: hidden;
+      }
+    }
+
+    .header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+      width: 100%;
+    }
+
+    .title {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.5rem;
+      z-index: 1;
+
+      h2 {
+        font-size: 1.6rem;
+        font-weight: 700;
+        margin: 0;
+      }
+
+      h3 {
+        font-size: 1.3rem;
+        font-weight: 300;
+        margin: 0;
+      }
+    }
+
+    &.limitedSpace {
+      .header {
+        .title {
+          flex-direction: row;
+          align-items: center;
+          text-align: left;
+        }
+      }
+
+      .onlyShowOnHoverOfWrapper {
+        height: 0px;
+        opacity: 0;
+        transition: height 0.5s, opacity 0.5s;
+        transition-timing-function: ease-in-out;
+      }
+
+      &:hover {
+        .onlyShowOnHoverOfWrapper {
+          height: auto;
+          opacity: 1;
+        }
+      }
+    }
+
+    .modal-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-evenly;
+      position: relative;
+      z-index: 1;
+    }
 
     .backdrop {
       background-color: rgba(56, 58, 62, 0.52);
@@ -92,23 +137,6 @@
       color: white;
       width: fit-content;
       text-align: center;
-    }
-
-    .title {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 0.5rem;
-
-      h2 {
-        font-size: 1.6rem;
-        font-weight: 700;
-      }
-
-      h3 {
-        font-size: 1.4rem;
-        font-weight: 500;
-      }
     }
 
     .times {
@@ -139,28 +167,32 @@
         background-color: rgba(56, 58, 62, 0.52);
       }
     }
-  }
 
-  .tools {
-    display: flex;
-    gap: 0.5rem;
-  }
+    .tools {
+      display: flex;
+      gap: 0.5rem;
+    }
 
-  .tool {
-    border: 1px solid var(--ion-color-primary);
-    background-color: white;
-    color: var(--ion-color-primary);
-    font-size: 1.2rem;
-    min-width: 3rem;
-    height: 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 1.5rem;
+    .tool {
+      border: 1px solid var(--ion-color-primary);
+      background-color: white;
+      color: var(--ion-color-primary);
+      font-size: 1.2rem;
+      min-width: 3rem;
+      height: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 1.5rem;
 
-    &:first-child {
-      font-size: 1rem;
-      padding: 0 1rem;
+      &:first-child {
+        font-size: 1rem;
+        padding: 0 1rem;
+      }
+    }
+
+    .hidden {
+      visibility: hidden;
     }
   }
 }
