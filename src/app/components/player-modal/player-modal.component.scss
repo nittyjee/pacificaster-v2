@@ -70,11 +70,24 @@
     }
 
     .header {
+      padding: 0.5rem;
       display: flex;
       flex-direction: row;
       justify-content: center;
       align-items: center;
       width: 100%;
+      z-index: 1;
+      position: relative;
+
+      .header-start {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        place-content: flex-start;
+      }
     }
 
     .title {
@@ -83,6 +96,8 @@
       justify-content: center;
       gap: 0.5rem;
       z-index: 1;
+      flex-wrap: wrap;
+      place-content: flex-start;
 
       h2 {
         font-size: 1.6rem;
@@ -159,13 +174,6 @@
       span {
         font-size: 1rem;
         font-weight: 500;
-      }
-
-      .line {
-        display: block;
-        width: 2px;
-        height: 100%;
-        background-color: rgba(56, 58, 62, 0.52);
       }
     }
 

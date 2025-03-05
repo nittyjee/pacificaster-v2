@@ -35,27 +35,29 @@
   }
   <div>
     <div class="header">
-      @if(inLimitedSpace){
-      <ion-buttons class="onlyShowOnHoverOfWrapper">
-        <ng-container
-          *ngTemplateOutlet="episodeInfoButtonTemplate"
-        ></ng-container>
-      </ion-buttons>
-      }
-      <div class="title backdrop">
-        <h2>{{ player.currentEpisode().title }}</h2>
+      <div class="header-start">
+        <div class="title backdrop">
+          <h2>{{ player.currentEpisode().title }}</h2>
+          @if(inLimitedSpace){
+          <span>|</span>
+          }
+          <h3>{{ player.currentEpisode().host_name }}</h3>
+        </div>
         @if(inLimitedSpace){
-        <span>|</span>
+        <div class="times">
+          <ng-container *ngTemplateOutlet="timeProgressTemplate"></ng-container>
+        </div>
         }
-        <h3>{{ player.currentEpisode().host_name }}</h3>
       </div>
 
       @if(inLimitedSpace){
-      <ion-buttons class="onlyShowOnHoverOfWrapper">
+      <ion-buttons>
         <ng-container *ngTemplateOutlet="toolsButtonsTemplate"></ng-container>
+        <ng-container *ngTemplateOutlet="episodeInfoButtonTemplate"></ng-container>
       </ion-buttons>
       }
     </div>
+
     <!-- Modal Content -->
     <div
       class="modal-content"
@@ -71,24 +73,15 @@
       ></app-player-waveform>
 
       <div class="times onlyShowOnHoverOfWrapper">
-        <div class="top">
-          <span class="backdrop">{{ currentTime | timeline }}</span>
-          <span class="line"></span>
-          <span class="backdrop">{{
-            player.totalDuration - currentTime | timeline
-          }}</span>
-        </div>
         @if (!inLimitedSpace){
+        <ng-container *ngTemplateOutlet="timeProgressTemplate"></ng-container>
         <ng-container *ngTemplateOutlet="totalDurationTemplate"></ng-container>
         }
       </div>
     </div>
   </div>
 
-  <div
-    [class.hidden]="showPauseOverlay"
-    class="footer onlyShowOnHoverOfWrapper"
-  >
+  <div [class.hidden]="showPauseOverlay" class="footer">
     @if(!inLimitedSpace){
     <ion-toolbar>
       <ion-buttons slot="primary">
@@ -112,6 +105,15 @@
     player.totalDuration | timeline
   }}</span></ng-template
 >
+
+<ng-template #timeProgressTemplate>
+  <div class="top">
+    <span class="backdrop">{{ currentTime | timeline }}</span>
+    <span class="backdrop">{{
+      player.totalDuration - currentTime | timeline
+    }}</span>
+  </div>
+</ng-template>
 
 <ng-template #episodeInfoButtonTemplate>
   <ion-button
