@@ -6,7 +6,7 @@ import {
   Input,
   OnChanges,
   ViewChild,
-  inject
+  inject,
 } from '@angular/core';
 import type { GestureDetail } from '@ionic/angular/standalone';
 import { GestureController } from '@ionic/angular/standalone';
@@ -22,6 +22,8 @@ import { PlayerService } from 'src/app/services/player.service';
 })
 export class PlayerWaveformComponent implements AfterViewInit, OnChanges {
   @Input() totalDuration?: number;
+  @Input() inLimitedSpace: boolean = false;
+
   @ViewChild('canvas')
   canvas?: ElementRef<HTMLCanvasElement>;
   @ViewChild('waveformContainer')

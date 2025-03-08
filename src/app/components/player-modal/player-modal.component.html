@@ -35,25 +35,27 @@
   }
   <div>
     <div class="header">
-      <div class="header-start">
+      <div>
         <div class="title backdrop">
           <h2>{{ player.currentEpisode().title }}</h2>
-          @if(inLimitedSpace){
-          <span>|</span>
-          }
-          <h3>{{ player.currentEpisode().host_name }}</h3>
+          <h3 class="onlyShowOnHoverOfWrapper">
+            @if(inLimitedSpace){
+            <span>|</span>
+            }
+            {{ player.currentEpisode().host_name }}
+          </h3>
         </div>
-        @if(inLimitedSpace){
-        <div class="times">
-          <ng-container *ngTemplateOutlet="timeProgressTemplate"></ng-container>
-        </div>
-        }
+      </div>
+      @if(inLimitedSpace){
+      <div class="times">
+        <ng-container *ngTemplateOutlet="timeProgressTemplate"></ng-container>
       </div>
 
-      @if(inLimitedSpace){
       <ion-buttons>
         <ng-container *ngTemplateOutlet="toolsButtonsTemplate"></ng-container>
-        <ng-container *ngTemplateOutlet="episodeInfoButtonTemplate"></ng-container>
+        <ng-container
+          *ngTemplateOutlet="episodeInfoButtonTemplate"
+        ></ng-container>
       </ion-buttons>
       }
     </div>
@@ -69,6 +71,7 @@
       (mouseup)="!isTouchDevice && mouseUp($event)"
     >
       <app-player-waveform
+        [inLimitedSpace]="inLimitedSpace"
         [totalDuration]="player.totalDuration"
       ></app-player-waveform>
 
@@ -117,7 +120,7 @@
 
 <ng-template #episodeInfoButtonTemplate>
   <ion-button
-    class="tool"
+    class="onlyShowOnHoverOfWrapper tool"
     (click)="onEpisodeDetail()"
     [class.hidden]="showPauseOverlay"
   >
@@ -126,24 +129,22 @@
 </ng-template>
 
 <ng-template #toolsButtonsTemplate>
-  <div class="tools" [class.hidden]="showPauseOverlay">
-    <div class="tool">
-      <ion-select
-        interface="popover"
-        [(ngModel)]="selectedSpeed"
-        (ngModelChange)="onSpeedChange($event)"
-      >
-        @for (item of speedOptions; track $index) {
-        <ion-select-option [value]="item">{{ item }}X</ion-select-option>
-        }
-      </ion-select>
-    </div>
-    <ion-button class="tool">
-      <ion-icon
-        slot="icon-only"
-        name="share-social-outline"
-        (click)="onShare()"
-      ></ion-icon>
-    </ion-button>
-  </div>
+  <ion-select
+    class="tool"
+    [class.hidden]="showPauseOverlay"
+    interface="popover"
+    [(ngModel)]="selectedSpeed"
+    (ngModelChange)="onSpeedChange($event)"
+  >
+    @for (item of speedOptions; track $index) {
+    <ion-select-option [value]="item">{{ item }}X</ion-select-option>
+    }
+  </ion-select>
+  <ion-button class="tool" [class.hidden]="showPauseOverlay">
+    <ion-icon
+      slot="icon-only"
+      name="share-social-outline"
+      (click)="onShare()"
+    ></ion-icon>
+  </ion-button>
 </ng-template>

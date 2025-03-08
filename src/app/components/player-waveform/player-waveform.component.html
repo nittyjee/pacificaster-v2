@@ -1,4 +1,4 @@
-<div class="waveform">
+<div class="waveform" [class.inLimitedSpace]="inLimitedSpace">
   <div #waveformContainer class="waveform-container">
     <canvas #canvas height="100" [class.animation]="!player.isSeeking"></canvas>
   </div>
