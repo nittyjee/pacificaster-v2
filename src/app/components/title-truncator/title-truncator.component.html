@@ -1,0 +1,7 @@
+<span
+  (click)="toggleTruncate()"
+  [class.cursor-pointer]="(isTruncated || !alwaysShowFull) && longEnoughToBeTrunkated"
+  [title]="fullTitle"
+>
+  {{ displayText }}
+</span>

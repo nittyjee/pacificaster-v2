@@ -37,8 +37,10 @@
     <div class="header">
       <div>
         <div class="title backdrop">
-          <h2>{{ player.currentEpisode().title }}</h2>
-          <h3 class="onlyShowOnHoverOfWrapper">
+          <h2 [class.limitLengthOfTextUnlessHovered]="inLimitedSpace">
+            {{ player.currentEpisode().title }}
+          </h2>
+          <h3 [class.onlyShowOnHoverOfWrapper]="player.currentEpisode().title.length > 40">
             @if(inLimitedSpace){
             <span>|</span>
             }

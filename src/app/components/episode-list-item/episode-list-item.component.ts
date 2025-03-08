@@ -16,12 +16,11 @@ import { ThumbnailComponent } from '../thumbnail/thumbnail.component';
     IonButton,
     IonIcon,
     DatePipe,
-    EpisodeInfoModalComponent,
     PlayButtonComponent,
     ThumbnailComponent,
   ],
 })
-export class EpisodeListItemComponent implements OnInit {
+export class EpisodeListItemComponent {
   @Input() episode!: IEpisode;
 
   private player = inject(PlayerService);
@@ -30,8 +29,6 @@ export class EpisodeListItemComponent implements OnInit {
   isModalOpen = false;
 
   constructor(private modalCtrl: ModalController) {}
-
-  ngOnInit() {}
 
   onDescription() {
     if (this.isDescriptionExpanded && !this.isModalOpen) {

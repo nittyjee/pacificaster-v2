@@ -9,31 +9,22 @@ import {
   AlertController,
   IonButton,
   IonButtons,
-  IonContent,
-  IonFooter,
-  IonHeader,
   IonIcon,
-  IonPopover,
-  IonRange,
   IonSelect,
   IonSelectOption,
-  IonTitle,
   IonToolbar,
   ModalController,
-  Platform,
+  Platform
 } from '@ionic/angular/standalone';
 
-import { DatePipe, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { TimelinePipe } from 'src/app/pipes/timeline.pipe';
 import { PlayerService } from 'src/app/services/player.service';
 import { EpisodeInfoModalComponent } from '../episode-info-modal/episode-info-modal.component';
-import { MiniPlayerComponent } from '../mini-player/mini-player.component';
-import { PlayButtonComponent } from '../play-button/play-button.component';
 import { PlayerTimelineComponent } from '../player-timeline/player-timeline.component';
 import { PlayerWaveformComponent } from '../player-waveform/player-waveform.component';
-import { ThumbnailComponent } from '../thumbnail/thumbnail.component';
 
 @Component({
   selector: 'app-player-modal',
@@ -41,23 +32,13 @@ import { ThumbnailComponent } from '../thumbnail/thumbnail.component';
   styleUrls: ['./player-modal.component.scss'],
   standalone: true,
   imports: [
-    IonRange,
-    IonHeader,
     IonToolbar,
-    IonTitle,
-    IonContent,
     IonButtons,
     IonIcon,
     IonButton,
-    ThumbnailComponent,
-    DatePipe,
-    IonFooter,
-    MiniPlayerComponent,
     PlayerTimelineComponent,
     TimelinePipe,
     PlayerWaveformComponent,
-    PlayButtonComponent,
-    IonPopover,
     IonSelect,
     IonSelectOption,
     FormsModule,
