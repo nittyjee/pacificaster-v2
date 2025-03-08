@@ -44,6 +44,8 @@ export class PlayerWaveformComponent implements AfterViewInit, OnChanges {
 
   translationOrigin!: number;
 
+  height = 100;
+
   constructor(
     private el: ElementRef,
     private gestureCtrl: GestureController,
@@ -70,6 +72,7 @@ export class PlayerWaveformComponent implements AfterViewInit, OnChanges {
   }
 
   ngOnChanges(): void {
+    this.height = this.inLimitedSpace ? 60 : 100;
     if (this.totalDuration) {
       this.drawRandomWaveform();
     }

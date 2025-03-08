@@ -1,9 +1,9 @@
 <div class="waveform" [class.inLimitedSpace]="inLimitedSpace">
-  <div #waveformContainer class="waveform-container">
-    <canvas #canvas height="100" [class.animation]="!player.isSeeking"></canvas>
+  <div #waveformContainer class="waveform-container" [style.height]="height + 'px'">
+    <canvas #canvas [height]="height" [class.animation]="!player.isSeeking"></canvas>
   </div>
 
-  <span class="cursor"></span>
+  <span class="cursor" [style.height]="height + 'px'"></span>
 </div>
 
 <div class="times" [class.hidden]="!player.isSeeking">

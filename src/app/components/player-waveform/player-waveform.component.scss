@@ -8,7 +8,6 @@
 
     .waveform-container {
       position: relative;
-      height: 100px;
       display: block;
       //   transition: transform 1s linear;
 
@@ -25,14 +24,13 @@
     .cursor {
       position: absolute;
       width: 2px;
-      height: 100px;
       background: #fff;
       z-index: 1;
       left: 50%;
       top: 0;
     }
   }
-
+  
   .times {
     display: flex;
     align-items: center;
