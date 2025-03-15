@@ -1,4 +1,8 @@
-<div class="waveform" [class.inLimitedSpace]="inLimitedSpace">
+<div [class]="{
+  waveform: true,
+  'cursor-grabbing': player.isSeeking,
+  'cursor-grab': !player.isSeeking,
+}" [class.inLimitedSpace]="inLimitedSpace">
   <div #waveformContainer class="waveform-container" [style.height]="height + 'px'">
     <canvas #canvas [height]="height" [class.animation]="!player.isSeeking"></canvas>
   </div>

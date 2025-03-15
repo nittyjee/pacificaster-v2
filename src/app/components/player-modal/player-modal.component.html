@@ -34,30 +34,38 @@
   </div>
   }
   <div>
-    <div class="header">
-      <div>
-        <div class="title backdrop">
-          <h2 [class.limitLengthOfTextUnlessHovered]="inLimitedSpace">
-            {{ player.currentEpisode().title }}
-          </h2>
-          <h3 [class.onlyShowOnHoverOfWrapper]="player.currentEpisode().title.length > 40">
-            @if(inLimitedSpace){
-            <span>|</span>
-            }
-            {{ player.currentEpisode().host_name }}
-          </h3>
-        </div>
+    <div class="title-wrapper">
+      <div class="backdrop title" [class.limitLengthOfTextUnlessHovered]="inLimitedSpace">
+        <h2>
+          {{ player.currentEpisode().title }}
+        </h2> 
+        <h3
+          [class.onlyShowOnHoverOfWrapper]="
+            player.currentEpisode().title.length > 40
+          "
+        >
+          @if(inLimitedSpace){
+          <span>|</span>
+          }
+          {{ player.currentEpisode().host_name }}
+        </h3>
       </div>
+    </div>
+    <div class="header">
       @if(inLimitedSpace){
-      <div class="times">
+      <ion-buttons>
+        <ng-container
+          class="column-1"
+          *ngTemplateOutlet="episodeInfoButtonTemplate"
+        ></ng-container>
+      </ion-buttons>
+      } @if(inLimitedSpace){
+      <div class="times column-2">
         <ng-container *ngTemplateOutlet="timeProgressTemplate"></ng-container>
       </div>
 
-      <ion-buttons>
+      <ion-buttons class="column-3">
         <ng-container *ngTemplateOutlet="toolsButtonsTemplate"></ng-container>
-        <ng-container
-          *ngTemplateOutlet="episodeInfoButtonTemplate"
-        ></ng-container>
       </ion-buttons>
       }
     </div>
@@ -122,7 +130,7 @@
 
 <ng-template #episodeInfoButtonTemplate>
   <ion-button
-    class="onlyShowOnHoverOfWrapper tool"
+    class="tool"
     (click)="onEpisodeDetail()"
     [class.hidden]="showPauseOverlay"
   >
