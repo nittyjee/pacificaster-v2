@@ -1,13 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
+  IonButton,
   IonCol,
   IonGrid,
-  IonRow,
-  IonSearchbar,
   IonIcon,
-  IonButton,
-  IonList,
   IonItem,
+  IonList,
+  IonRow
 } from '@ionic/angular/standalone';
 import { ListItemComponent } from '../list-item/list-item.component';
 
@@ -17,7 +16,6 @@ import { ListItemComponent } from '../list-item/list-item.component';
   styleUrls: ['./list.component.scss'],
   standalone: true,
   imports: [
-    IonSearchbar,
     IonGrid,
     IonRow,
     IonCol,

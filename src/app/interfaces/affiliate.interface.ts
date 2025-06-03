@@ -1,7 +1,7 @@
 import { IPodcast } from './podcast.interface';
 
 export interface IAffiliate {
-  type: string;
+  type: 'affiliate';
   id: number;
   uuid: string;
   title: string;
@@ -26,7 +26,7 @@ export interface ISocialLink {
 }
 
 export interface IAffiliatePodcast {
-  type: string;
+  type: 'affiliate-podcast';
   id: number;
   uuid: string;
   target_id: number;
