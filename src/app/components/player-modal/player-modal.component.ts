@@ -3,6 +3,7 @@ import {
   Component,
   Input,
   OnInit,
+  OnDestroy,
   inject
 } from '@angular/core';
 import {
@@ -45,13 +46,14 @@ import { PlayerWaveformComponent } from '../player-waveform/player-waveform.comp
     NgTemplateOutlet,
   ],
 })
-export class PlayerModalComponent implements OnInit {
+export class PlayerModalComponent implements OnInit, OnDestroy {
   @Input() inLimitedSpace = false;
   private modalCtrl = inject(ModalController);
   public player = inject(PlayerService);
   private route = inject(ActivatedRoute);
 
   showPauseOverlay = false;
+  private statusCheckInterval: ReturnType<typeof setInterval> | null = null;
 
   speedOptions = [1, 1.25, 1.5, 2];
   selectedSpeed = this.speedOptions[0];
@@ -85,12 +87,28 @@ export class PlayerModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.showPauseOverlay = !this.player.isPlaying();
+    this.showPauseOverlay = !this.player.isPlaying();
     this.route.fragment.subscribe((fragment: string | null) => {
       if (fragment === null) {
         this.cancel();
       }
     });
+
+    // Start interval to check player status every second
+    this.statusCheckInterval = setInterval(() => {
+      const isPlaying = this.player.isPlaying();
+      if (this.showPauseOverlay === isPlaying) {
+        this.showPauseOverlay = !isPlaying;
+        this.cdr.detectChanges();
+      }
+    }, 1000);
+  }
+
+  ngOnDestroy() {
+    // Clear the interval when component is destroyed
+    if (this.statusCheckInterval) {
+      clearInterval(this.statusCheckInterval);
+    }
   }
 
   cancel() {

@@ -1,6 +1,6 @@
 @if (isMobile) {
 <app-header></app-header>
-} 
+}
 
 @if (affiliate) {
 <ion-content [fullscreen]="false">
@@ -29,6 +29,12 @@
 
     <app-podcast-list [podcasts]="affiliate.podcasts"></app-podcast-list>
   </div>
+
+  @if(player.isInitialized() && !isMobile){
+    <div class="bottom-bar">
+      <app-player-modal [inLimitedSpace]="true"></app-player-modal>
+    </div>
+    }
 </ion-content>
 } @else if(affiliateNotFound === false && someTimePassed) {
 <app-not-found itemType="Affiliate"></app-not-found>

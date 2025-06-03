@@ -4,7 +4,7 @@
     --background: var(--ion-color-primary);
     --color: var(--ion-color-primary-contrast);
   }
-  
+
   ion-button {
     margin-bottom: 8px;
     text-align: left;
@@ -23,9 +23,5 @@
 
 // Ensure proper sizing
 ion-split-pane {
-  height: 100%;
-}
-
-.ion-page {
   height: 100%;
 }

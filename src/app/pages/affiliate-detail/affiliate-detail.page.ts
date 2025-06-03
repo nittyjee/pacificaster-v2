@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, effect, inject } from '@angular/core';
+import { Component, Input, effect, inject } from '@angular/core';
 import {
   IonContent,
   IonIcon,
@@ -9,10 +9,12 @@ import { PodcastInfoModalComponent } from 'src/app/components/podcast-info-modal
 import { PodcastListComponent } from 'src/app/components/podcast-list/podcast-list.component';
 import { ThumbnailComponent } from 'src/app/components/thumbnail/thumbnail.component';
 import { IAffiliate } from 'src/app/interfaces/affiliate.interface';
+import { PlayerService } from 'src/app/services/player.service';
 import { PodcastService } from 'src/app/services/podcast.service';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
-import { NotFoundComponent } from "../../components/not-found/not-found.component";
 import { LoadingComponent } from "../../components/loading/loading.component";
+import { NotFoundComponent } from "../../components/not-found/not-found.component";
+import { PlayerModalComponent } from "../../components/player-modal/player-modal.component";
 
 @Component({
   selector: 'app-affiliate-detail',
@@ -26,8 +28,9 @@ import { LoadingComponent } from "../../components/loading/loading.component";
     IonIcon,
     HeaderComponent,
     NotFoundComponent,
-    LoadingComponent
-  ],
+    LoadingComponent,
+    PlayerModalComponent
+],
 })
 export class AffiliateDetailPage {
   @Input() affiliateId!: string;
@@ -37,6 +40,7 @@ export class AffiliateDetailPage {
 
   someTimePassed = false;
 
+  public player = inject(PlayerService);
   private podcastService = inject(PodcastService);
   private screenSizeService = inject(ScreenSizeService);
 

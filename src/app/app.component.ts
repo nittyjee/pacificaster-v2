@@ -18,8 +18,8 @@ import { ScreenSizeService } from './services/screen-size.service';
     IonApp,
     IonRouterOutlet,
     MiniPlayerComponent,
-    TabbarComponent,
-  ],
+    TabbarComponent
+],
 })
 export class AppComponent implements OnInit {
   public player = inject(PlayerService);
