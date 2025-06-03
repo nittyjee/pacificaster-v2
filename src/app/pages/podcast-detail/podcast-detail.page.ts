@@ -30,20 +30,17 @@ import { ScreenSizeService } from 'src/app/services/screen-size.service';
 export class PodcastDetailPage implements OnInit {
   @Input() podcastId!: string;
 
-  podcast!: IPodcast;
+  podcast?: IPodcast;
 
   private podcastService = inject(PodcastService);
   private screenSizeService = inject(ScreenSizeService);
 
   constructor(private modalCtrl: ModalController) {
     effect(() => {
-      this.podcast =
-        this.podcastService
-          .podcasts()
-          .find((podcast) => podcast.uuid === this.podcastId) ??
-        ({} as IPodcast);
+      this.podcast = this.podcastService.decodePodcastURL(this.podcastId);
     });
   }
+
   ngOnInit(): void {
     if (this.podcastService.podcasts().length === 0)
       this.podcastService.fetchPodcasts();

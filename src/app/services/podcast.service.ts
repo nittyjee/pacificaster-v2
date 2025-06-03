@@ -38,6 +38,34 @@ export class PodcastService {
     return this.podcasts().find((podcast) => podcast.id === id) ?? null;
   }
 
+  static makeNameURLReadable(name: string): string {
+    return name
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-') // Replace non-alphanumeric characters with hyphens
+      .replace(/^-+|-+$/g, '') // Remove leading and trailing hyphens
+      .replace(/-+/g, '-'); // Replace multiple consecutive hyphens with single hyphen
+  }
+
+  decodeEpisodeURL(urlName: string): IEpisode | undefined {
+    return this.decodeNameURL(urlName, this.episodes());
+  }
+
+  decodePodcastURL(urlName: string): IPodcast | undefined {
+    return this.decodeNameURL(urlName, this.podcasts());
+  }
+
+  decodeAffiliateURL(urlName: string): IAffiliate | undefined {
+    return this.decodeNameURL(urlName, this.affiliates());
+  }
+
+  decodeNameURL<T extends IPodcast | IAffiliate | IEpisode>(urlName: string, items: T[]): T | undefined {
+    // Since we can't perfectly reverse the URL transformation, 
+    // we need to find the original item by matching
+    return items.find(item =>
+      PodcastService.makeNameURLReadable(item.title) === urlName
+    );
+  }
+
   public fetchEpisodes() {
     this.http.get(this.apiUrl + '/rest/episodes').subscribe((data: any) => {
       data = data.map(this.parserService.episodeDataParser);

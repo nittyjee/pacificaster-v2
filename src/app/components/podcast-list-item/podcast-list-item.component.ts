@@ -4,6 +4,7 @@ import { ThumbnailComponent } from '../thumbnail/thumbnail.component';
 import { IPodcast } from 'src/app/interfaces/podcast.interface';
 import { Router } from '@angular/router';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
+import { PodcastService } from 'src/app/services/podcast.service';
 
 @Component({
   selector: 'app-podcast-list-item',
@@ -24,10 +25,10 @@ export class PodcastListItemComponent implements OnInit {
 
   onClick() {
     if (this.screenSizeService.isMobile()) {
-      this.router.navigate(['podcast', this.podcast.uuid]);
+      this.router.navigate(['podcast', PodcastService.makeNameURLReadable(this.podcast.title)]);
     } else {
       this.router.navigate([
-        { outlets: { sidebar: ['podcast-sidebar', this.podcast.uuid] } },
+        { outlets: { sidebar: ['podcast-sidebar', PodcastService.makeNameURLReadable(this.podcast.title)] } },
       ]);
     }
   }

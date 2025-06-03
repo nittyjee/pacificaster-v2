@@ -2,6 +2,7 @@ import { Component, Input, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { IAffiliate } from 'src/app/interfaces/affiliate.interface';
 import { IPodcast } from 'src/app/interfaces/podcast.interface';
+import { PodcastService } from 'src/app/services/podcast.service';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
 import { ThumbnailComponent } from '../thumbnail/thumbnail.component';
 
@@ -24,11 +25,11 @@ export class ListItemComponent {
   constructor() { }
 
   onClick() {
-    if (this.screenSizeService.isMobile()) {
-      this.router.navigate([this.item.type, this.item.uuid]);
+    if (this.screenSizeService.isMobile() || this.item.type === 'affiliate') {
+      this.router.navigate([this.item.type, PodcastService.makeNameURLReadable(this.item.title)]);
     } else {
       this.router.navigate([
-        { outlets: { sidebar: [this.item.type + '-sidebar', this.item.uuid] } },
+        { outlets: { sidebar: [this.item.type + '-sidebar', PodcastService.makeNameURLReadable(this.item.title)] } },
       ]);
     }
   }

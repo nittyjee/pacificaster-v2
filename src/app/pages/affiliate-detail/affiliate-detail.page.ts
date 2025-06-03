@@ -22,13 +22,13 @@ import { ScreenSizeService } from 'src/app/services/screen-size.service';
     PodcastListComponent,
     ThumbnailComponent,
     IonIcon,
-    HeaderComponent,
+    HeaderComponent
   ],
 })
 export class AffiliateDetailPage implements OnInit {
   @Input() affiliateId!: string;
 
-  affiliate!: IAffiliate;
+  affiliate?: IAffiliate;
 
   private podcastService = inject(PodcastService);
   private screenSizeService = inject(ScreenSizeService);
@@ -36,10 +36,7 @@ export class AffiliateDetailPage implements OnInit {
   constructor(private modalCtrl: ModalController) {
     effect(() => {
       this.affiliate =
-        this.podcastService
-          .affiliates()
-          .find((affiliate) => affiliate.uuid === this.affiliateId) ??
-        ({} as IAffiliate);
+        this.podcastService.decodeAffiliateURL(this.affiliateId)
     });
   }
   ngOnInit(): void {
@@ -63,6 +60,6 @@ export class AffiliateDetailPage implements OnInit {
     });
     modal.present();
 
-    const { data, role } = await modal.onWillDismiss();
+    await modal.onWillDismiss();
   }
 }
