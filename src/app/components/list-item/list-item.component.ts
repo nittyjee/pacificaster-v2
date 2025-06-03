@@ -1,15 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
-import {
-  IonCard,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonCardContent,
-  IonCardTitle,
-} from '@ionic/angular/standalone';
-import { IPodcast } from 'src/app/interfaces/podcast.interface';
-import { ThumbnailComponent } from '../thumbnail/thumbnail.component';
+import { Component, Input, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { IAffiliate } from 'src/app/interfaces/affiliate.interface';
+import { IPodcast } from 'src/app/interfaces/podcast.interface';
+import { ScreenSizeService } from 'src/app/services/screen-size.service';
+import { ThumbnailComponent } from '../thumbnail/thumbnail.component';
 
 @Component({
   selector: 'app-list-item',
@@ -17,12 +11,6 @@ import { IAffiliate } from 'src/app/interfaces/affiliate.interface';
   styleUrls: ['./list-item.component.scss'],
   standalone: true,
   imports: [
-    IonCardTitle,
-    IonCard,
-    IonCardHeader,
-    IonCardSubtitle,
-    IonCardContent,
-    RouterLink,
     ThumbnailComponent,
   ],
 })
@@ -30,16 +18,18 @@ export class ListItemComponent {
   @Input() item!: IPodcast | IAffiliate;
   @Input() inList: boolean = false;
 
-  constructor(private router: Router) {}
+  private router = inject(Router);
+  private screenSizeService = inject(ScreenSizeService);
+
+  constructor() { }
 
   onClick() {
-    if (window.innerWidth > 768) {
+    if (this.screenSizeService.isMobile()) {
+      this.router.navigate([this.item.type, this.item.uuid]);
+    } else {
       this.router.navigate([
-        'desktop',
         { outlets: { sidebar: [this.item.type + '-sidebar', this.item.uuid] } },
       ]);
-    } else {
-      this.router.navigate(['mobile', this.item.type, this.item.uuid]);
     }
   }
 }

@@ -2,19 +2,14 @@ import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit, inject } from '@angular/core';
 import {
   IonContent,
-  IonIcon,
-  IonHeader,
-  IonToolbar,
-  IonButtons,
-  IonButton,
-  IonTitle,
-  ModalController,
+  ModalController
 } from '@ionic/angular/standalone';
 import { IEpisode } from 'src/app/interfaces/episode.interface';
+import { IPodcast } from 'src/app/interfaces/podcast.interface';
+import { PodcastService } from 'src/app/services/podcast.service';
+import { ScreenSizeService } from 'src/app/services/screen-size.service';
 import { PlayButtonComponent } from '../play-button/play-button.component';
 import { ThumbnailComponent } from '../thumbnail/thumbnail.component';
-import { PodcastService } from 'src/app/services/podcast.service';
-import { IPodcast } from 'src/app/interfaces/podcast.interface';
 
 @Component({
   selector: 'app-episode-info-modal',
@@ -22,12 +17,6 @@ import { IPodcast } from 'src/app/interfaces/podcast.interface';
   styleUrls: ['./episode-info-modal.component.scss'],
   standalone: true,
   imports: [
-    IonTitle,
-    IonHeader,
-    IonToolbar,
-    IonButtons,
-    IonButton,
-    IonIcon,
     IonContent,
     DatePipe,
     PlayButtonComponent,
@@ -41,11 +30,14 @@ export class EpisodeInfoModalComponent implements OnInit {
 
   isModalOpen = false;
 
-  isMobile = window.innerWidth < 768;
-
   private podcastService = inject(PodcastService);
+  private screenSizeService = inject(ScreenSizeService);
 
   constructor(private modalCtrl: ModalController) {}
+
+  get isMobile(): boolean {
+    return this.screenSizeService.isMobile();
+  }
 
   ngOnInit() {
     this.podcast =

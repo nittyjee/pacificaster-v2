@@ -1,0 +1,31 @@
+// Common styles
+.menu {
+  .active {
+    --background: var(--ion-color-primary);
+    --color: var(--ion-color-primary-contrast);
+  }
+  
+  ion-button {
+    margin-bottom: 8px;
+    text-align: left;
+    justify-content: flex-start;
+  }
+}
+
+.left {
+  max-width: 300px;
+  width: 300px;
+}
+
+.right {
+  flex: 1;
+}
+
+// Ensure proper sizing
+ion-split-pane {
+  height: 100%;
+}
+
+.ion-page {
+  height: 100%;
+}

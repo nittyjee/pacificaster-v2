@@ -55,17 +55,13 @@ const childRoutes: Routes = [
 
 export const routes: Routes = [
   {
-    path: 'mobile',
-
+    path: '',
     loadComponent: () =>
-      import('./layouts/mobile/mobile.layout').then((m) => m.MobileLayout),
-
+      import('./layouts/responsive/responsive.layout').then((m) => m.ResponsiveLayout),
     children: childRoutes,
   },
   {
-    path: 'desktop',
-    loadComponent: () =>
-      import('./layouts/desktop/desktop.layout').then((m) => m.DesktopLayout),
-    children: childRoutes,
+    path: '**',
+    redirectTo: '',
   },
 ];

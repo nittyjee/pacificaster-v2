@@ -10,6 +10,7 @@ import { HeaderComponent } from 'src/app/components/header/header.component';
 import { ListComponent } from 'src/app/components/list/list.component';
 import { PlayerService } from 'src/app/services/player.service';
 import { PodcastService } from 'src/app/services/podcast.service';
+import { ScreenSizeService } from 'src/app/services/screen-size.service';
 import { PlayerModalComponent } from "../../components/player-modal/player-modal.component";
 
 @Component({
@@ -18,12 +19,9 @@ import { PlayerModalComponent } from "../../components/player-modal/player-modal
   styleUrls: ['home.page.scss'],
   standalone: true,
   imports: [
-    IonSplitPane,
-    IonMenu,
     IonContent,
     IonImg,
     ListComponent,
-    IonRouterOutlet,
     HeaderComponent,
     PlayerModalComponent
 ],
@@ -31,12 +29,15 @@ import { PlayerModalComponent } from "../../components/player-modal/player-modal
 export class HomePage implements OnInit {
   public podcastService = inject(PodcastService);
   public player = inject(PlayerService);
-
-  isMobile = window.innerWidth < 768;
+  private screenSizeService = inject(ScreenSizeService);
 
   isList = signal<boolean>(false);
 
   constructor() {}
+
+  get isMobile(): boolean {
+    return this.screenSizeService.isMobile();
+  }
 
   ngOnInit(): void {
     this.podcastService.fetchPodcasts();

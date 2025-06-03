@@ -12,6 +12,7 @@ import { PodcastInfoModalComponent } from 'src/app/components/podcast-info-modal
 import { ThumbnailComponent } from 'src/app/components/thumbnail/thumbnail.component';
 import { IPodcast } from 'src/app/interfaces/podcast.interface';
 import { PodcastService } from 'src/app/services/podcast.service';
+import { ScreenSizeService } from 'src/app/services/screen-size.service';
 
 @Component({
   selector: 'app-podcast-detail',
@@ -19,24 +20,20 @@ import { PodcastService } from 'src/app/services/podcast.service';
   styleUrls: ['./podcast-detail.page.scss'],
   standalone: true,
   imports: [
-    IonFooter,
     IonContent,
     EpisodeListComponent,
-    PodcastInfoModalComponent,
     ThumbnailComponent,
     IonIcon,
-    KeyValuePipe,
     HeaderComponent,
   ],
 })
 export class PodcastDetailPage implements OnInit {
   @Input() podcastId!: string;
 
-  isMobile = window.innerWidth < 768;
-
   podcast!: IPodcast;
 
   private podcastService = inject(PodcastService);
+  private screenSizeService = inject(ScreenSizeService);
 
   constructor(private modalCtrl: ModalController) {
     effect(() => {
@@ -47,10 +44,13 @@ export class PodcastDetailPage implements OnInit {
         ({} as IPodcast);
     });
   }
-
   ngOnInit(): void {
     if (this.podcastService.podcasts().length === 0)
       this.podcastService.fetchPodcasts();
+  }
+
+  get isMobile(): boolean {
+    return this.screenSizeService.isMobile();
   }
 
   async onDescription() {

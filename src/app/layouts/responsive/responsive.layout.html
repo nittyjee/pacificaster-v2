@@ -1,0 +1,46 @@
+<!-- Desktop layout with sidebar for larger screens -->
+@if (!isMobile) {
+<ion-split-pane 
+  when="md" 
+  contentId="main" 
+  [disabled]="!showSidebar"
+>
+  <ion-menu side="start" menuId="sidebar" contentId="main" class="left">
+    <ion-router-outlet name="sidebar"></ion-router-outlet>
+  </ion-menu>
+
+  <div id="main" class="right ion-page">
+    <ion-router-outlet></ion-router-outlet>
+  </div>
+</ion-split-pane>
+}
+
+<!-- Mobile layout -->
+@if (isMobile) {
+<ion-menu 
+  side="end" 
+  menuId="menu" 
+  type="push" 
+  contentId="main-content"
+>
+  <div class="menu ion-padding">
+    @for (item of menuItems; track $index) {
+    <ion-menu-toggle>
+      <ion-button
+        fill="clear"
+        [routerLink]="item.link"
+        [routerLinkActive]="'active'"
+        expand="block"
+      >
+        <ion-icon slot="start" [name]="item.icon"></ion-icon>
+        {{item.title}}
+      </ion-button>
+    </ion-menu-toggle>
+    }
+  </div>
+</ion-menu>
+
+<div class="ion-page" id="main-content">
+  <ion-router-outlet></ion-router-outlet>
+</div>
+}

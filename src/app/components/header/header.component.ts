@@ -1,15 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonButtons,
   IonBackButton,
-  IonIcon,
-  IonButton,
+  IonButtons,
+  IonHeader,
   IonMenuButton,
+  IonTitle,
+  IonToolbar
 } from '@ionic/angular/standalone';
+import { ScreenSizeService } from '../../services/screen-size.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -21,15 +20,18 @@ import {
     IonTitle,
     IonButtons,
     IonBackButton,
-    IonIcon,
-    IonButton,
     IonMenuButton,
     RouterLink,
   ],
 })
 export class HeaderComponent implements OnInit {
-  isMobile = window.innerWidth < 768;
+  private screenSizeService = inject(ScreenSizeService);
+
   constructor() {}
 
   ngOnInit() {}
+
+  get isMobile(): boolean {
+    return this.screenSizeService.isMobile();
+  }
 }

@@ -1,31 +1,34 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { IonButton, IonIcon } from '@ionic/angular/standalone';
 import { ThumbnailComponent } from '../thumbnail/thumbnail.component';
 import { IPodcast } from 'src/app/interfaces/podcast.interface';
 import { Router } from '@angular/router';
+import { ScreenSizeService } from 'src/app/services/screen-size.service';
 
 @Component({
   selector: 'app-podcast-list-item',
   templateUrl: './podcast-list-item.component.html',
   styleUrls: ['./podcast-list-item.component.scss'],
   standalone: true,
-  imports: [IonButton, IonIcon, ThumbnailComponent],
+  imports: [ThumbnailComponent],
 })
 export class PodcastListItemComponent implements OnInit {
   @Input() podcast!: IPodcast;
 
-  constructor(private router: Router) {}
+  private router = inject(Router);
+  private screenSizeService = inject(ScreenSizeService);
+
+  constructor() { }
 
   ngOnInit() {}
 
   onClick() {
-    if (window.innerWidth > 768) {
+    if (this.screenSizeService.isMobile()) {
+      this.router.navigate(['podcast', this.podcast.uuid]);
+    } else {
       this.router.navigate([
-        'desktop',
         { outlets: { sidebar: ['podcast-sidebar', this.podcast.uuid] } },
       ]);
-    } else {
-      this.router.navigate(['mobile', 'podcast', this.podcast.uuid]);
     }
   }
 }
