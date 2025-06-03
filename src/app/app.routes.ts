@@ -51,6 +51,13 @@ const childRoutes: Routes = [
     loadComponent: () =>
       import('./pages/apply/apply.page').then((m) => m.ApplyPage),
   },
+  {
+    path: ':affiliateId',
+    loadComponent: () =>
+      import('./pages/affiliate-detail/affiliate-detail.page').then(
+        (m) => m.AffiliateDetailPage
+      ),
+  }
 ];
 
 export const routes: Routes = [

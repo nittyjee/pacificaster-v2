@@ -1,0 +1,71 @@
+.loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  text-align: center;
+  background-color: var(--ion-color-background);
+}
+
+.loading-content {
+  max-width: 400px;
+  width: 100%;
+}
+
+.loading-animation {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 2rem;
+}
+
+.main-spinner {
+  --color: var(--ion-color-primary);
+  font-size: 3rem;
+  position: relative;
+  z-index: 3;
+}
+
+.loading-message {
+  color: var(--ion-color-medium);
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 0;
+  animation: fadeInOut 2s ease-in-out infinite;
+}
+
+@keyframes fadeInOut {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .loading-container {
+    min-height: 50vh;
+    padding: 2rem 1rem;
+  }
+  
+  .main-spinner {
+    font-size: 2.5rem;
+  }
+  
+  .pulse-ring {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .loading-message {
+    font-size: 1rem;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .loading-content::before,
+  .loading-content::after {
+    background: var(--ion-color-primary-tint);
+  }
+}

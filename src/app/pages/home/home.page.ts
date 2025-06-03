@@ -1,10 +1,7 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
   IonContent,
-  IonImg,
-  IonMenu,
-  IonRouterOutlet,
-  IonSplitPane,
+  IonImg
 } from '@ionic/angular/standalone';
 import { HeaderComponent } from 'src/app/components/header/header.component';
 import { ListComponent } from 'src/app/components/list/list.component';
@@ -26,7 +23,7 @@ import { PlayerModalComponent } from "../../components/player-modal/player-modal
     PlayerModalComponent
 ],
 })
-export class HomePage implements OnInit {
+export class HomePage {
   public podcastService = inject(PodcastService);
   public player = inject(PlayerService);
   private screenSizeService = inject(ScreenSizeService);
@@ -37,11 +34,6 @@ export class HomePage implements OnInit {
 
   get isMobile(): boolean {
     return this.screenSizeService.isMobile();
-  }
-
-  ngOnInit(): void {
-    this.podcastService.fetchPodcasts();
-    // this.podcastService.fetchAffiliates();
   }
 
   onLayoutChange(eventData: boolean) {

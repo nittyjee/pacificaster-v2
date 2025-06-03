@@ -1,6 +1,8 @@
 @if (isMobile) {
 <app-header></app-header>
-} @if (affiliate) {
+} 
+
+@if (affiliate) {
 <ion-content [fullscreen]="false">
   <div class="page-content podcast-info ion-padding">
     <h2>Affiliate</h2>
@@ -28,4 +30,8 @@
     <app-podcast-list [podcasts]="affiliate.podcasts"></app-podcast-list>
   </div>
 </ion-content>
+} @else if(affiliateNotFound === false && someTimePassed) {
+<app-not-found itemType="Affiliate"></app-not-found>
+} @else {
+<app-loading [message]="'Loading affiliate...'"></app-loading>
 }

@@ -1,12 +1,12 @@
-import { Component, OnInit, inject, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit, inject } from '@angular/core';
 import {
   IonApp,
   IonRouterOutlet,
 } from '@ionic/angular/standalone';
-import { PlayerService } from './services/player.service';
 import { MiniPlayerComponent } from './components/mini-player/mini-player.component';
-import { Router } from '@angular/router';
 import { TabbarComponent } from './components/tabbar/tabbar.component';
+import { PlayerService } from './services/player.service';
+import { PodcastService } from './services/podcast.service';
 import { ScreenSizeService } from './services/screen-size.service';
 
 @Component({
@@ -23,14 +23,14 @@ import { ScreenSizeService } from './services/screen-size.service';
 })
 export class AppComponent implements OnInit {
   public player = inject(PlayerService);
-  private router = inject(Router);
+  private podcastService = inject(PodcastService);
+
   private screenSizeService = inject(ScreenSizeService);
 
   constructor() {}
 
   ngOnInit(): void {
-    // No need for device-specific routing anymore
-    // The responsive layout handles this automatically
+    this.podcastService.initialize();
   }
 
   get isMobile(): boolean {

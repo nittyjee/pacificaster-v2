@@ -25,7 +25,9 @@ export class ListItemComponent {
   constructor() { }
 
   onClick() {
-    if (this.screenSizeService.isMobile() || this.item.type === 'affiliate') {
+    if (this.item.type === 'affiliate') {
+      this.router.navigate([PodcastService.makeNameURLReadable(this.item.title)]);
+    } else if (this.screenSizeService.isMobile()) {
       this.router.navigate([this.item.type, PodcastService.makeNameURLReadable(this.item.title)]);
     } else {
       this.router.navigate([

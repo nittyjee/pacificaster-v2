@@ -21,7 +21,11 @@ export class PodcastService {
   public episodes = signal<IEpisode[]>([]);
   public affiliates = signal<IAffiliate[]>([]);
 
-  public fetchPodcasts() {
+  public initialize() {
+    this.fetchPodcasts();
+  }
+
+  private fetchPodcasts() {
     this.http.get(this.apiUrl + '/rest/podcasts').subscribe((data: any) => {
       data = data.map(this.parserService.podcastDataParser);
 
@@ -88,7 +92,7 @@ export class PodcastService {
     this.fetchAffiliates();
   }
 
-  public fetchAffiliates() {
+  private fetchAffiliates() {
     this.http.get(this.apiUrl + '/rest/affiliates').subscribe((data: any) => {
       data = data.map(this.parserService.affiliateDataParser);
 

@@ -11,6 +11,8 @@ import { ThumbnailComponent } from 'src/app/components/thumbnail/thumbnail.compo
 import { IAffiliate } from 'src/app/interfaces/affiliate.interface';
 import { PodcastService } from 'src/app/services/podcast.service';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
+import { NotFoundComponent } from "../../components/not-found/not-found.component";
+import { LoadingComponent } from "../../components/loading/loading.component";
 
 @Component({
   selector: 'app-affiliate-detail',
@@ -22,26 +24,32 @@ import { ScreenSizeService } from 'src/app/services/screen-size.service';
     PodcastListComponent,
     ThumbnailComponent,
     IonIcon,
-    HeaderComponent
+    HeaderComponent,
+    NotFoundComponent,
+    LoadingComponent
   ],
 })
-export class AffiliateDetailPage implements OnInit {
+export class AffiliateDetailPage {
   @Input() affiliateId!: string;
 
   affiliate?: IAffiliate;
+  affiliateNotFound?: boolean;
+
+  someTimePassed = false;
 
   private podcastService = inject(PodcastService);
   private screenSizeService = inject(ScreenSizeService);
 
   constructor(private modalCtrl: ModalController) {
     effect(() => {
-      this.affiliate =
-        this.podcastService.decodeAffiliateURL(this.affiliateId)
+      this.affiliate = this.podcastService.decodeAffiliateURL(this.affiliateId)
+
+      this.affiliateNotFound = !!this.affiliate;
     });
-  }
-  ngOnInit(): void {
-    if (this.podcastService.affiliates().length === 0)
-      this.podcastService.fetchAffiliates();
+
+    setTimeout(() => {
+      this.someTimePassed = true;
+    }, 800);
   }
 
   get isMobile(): boolean {

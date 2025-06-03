@@ -13,37 +13,40 @@ import { ThumbnailComponent } from 'src/app/components/thumbnail/thumbnail.compo
 import { IPodcast } from 'src/app/interfaces/podcast.interface';
 import { PodcastService } from 'src/app/services/podcast.service';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
+import { NotFoundComponent } from "../../components/not-found/not-found.component";
+import { LoadingComponent } from "../../components/loading/loading.component";
 
 @Component({
   selector: 'app-podcast-detail',
   templateUrl: './podcast-detail.page.html',
-  styleUrls: ['./podcast-detail.page.scss'],
-  standalone: true,
+  styleUrls: ['./podcast-detail.page.scss'], standalone: true,
   imports: [
     IonContent,
     EpisodeListComponent,
     ThumbnailComponent,
     IonIcon,
     HeaderComponent,
+    NotFoundComponent,
+    LoadingComponent
   ],
 })
-export class PodcastDetailPage implements OnInit {
+export class PodcastDetailPage {
   @Input() podcastId!: string;
-
   podcast?: IPodcast;
+  podcastNotFound?: boolean;
+  someTimePassed = false;
 
   private podcastService = inject(PodcastService);
   private screenSizeService = inject(ScreenSizeService);
-
   constructor(private modalCtrl: ModalController) {
     effect(() => {
       this.podcast = this.podcastService.decodePodcastURL(this.podcastId);
+      this.podcastNotFound = !!this.podcast;
     });
-  }
 
-  ngOnInit(): void {
-    if (this.podcastService.podcasts().length === 0)
-      this.podcastService.fetchPodcasts();
+    setTimeout(() => {
+      this.someTimePassed = true;
+    }, 800);
   }
 
   get isMobile(): boolean {
