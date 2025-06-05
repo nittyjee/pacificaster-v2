@@ -60,7 +60,7 @@ export class PlayerWaveformComponent implements AfterViewInit, OnChanges {
     this.drawRandomWaveform();
 
     const gesture = this.gestureCtrl.create({
-      el: this.el.nativeElement,
+      el: this.el.nativeElement.closest('app-player-modal'),
       onStart: () => this.onStart(),
       onMove: (detail) => this.onMove(detail),
       onEnd: () => this.onEnd(),

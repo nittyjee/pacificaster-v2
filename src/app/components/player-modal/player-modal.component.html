@@ -35,10 +35,15 @@
   }
   <div>
     <div class="title-wrapper">
-      <div class="backdrop title" [class.limitLengthOfTextUnlessHovered]="inLimitedSpace">
+      <div
+        class="backdrop title"
+        [class.limitLengthOfTextUnlessHovered]="inLimitedSpace"
+        (mouseup)="!isTouchDevice && mouseUp($event)"
+        (touchend)="isTouchDevice && onTouched($event)"
+      >
         <h2>
           {{ player.currentEpisode().title }}
-        </h2> 
+        </h2>
         <h3
           [class.onlyShowOnHoverOfWrapper]="
             player.currentEpisode().title.length > 40
@@ -60,7 +65,11 @@
         ></ng-container>
       </ion-buttons>
       } @if(inLimitedSpace){
-      <div class="times column-2">
+      <div
+        class="times column-2"
+        (mouseup)="!isTouchDevice && mouseUp($event)"
+        (touchend)="isTouchDevice && onTouched($event)"
+      >
         <ng-container *ngTemplateOutlet="timeProgressTemplate"></ng-container>
       </div>
 
