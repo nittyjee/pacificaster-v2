@@ -15,8 +15,6 @@ import { PodcastService } from 'src/app/services/podcast.service';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
 import { NotFoundComponent } from "../../components/not-found/not-found.component";
 import { LoadingComponent } from "../../components/loading/loading.component";
-import { PlayerService } from 'src/app/services/player.service';
-import { PlayerModalComponent } from "../../components/player-modal/player-modal.component";
 
 @Component({
   selector: 'app-podcast-detail',
@@ -29,9 +27,8 @@ import { PlayerModalComponent } from "../../components/player-modal/player-modal
     IonIcon,
     HeaderComponent,
     NotFoundComponent,
-    LoadingComponent,
-    PlayerModalComponent
-],
+    LoadingComponent
+  ],
 })
 export class PodcastDetailPage {
   @Input() podcastId!: string;
@@ -39,7 +36,6 @@ export class PodcastDetailPage {
   podcastNotFound?: boolean;
   someTimePassed = false;
 
-  public player = inject(PlayerService);
   private podcastService = inject(PodcastService);
   private screenSizeService = inject(ScreenSizeService);
   constructor(private modalCtrl: ModalController) {

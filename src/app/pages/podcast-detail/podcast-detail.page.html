@@ -31,12 +31,6 @@
       <h6>{{podcast.host_name}}</h6>
     </div>    <app-episode-list [episodes]="podcast.episodes"></app-episode-list>
   </div>
-
-  @if(player.isInitialized() && !isMobile){
-    <div class="bottom-bar">
-      <app-player-modal [inLimitedSpace]="true"></app-player-modal>
-    </div>
-    }
 </ion-content>
 } @else if(podcastNotFound === false && someTimePassed) {
   <app-not-found itemType="Podcast"></app-not-found>
