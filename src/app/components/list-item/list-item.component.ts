@@ -27,8 +27,6 @@ export class ListItemComponent {
   onClick() {
     if (this.item.type === 'affiliate') {
       this.router.navigate([PodcastService.makeNameURLReadable(this.item.title)]);
-    } else if (this.screenSizeService.isMobile()) {
-      this.router.navigate([this.item.type, PodcastService.makeNameURLReadable(this.item.title)]);
     } else {
       this.router.navigate([
         { outlets: { sidebar: [this.item.type + '-sidebar', PodcastService.makeNameURLReadable(this.item.title)] } },

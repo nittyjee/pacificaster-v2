@@ -13,6 +13,9 @@ const childRoutes: Routes = [
       import('./pages/podcast-detail/podcast-detail.page').then(
         (m) => m.PodcastDetailPage
       ),
+    data: {
+      isSidebar: true,
+    }
   },
   {
     path: 'podcast/:podcastId',
@@ -28,6 +31,9 @@ const childRoutes: Routes = [
       import('./pages/affiliate-detail/affiliate-detail.page').then(
         (m) => m.AffiliateDetailPage
       ),
+    data: {
+      isSidebar: true,
+    }
   },
   {
     path: 'affiliate/:affiliateId',

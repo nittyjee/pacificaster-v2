@@ -38,6 +38,7 @@ export class PodcastDetailPage {
   podcast?: IPodcast;
   podcastNotFound?: boolean;
   someTimePassed = false;
+  @Input() isSidebar = false;
 
   public player = inject(PlayerService);
   private podcastService = inject(PodcastService);

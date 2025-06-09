@@ -1,8 +1,6 @@
 @if (isMobile) {
 <app-header></app-header>
-}
-
-@if (podcast) {
+} @if (podcast) {
 <ion-content [fullscreen]="false">
   <div class="page-content podcast-info ion-padding">
     <div class="top">
@@ -29,17 +27,18 @@
     <div class="bottom">
       <p>Hosted by:</p>
       <h6>{{podcast.host_name}}</h6>
-    </div>    <app-episode-list [episodes]="podcast.episodes"></app-episode-list>
+    </div>
+    <app-episode-list [episodes]="podcast.episodes"></app-episode-list>
   </div>
 
-  @if(player.isInitialized() && !isMobile){
-    <div class="bottom-bar">
-      <app-player-modal [inLimitedSpace]="true"></app-player-modal>
-    </div>
-    }
+  @if(player.isInitialized() && !isMobile && !isSidebar){
+  <div class="bottom-bar">
+    <app-player-modal [inLimitedSpace]="true"></app-player-modal>
+  </div>
+  }
 </ion-content>
 } @else if(podcastNotFound === false && someTimePassed) {
-  <app-not-found itemType="Podcast"></app-not-found>
+<app-not-found itemType="Podcast"></app-not-found>
 } @else {
-  <app-loading [message]="'Loading podcast...'"></app-loading> 
+<app-loading [message]="'Loading podcast...'"></app-loading>
 }

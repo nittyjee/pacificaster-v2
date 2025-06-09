@@ -1,6 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { IEpisode } from '../interfaces/episode.interface';
 import { Howl, Howler } from 'howler';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -9,6 +10,8 @@ export class PlayerService {
   currentEpisode = signal<IEpisode>({} as IEpisode);
 
   private howl?: Howl;
+  private isPlayingSubject = new BehaviorSubject<boolean>(false);
+  isPlaying$: Observable<boolean> = this.isPlayingSubject.asObservable();
 
   totalDuration = 0;
   currentTime = 0;
@@ -39,10 +42,11 @@ export class PlayerService {
       this.howl?.unload();
 
       this.initHowl(episode.audio_url);
-    }
-
+    } 
+    
     if (!this.howl?.playing()) {
       this.howl?.play();
+      this.isPlayingSubject.next(true);
     }
   }
 
@@ -54,8 +58,23 @@ export class PlayerService {
 
     this.howl.on('load', () => {
       this.totalDuration = this.howl!.duration();
-
       this.logCurrentTime();
+    });
+
+    this.howl.on('play', () => {
+      this.isPlayingSubject.next(true);
+    });
+
+    this.howl.on('pause', () => {
+      this.isPlayingSubject.next(false);
+    });
+
+    this.howl.on('end', () => {
+      this.isPlayingSubject.next(false);
+    });
+
+    this.howl.on('stop', () => {
+      this.isPlayingSubject.next(false);
     });
   }
 
@@ -83,16 +102,17 @@ export class PlayerService {
   jump(value: number) {
     this.howl?.seek(value);
   }
-
   pause() {
     if (this.howl && this.howl.playing()) {
       this.howl.pause();
+      this.isPlayingSubject.next(false);
     }
   }
 
   continue() {
     if (this.howl && !this.howl.playing()) {
       this.howl.play();
+      this.isPlayingSubject.next(true);
     }
   }
 
