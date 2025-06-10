@@ -26,7 +26,6 @@ import { PlayerService } from 'src/app/services/player.service';
 import { EpisodeInfoModalComponent } from '../episode-info-modal/episode-info-modal.component';
 import { PlayerTimelineComponent } from '../player-timeline/player-timeline.component';
 import { PlayerWaveformComponent } from '../player-waveform/player-waveform.component';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-player-modal',
@@ -52,7 +51,6 @@ export class PlayerModalComponent implements OnInit, OnDestroy {
   private modalCtrl = inject(ModalController);
   public player = inject(PlayerService);
   private route = inject(ActivatedRoute);
-  private subscriptions: Subscription[] = [];
 
   showPauseOverlay = false;
   private statusCheckInterval: ReturnType<typeof setInterval> | null = null;
@@ -96,15 +94,14 @@ export class PlayerModalComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.subscriptions.push(
-      this.player.isPlaying$.subscribe((isPlaying) => {
-        if (this.showPauseOverlay === isPlaying) {
-          this.showPauseOverlay = !isPlaying;
-          this.cdr.detectChanges();
-        }
+    // Start interval to check player status every second
+    this.statusCheckInterval = setInterval(() => {
+      const isPlaying = this.player.isPlaying();
+      if (this.showPauseOverlay === isPlaying) {
+        this.showPauseOverlay = !isPlaying;
+        this.cdr.detectChanges();
       }
-      ))
-
+    }, 1000);
   }
 
   ngOnDestroy() {
@@ -112,8 +109,6 @@ export class PlayerModalComponent implements OnInit, OnDestroy {
     if (this.statusCheckInterval) {
       clearInterval(this.statusCheckInterval);
     }
-
-    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
   cancel() {
