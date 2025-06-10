@@ -1,6 +1,10 @@
 :host {
   display: block;
 
+  .page-content{
+    height: 100%;
+  }
+
   .podcast-info {
     display: flex;
     flex-direction: column;
