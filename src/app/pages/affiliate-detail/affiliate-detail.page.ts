@@ -34,6 +34,7 @@ import { PlayerModalComponent } from "../../components/player-modal/player-modal
 })
 export class AffiliateDetailPage {
   @Input() affiliateId!: string;
+  @Input() isSidebar = false;
 
   affiliate?: IAffiliate;
   affiliateNotFound?: boolean;

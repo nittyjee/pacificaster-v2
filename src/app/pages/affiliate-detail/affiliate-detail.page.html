@@ -30,7 +30,7 @@
     <app-podcast-list [podcasts]="affiliate.podcasts"></app-podcast-list>
   </div>
 
-  @if(player.isInitialized() && !isMobile){
+  @if(player.isInitialized() && !isMobile && !isSidebar){
     <div class="bottom-bar">
       <app-player-modal [inLimitedSpace]="true"></app-player-modal>
     </div>
