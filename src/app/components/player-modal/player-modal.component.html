@@ -35,47 +35,52 @@
   }
   <div>
     <div class="title-wrapper">
-      <div
-        class="backdrop title"
-        [class.limitLengthOfTextUnlessHovered]="inLimitedSpace"
+      @if(inLimitedSpace){
+      <ion-buttons class="title-left-buttons">
+        <ng-container *ngTemplateOutlet="episodeInfoButtonTemplate"></ng-container>
+      </ion-buttons>
+      }
+      
+      <div class="title-center-area"
         (mouseup)="!isTouchDevice && mouseUp($event)"
         (touchend)="isTouchDevice && onTouched($event)"
       >
-        <h2>
-          {{ player.currentEpisode().title }}
-        </h2>
-        <h3
-          [class.onlyShowOnHoverOfWrapper]="
-            player.currentEpisode().title.length > 40
-          "
+        <div
+          class="backdrop title"
+          [class.limitLengthOfTextUnlessHovered]="inLimitedSpace"
         >
-          @if(inLimitedSpace){
-          <span>|</span>
-          }
-          {{ player.currentEpisode().host_name }}
-        </h3>
+          <h2>
+            {{ player.currentEpisode().title }}
+          </h2>
+          <h3
+            [class.onlyShowOnHoverOfWrapper]="
+              player.currentEpisode().title.length > 40
+            "
+          >
+            @if(inLimitedSpace){
+            <span>|</span>
+            }
+            {{ player.currentEpisode().host_name }}
+          </h3>
+        </div>
       </div>
+      
+      @if(inLimitedSpace){
+      <ion-buttons class="title-right-buttons">
+        <ng-container *ngTemplateOutlet="toolsButtonsTemplate"></ng-container>
+      </ion-buttons>
+      }
     </div>
+    
     <div class="header">
       @if(inLimitedSpace){
-      <ion-buttons>
-        <ng-container
-          class="column-1"
-          *ngTemplateOutlet="episodeInfoButtonTemplate"
-        ></ng-container>
-      </ion-buttons>
-      } @if(inLimitedSpace){
       <div
-        class="times column-2"
+        class="times-centered"
         (mouseup)="!isTouchDevice && mouseUp($event)"
         (touchend)="isTouchDevice && onTouched($event)"
       >
         <ng-container *ngTemplateOutlet="timeProgressTemplate"></ng-container>
       </div>
-
-      <ion-buttons class="column-3">
-        <ng-container *ngTemplateOutlet="toolsButtonsTemplate"></ng-container>
-      </ion-buttons>
       }
     </div>
 
