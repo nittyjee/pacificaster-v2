@@ -115,6 +115,11 @@ export class PlayerModalComponent implements OnInit, OnDestroy {
     return this.modalCtrl.dismiss(null, 'cancel');
   }
 
+  onPause() {
+    this.player.pause();
+    this.showPauseOverlay = true;
+  }
+
   onTouchMove(event: TouchEvent) {
     this.player.mute();
     this.isSearch = true;

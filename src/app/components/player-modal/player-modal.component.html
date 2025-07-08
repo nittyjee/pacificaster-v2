@@ -37,11 +37,14 @@
     <div class="title-wrapper">
       @if(inLimitedSpace){
       <ion-buttons class="title-left-buttons">
-        <ng-container *ngTemplateOutlet="episodeInfoButtonTemplate"></ng-container>
+        <ng-container
+          *ngTemplateOutlet="episodeInfoButtonTemplate"
+        ></ng-container>
       </ion-buttons>
       }
-      
-      <div class="title-center-area"
+
+      <div
+        class="title-center-area"
         (mouseup)="!isTouchDevice && mouseUp($event)"
         (touchend)="isTouchDevice && onTouched($event)"
       >
@@ -64,14 +67,14 @@
           </h3>
         </div>
       </div>
-      
+
       @if(inLimitedSpace){
       <ion-buttons class="title-right-buttons">
         <ng-container *ngTemplateOutlet="toolsButtonsTemplate"></ng-container>
       </ion-buttons>
       }
     </div>
-    
+
     <div class="header">
       @if(inLimitedSpace){
       <div
@@ -143,6 +146,14 @@
 </ng-template>
 
 <ng-template #episodeInfoButtonTemplate>
+  <ion-button
+    class="tool"
+    (click)="onPause()"
+    [class.hidden]="showPauseOverlay"
+  >
+    <ion-icon slot="icon-only" name="pause-outline"></ion-icon>
+  </ion-button>
+
   <ion-button
     class="tool"
     (click)="onEpisodeDetail()"
