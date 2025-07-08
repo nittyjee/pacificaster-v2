@@ -53,6 +53,8 @@ export class PlayerModalComponent implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
 
   showPauseOverlay = false;
+  showPauseModal = false;
+  private readonly MODAL_DISMISSED_KEY = 'pause-modal-dismissed';
   private statusCheckInterval: ReturnType<typeof setInterval> | null = null;
 
   speedOptions = [1, 1.25, 1.5, 2];
@@ -102,6 +104,8 @@ export class PlayerModalComponent implements OnInit, OnDestroy {
         this.cdr.detectChanges();
       }
     }, 1000);
+
+    this.checkIfModalShouldShow();
   }
 
   ngOnDestroy() {
@@ -218,5 +222,17 @@ export class PlayerModalComponent implements OnInit, OnDestroy {
     });
 
     const { data, role } = await modal.onWillDismiss();
+  }
+
+  private checkIfModalShouldShow() {
+    const isDismissed = localStorage.getItem(this.MODAL_DISMISSED_KEY);
+    if (!isDismissed) {
+      this.showPauseModal = true;
+    }
+  }
+
+  dismissModal() {
+    this.showPauseModal = false;
+    localStorage.setItem(this.MODAL_DISMISSED_KEY, 'true');
   }
 }
