@@ -26,6 +26,7 @@ import { PlayerService } from 'src/app/services/player.service';
 import { EpisodeInfoModalComponent } from '../episode-info-modal/episode-info-modal.component';
 import { PlayerTimelineComponent } from '../player-timeline/player-timeline.component';
 import { PlayerWaveformComponent } from '../player-waveform/player-waveform.component';
+import { ScreenSizeService } from 'src/app/services/screen-size.service';
 
 @Component({
   selector: 'app-player-modal',
@@ -52,9 +53,16 @@ export class PlayerModalComponent implements OnInit, OnDestroy {
   public player = inject(PlayerService);
   private route = inject(ActivatedRoute);
 
+  private screenSizeService = inject(ScreenSizeService);
+  
+  get isMobile(): boolean {
+    return this.screenSizeService.isMobile();
+  }
+
   showPauseOverlay = false;
-  showPauseModal = false;
-  private readonly MODAL_DISMISSED_KEY = 'pause-modal-dismissed';
+  showIntroductionModal = false;
+  private readonly MODAL_DISMISSED_COUNT_KEY = 'pause-modal-dismissed-count';
+  private readonly MIN_INTRODUCTION_MODAL_DISMISSED_COUNT = 20;
   private statusCheckInterval: ReturnType<typeof setInterval> | null = null;
 
   speedOptions = [1, 1.25, 1.5, 2];
@@ -105,7 +113,7 @@ export class PlayerModalComponent implements OnInit, OnDestroy {
       }
     }, 1000);
 
-    this.checkIfModalShouldShow();
+    this.checkIfIntroductionModalShouldShow();
   }
 
   ngOnDestroy() {
@@ -224,15 +232,25 @@ export class PlayerModalComponent implements OnInit, OnDestroy {
     const { data, role } = await modal.onWillDismiss();
   }
 
-  private checkIfModalShouldShow() {
-    const isDismissed = localStorage.getItem(this.MODAL_DISMISSED_KEY);
-    if (!isDismissed) {
-      this.showPauseModal = true;
+  private checkIfIntroductionModalShouldShow() {
+    const dismissedCount = this.getIntroducitonModalDismissedCount();
+    const dismissedEnoughTimes = dismissedCount >= this.MIN_INTRODUCTION_MODAL_DISMISSED_COUNT;
+    if (!dismissedEnoughTimes) {
+      this.showIntroductionModal = true;
     }
   }
 
-  dismissModal() {
-    this.showPauseModal = false;
-    localStorage.setItem(this.MODAL_DISMISSED_KEY, 'true');
+  private getIntroducitonModalDismissedCount(): number {
+    const count = localStorage.getItem(this.MODAL_DISMISSED_COUNT_KEY);
+    return count ? +count : 0;
+  }
+
+  dismissIntroductionModal() {
+    this.showIntroductionModal = false;
+    const dismissedCount = this.getIntroducitonModalDismissedCount();
+    localStorage.setItem(
+      this.MODAL_DISMISSED_COUNT_KEY,
+      (dismissedCount + 1).toString()
+    );
   }
 }
