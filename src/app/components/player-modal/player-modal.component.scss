@@ -1,4 +1,6 @@
 :host {
+  $pause-circle-cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="white" stroke-width="2"/><rect x="8" y="7" width="2" height="10" fill="white"/><rect x="14" y="7" width="2" height="10" fill="white"/></svg>') 12 12, auto;
+  
   .wrapper {
     display: flex;
     flex-direction: column;
@@ -27,7 +29,8 @@
       height: 100%;
       z-index: 0;
       opacity: 1;
-      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="white" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>') 12 12, auto;
+      cursor: $pause-circle-cursor;
+
 
       img {
         width: 100%;
@@ -91,12 +94,14 @@
         justify-content: center;
         align-items: center;
         flex: 1;
-        cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="white" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>') 12 12, auto;
+        cursor: $pause-circle-cursor;
+
         
         .title {
           width: fit-content;
           text-align: center;
-          cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="white" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>') 12 12, auto;
+          cursor: $pause-circle-cursor;
+
         }
       }
     }
@@ -109,14 +114,16 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="white" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>') 12 12, auto;
+      cursor: $pause-circle-cursor;
+
 
       .times-centered {
         display: flex;
         justify-content: center;
         align-items: center;
         width: 100%;
-        cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="white" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>') 12 12, auto;
+        cursor: $pause-circle-cursor;
+
       }
 
       ion-buttons {
@@ -147,10 +154,12 @@
       justify-content: space-evenly;
       position: relative;
       z-index: 1;
-      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="white" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>') 12 12, auto;
+      cursor: $pause-circle-cursor;
+
       
       app-player-waveform {
-        cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="white" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>') 12 12, auto;
+        cursor: $pause-circle-cursor;
+
       }
     }
 
@@ -170,7 +179,8 @@
       gap: 0.5rem;
       justify-content: flex-start;
       height: 100%;
-      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="white" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>') 12 12, auto;
+      cursor: $pause-circle-cursor;
+
 
       .top {
         display: flex;
