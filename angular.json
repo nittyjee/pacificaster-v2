@@ -36,7 +36,7 @@
           },
           "configurations": {
             "production": {
-              /*
+              "allowedCommonJsDependencies": ["howler"],
               "budgets": [
                 {
                   "type": "initial",
@@ -45,11 +45,10 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "7kb",
+                  "maximumError": "10kb"
                 }
               ],
-              */
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
