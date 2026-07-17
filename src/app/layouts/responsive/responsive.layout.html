@@ -21,7 +21,34 @@
   <ion-router-outlet></ion-router-outlet>
 </div>
 } @else {
-<ion-split-pane contentId="main" [disabled]="!showSidebar">
+<ion-menu side="end" menuId="menu" contentId="main">
+  <div class="menu ion-padding">
+    @for (item of menuItems; track $index) {
+    <ion-menu-toggle>
+      <ion-button
+        fill="clear"
+        [routerLink]="item.link"
+        [routerLinkActive]="'active'"
+        expand="block"
+      >
+        <ion-icon slot="start" [name]="item.icon"></ion-icon>
+        {{item.title}}
+      </ion-button>
+    </ion-menu-toggle>
+    }
+  </div>
+</ion-menu>
+
+<button
+  type="button"
+  class="desktop-menu-button"
+  aria-label="Open menu"
+  (click)="toggleMenu()"
+>
+  <ion-icon name="menu-outline"></ion-icon>
+</button>
+
+<ion-split-pane contentId="main" when="(min-width: 768px)" [class.sidebar-closed]="!showSidebar">
   <ion-menu side="start" menuId="sidebar" contentId="main" class="left">
     <ion-router-outlet name="sidebar"></ion-router-outlet>
   </ion-menu>

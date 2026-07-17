@@ -4,7 +4,6 @@ import {
   IonRouterOutlet,
 } from '@ionic/angular/standalone';
 import { MiniPlayerComponent } from './components/mini-player/mini-player.component';
-import { TabbarComponent } from './components/tabbar/tabbar.component';
 import { PlayerService } from './services/player.service';
 import { PodcastService } from './services/podcast.service';
 import { ScreenSizeService } from './services/screen-size.service';
@@ -17,8 +16,7 @@ import { ScreenSizeService } from './services/screen-size.service';
   imports: [
     IonApp,
     IonRouterOutlet,
-    MiniPlayerComponent,
-    TabbarComponent
+    MiniPlayerComponent
 ],
 })
 export class AppComponent implements OnInit {

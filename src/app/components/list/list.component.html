@@ -15,15 +15,11 @@
 </div>
 
 @if (!isList) {
-<ion-grid [fixed]="true">
-  <ion-row>
-    @for (item of items; track $index) {
-    <ion-col size="6" size-md="4">
-      <app-list-item [item]="item"></app-list-item>
-    </ion-col>
-    }
-  </ion-row>
-</ion-grid>
+<div class="grid">
+  @for (item of items; track $index) {
+  <app-list-item [item]="item"></app-list-item>
+  }
+</div>
 } @else {
 <ion-list>
   @for (item of items; track $index) {

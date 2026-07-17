@@ -91,6 +91,17 @@ export class PlayerWaveformComponent implements AfterViewInit, OnChanges {
       const centerHeight = Math.ceil(height / 2);
       const scaleFactor = (height - margin * 2) / 2;
 
+      // Dark backdrop strip behind the bars so the light-blue waveform stays
+      // clearly visible regardless of the artwork behind the player. The top
+      // and bottom edges fade to transparent so the strip blends in softly.
+      const backdrop = this.ctx.createLinearGradient(0, 0, 0, height);
+      backdrop.addColorStop(0, 'rgba(0, 0, 0, 0)');
+      backdrop.addColorStop(0.2, 'rgba(0, 0, 0, 0.35)');
+      backdrop.addColorStop(0.8, 'rgba(0, 0, 0, 0.35)');
+      backdrop.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      this.ctx.fillStyle = backdrop;
+      this.ctx.fillRect(0, 0, this.canvas.nativeElement.width, height);
+
       // Generate random values
       const array = [];
       const totalPoints = duration * scale;
@@ -99,12 +110,14 @@ export class PlayerWaveformComponent implements AfterViewInit, OnChanges {
       }
 
       let x = 0;
+      // Draw solid, contiguous bars (no 1px gaps) so the waveform reads as a
+      // fully opaque shape instead of faint see-through lines.
+      this.ctx.fillStyle = '#76bde7';
       for (let k = 0; k < array.length; k += 2) {
-        this.ctx.fillStyle = '#76bde7';
         this.ctx.fillRect(
           x,
           centerHeight - array[k] * scaleFactor,
-          1,
+          2,
           array[k] * scaleFactor * 2
         );
         x += 2;

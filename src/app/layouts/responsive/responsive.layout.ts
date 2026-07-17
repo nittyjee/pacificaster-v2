@@ -7,6 +7,7 @@ import {
     IonMenuToggle,
     IonRouterOutlet,
     IonSplitPane,
+    MenuController,
 } from '@ionic/angular/standalone';
 import { filter, Subscription } from 'rxjs';
 import { PlayerService } from 'src/app/services/player.service';
@@ -33,6 +34,7 @@ export class ResponsiveLayout implements OnInit, OnDestroy {
     public player = inject(PlayerService);
     private screenSizeService = inject(ScreenSizeService);
     private cdr = inject(ChangeDetectorRef);
+    private menuCtrl = inject(MenuController);
 
     showSidebar = false;
     private subscriptions: Subscription[] = [];
@@ -58,6 +60,10 @@ export class ResponsiveLayout implements OnInit, OnDestroy {
     constructor() { }
 
     ngOnInit() {
+        // Expose the OS scrollbar width so the fixed hamburger can sit clear of
+        // the content scrollbar instead of being overlapped by it.
+        this.setScrollbarWidthVar();
+
         // Subscribe to router events
         const routerSub = this.router.events
             .pipe(filter((event) => event instanceof NavigationEnd))
@@ -86,5 +92,22 @@ export class ResponsiveLayout implements OnInit, OnDestroy {
 
     get isMobile(): boolean {
         return this.screenSizeService.isMobile();
+    }
+
+    toggleMenu() {
+        this.menuCtrl.toggle('menu');
+    }
+
+    private setScrollbarWidthVar() {
+        if (typeof document === 'undefined') {
+            return;
+        }
+        const outer = document.createElement('div');
+        outer.style.cssText =
+            'visibility:hidden;position:absolute;top:-9999px;width:100px;height:100px;overflow:scroll;';
+        document.body.appendChild(outer);
+        const width = outer.offsetWidth - outer.clientWidth;
+        outer.remove();
+        document.documentElement.style.setProperty('--app-scrollbar-width', `${width}px`);
     }
 }

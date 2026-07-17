@@ -1,4 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   IonContent,
   IonImg
@@ -27,8 +28,10 @@ export class HomePage {
   public podcastService = inject(PodcastService);
   public player = inject(PlayerService);
   private screenSizeService = inject(ScreenSizeService);
+  private router = inject(Router);
 
   isList = signal<boolean>(false);
+  private lastSidebar: string[] | null = null;
 
   constructor() {}
 
@@ -38,5 +41,18 @@ export class HomePage {
 
   onLayoutChange(eventData: boolean) {
     this.isList.set(eventData);
+  }
+
+  // Clicking the logo toggles the desktop sidebar:
+  // if a sidebar is open, remember it and close; if closed, reopen the last one.
+  onLogoClick() {
+    const sidebarGroup = this.router.parseUrl(this.router.url).root.children['sidebar'];
+
+    if (sidebarGroup) {
+      this.lastSidebar = sidebarGroup.segments.map((s) => s.path);
+      this.router.navigate([{ outlets: { sidebar: null } }]);
+    } else if (this.lastSidebar) {
+      this.router.navigate([{ outlets: { sidebar: this.lastSidebar } }]);
+    }
   }
 }

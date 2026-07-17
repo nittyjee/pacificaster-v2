@@ -3,7 +3,7 @@
 }
 <ion-content [fullscreen]="false">
   @if (!isMobile) {
-  <div class="header-logo-container">
+  <div class="header-logo-container" (click)="onLogoClick()">
     <ion-img
       class="header-logo"
       src="assets/images/main-logo-big.png"

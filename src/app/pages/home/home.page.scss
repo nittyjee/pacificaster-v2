@@ -1,6 +1,18 @@
 :host {
   display: block;
 
+  .header-logo-container {
+    cursor: pointer;
+    // Leave room for the fixed hamburger button so the logo never under/overlaps it.
+    padding-right: 72px;
+    box-sizing: border-box;
+
+    .header-logo {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+
   .page-content {
     max-width: 900px;
     display: flex;

@@ -15,8 +15,10 @@
       </a>
     </ion-title>
 
+    @if (isMobile) {
     <ion-buttons slot="end">
-      <ion-menu-button></ion-menu-button>
+      <ion-menu-button menu="menu" auto-hide="false"></ion-menu-button>
     </ion-buttons>
+    }
   </ion-toolbar>
 </ion-header>

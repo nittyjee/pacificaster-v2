@@ -91,6 +91,12 @@ body {
   padding: 10px; /* Optional: add some padding if needed */
 }
 
+/* Always reserve the scrollbar gutter so its width is consistent and the
+   fixed hamburger button clears it whether or not the page is scrolling. */
+ion-content::part(scroll) {
+  scrollbar-gutter: stable;
+}
+
 .podcast-title {
   font-size: 1.4rem;
   font-weight: 600;
